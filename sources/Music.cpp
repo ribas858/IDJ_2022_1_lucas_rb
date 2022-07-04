@@ -1,5 +1,5 @@
-#include "Music.h"
-#include "Game.h"
+#include "../headers/Music.h"
+#include "../headers/Game.h"
 
 Music::Music() {
     cout << "Entrou em MUSIC" << endl;
@@ -27,7 +27,7 @@ void Music::Stop(int msToStop) {
 void Music::Open(string file) {
     
     if(!IsOpen()) {
-        music = Mix_LoadMUS("stageState.ogg");
+        music = Mix_LoadMUS("sounds/stageState.ogg");
         if (!music) {
             SDL_Log("Erro ao carregar Musica: %s", Mix_GetError());
         } else {

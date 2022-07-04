@@ -1,14 +1,14 @@
-#include "State.h"
-#include "Music.h"
-#include "Game.h"
+#include "../headers/State.h"
+#include "../headers/Music.h"
+#include "../headers/Game.h"
 
 
 State::State() {
     cout << "State criado!!" << endl;
-    music = new Music("stageState.ogg");
+    music = new Music("sounds/stageState.ogg");
     music->Play();
     quitRequested = false;
-    bg = new Sprite("ocean.jpg");
+    bg = new Sprite("images/ocean.jpg");
 }
 
 bool State::QuitRequested() {

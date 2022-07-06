@@ -14,6 +14,10 @@ State::State() {
     //bg = new Sprite("images/ocean.jpg");
 }
 
+State::~State() {
+    objectArray.clear();
+}
+
 bool State::QuitRequested() {
     return quitRequested;
 }

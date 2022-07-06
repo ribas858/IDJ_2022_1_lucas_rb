@@ -70,7 +70,7 @@ bool Sprite::IsOpen() {
 void Sprite::Update(float dt) {}
 
 bool Sprite::Is(string type) {
-    string sprite = "sprite";
+    string sprite = "Sprite";
     if (type == sprite){
         return true;
     } else {

@@ -1,4 +1,5 @@
 #include "../headers/Game.h"
+#include "../headers/State.h"
 
 void Game::Init_Sdl() {
     if (SDL_Init(SDL_INIT_VIDEO || SDL_INIT_AUDIO || SDL_INIT_TIMER) != 0) {

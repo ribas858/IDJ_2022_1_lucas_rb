@@ -1,18 +1,28 @@
-#pragma once
-#include "../headers/base_includes.h"
+#ifndef SPRITE_H
+#define SPRITE_H
 
-class Sprite {
+#include "../headers/Component.h"
+
+
+class Sprite : public Component {
     public:
-        Sprite();
-        Sprite(string file);
-        ~Sprite();
+        Sprite() : Component(associated), texture(nullptr) { }
+        
+        Sprite(string file) : Component(associated), texture(nullptr) { Open(file); }
+        
+        ~Sprite() override {
+            SDL_DestroyTexture(texture);
+        }
         
         void Open(string file);
         void SetClip(int x, int y, int w, int h);
-        void Render(int x, int y);
         int GetWidth();
         int GetHeight();
         bool IsOpen();
+
+        void Render() override;
+        void Update(float dt) override;
+        bool Is(string type) override;
 
     private:
         SDL_Texture* texture;
@@ -20,3 +30,5 @@ class Sprite {
         int height;
         SDL_Rect clipRect;  
 };
+
+#endif

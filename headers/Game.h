@@ -1,9 +1,7 @@
-#pragma once
-#include "../headers/base_includes.h"
+#ifndef GAME_H
+#define GAME_H
 
-#include "../headers/State.h"
-
-
+#include "../headers/GameObject.h"
 
 class Game {
 
@@ -13,7 +11,7 @@ class Game {
         void Run(string title, int width, int height);
 
         static Game& GetInstance();
-        State& GetState();
+        class State& GetState();
         SDL_Renderer* GetRenderer();
     
     private:
@@ -27,7 +25,7 @@ class Game {
         static Game * instance;
         SDL_Window* window;
         SDL_Renderer* renderer;
-        State* state;
+        class State* state;
 
         Game (string title, int width, int height) {
             if (instance) {
@@ -43,3 +41,5 @@ class Game {
             Run(title, width, height);
         }
 };
+
+#endif

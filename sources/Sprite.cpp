@@ -1,18 +1,19 @@
 #include "../headers/Sprite.h"
+
 #include "../headers/Game.h"
 
-Sprite::Sprite() {
-    texture = nullptr;
-}
+// Sprite::Sprite(GameObject& associated) : Component(associated) {
+//     texture = nullptr;
+// }
 
-Sprite::Sprite(string file) {
-    texture = nullptr;
-    Open(file);
-}
+// Sprite::Sprite(string file) : Component(associated) {
+//     texture = nullptr;
+//     Open(file);
+// }
 
-Sprite::~Sprite() {
-    SDL_DestroyTexture(texture);
-}
+// Sprite::~Sprite() {
+//     SDL_DestroyTexture(texture);
+// }
 
 
 void Sprite::Open(string file) {
@@ -41,12 +42,12 @@ void Sprite::SetClip(int x, int y, int w, int h) {
     clipRect.y = y;
 }
 
-void Sprite::Render(int x, int y) {
+void Sprite::Render() {
     SDL_Rect dstrect;
     dstrect.w = clipRect.w;
     dstrect.h = clipRect.h;
-    dstrect.x = x;
-    dstrect.y = y;
+    dstrect.x = associated.box.x;
+    dstrect.y = associated.box.y;
     
     SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstrect);
 }
@@ -60,6 +61,17 @@ int Sprite::GetHeight() {
 
 bool Sprite::IsOpen() {
     if (texture) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+void Sprite::Update(float dt) {}
+
+bool Sprite::Is(string type) {
+    string sprite = "sprite";
+    if (type == sprite){
         return true;
     } else {
         return false;

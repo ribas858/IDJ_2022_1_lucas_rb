@@ -1,14 +1,17 @@
 #include "../headers/State.h"
-#include "../headers/Music.h"
-#include "../headers/Game.h"
-
 
 State::State() {
     cout << "State criado!!" << endl;
     music = new Music("sounds/stageState.ogg");
     music->Play();
     quitRequested = false;
-    bg = new Sprite("images/ocean.jpg");
+
+    // GameObject* back = new GameObject();
+    // bg = new Sprite("images/ocean.jpg");
+    // back->AddComponent(bg);
+    
+    
+    //bg = new Sprite("images/ocean.jpg");
 }
 
 bool State::QuitRequested() {
@@ -24,5 +27,6 @@ void State::Update(float dt) {
 }
 
 void State::Render() {
-    bg->Render(0, 0);
+    //bg->Render();
+    
 }

@@ -1,5 +1,7 @@
-#pragma once
-#include "../headers/base_includes.h"
+#ifndef MUSIC_H
+#define MUSIC_H
+
+#include "../headers/Component.h"
 
 class Music {
 
@@ -17,3 +19,5 @@ class Music {
     private:
         Mix_Music* music;
 };
+
+#endif

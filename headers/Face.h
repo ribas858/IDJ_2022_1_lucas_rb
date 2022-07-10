@@ -1,11 +1,11 @@
 #ifndef FACE_H
 #define FACE_H
 
-#include "../headers/Component.h"
+#include "../headers/GameObject.h"
 
 class Face : public Component {
     public:
-        Face(GameObject& associated) : Component(associated) {}
+        Face(GameObject& associated);
         void Damage (int damage);
 
         void Update(float dt) override;

@@ -1,8 +1,8 @@
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
 
-#include "../headers/Component.h"
 #include "../headers/Rect.h"
+#include "../headers/Component.h"
 
 class GameObject {
     public:
@@ -21,7 +21,7 @@ class GameObject {
         Rect box;
 
     private:
-        vector <Component*> components;
+        vector <unique_ptr<Component>> components;
         bool isDead;
 
 };

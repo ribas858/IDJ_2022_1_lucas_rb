@@ -2,18 +2,18 @@
 
 #include "../headers/Game.h"
 
-// Sprite::Sprite(GameObject& associated) : Component(associated) {
-//     texture = nullptr;
-// }
+Sprite::Sprite(GameObject& associated) : Component(associated) {
+    texture = nullptr;
+}
 
-// Sprite::Sprite(string file) : Component(associated) {
-//     texture = nullptr;
-//     Open(file);
-// }
+Sprite::Sprite(string file, GameObject& associated) : Component(associated) {
+    texture = nullptr;
+    Open(file);
+}
 
-// Sprite::~Sprite() {
-//     SDL_DestroyTexture(texture);
-// }
+Sprite::~Sprite() {
+    SDL_DestroyTexture(texture);
+}
 
 
 void Sprite::Open(string file) {
@@ -40,6 +40,10 @@ void Sprite::SetClip(int x, int y, int w, int h) {
     clipRect.h = h;
     clipRect.x = x;
     clipRect.y = y;
+    associated.box.x = x;
+    associated.box.y = y;
+    associated.box.w = w;
+    associated.box.h = h;
 }
 
 void Sprite::Render() {
@@ -67,7 +71,9 @@ bool Sprite::IsOpen() {
     }
 }
 
-void Sprite::Update(float dt) {}
+void Sprite::Update(float dt) {
+    
+}
 
 bool Sprite::Is(string type) {
     string sprite = "Sprite";

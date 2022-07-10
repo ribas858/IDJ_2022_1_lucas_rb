@@ -1,13 +1,16 @@
 #include "../headers/Face.h"
-#include "../headers/GameObject.h"
 
+Face::Face(GameObject& associated) : Component(associated) {
+    hitpoints = 30;
+}
 
 void Face::Damage (int damage){
+    hitpoints -= damage;
     if (hitpoints <= 0){
+        cout << "Chama RequesteDelete" << endl;
         associated.RequestDelete();
-    } else {
-        hitpoints -= damage;
     }
+    cout << "Hitpoints: " << hitpoints << endl;
 }
 
 void Face::Update(float dt) {}

@@ -6,13 +6,11 @@
 
 class Sprite : public Component {
     public:
-        Sprite() : Component(associated), texture(nullptr) { }
+        Sprite(class GameObject& associated);
         
-        Sprite(string file) : Component(associated), texture(nullptr) { Open(file); }
+        Sprite(string file, class GameObject& associated);
         
-        ~Sprite() override {
-            SDL_DestroyTexture(texture);
-        }
+        ~Sprite() override;
         
         void Open(string file);
         void SetClip(int x, int y, int w, int h);

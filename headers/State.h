@@ -2,8 +2,6 @@
 #define STATE_H
 
 #include "../headers/GameObject.h"
-
-#include "../headers/Sprite.h"
 #include "../headers/Music.h"
 
 class State {
@@ -20,9 +18,10 @@ class State {
         void AddObject(int mouseX, int mouseY);
     
     private:
-        Sprite* bg;
+        class Sprite* bg;
         Music* music;
         bool quitRequested;
+        
         vector<unique_ptr<GameObject>> objectArray;
 };
 

@@ -8,6 +8,11 @@ class Vec2 {
     public:
         float x, y;
 
+        Vec2(float xi, float yi) : x(xi), y(yi) {}
+
+        Vec2 Rotate(float ang);
+        Vec2 Soma(Vec2 v);
+
     private:
 };
 

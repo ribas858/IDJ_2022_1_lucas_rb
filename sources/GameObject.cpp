@@ -6,20 +6,20 @@ GameObject::GameObject() {
 }
 
 GameObject::~GameObject() {
-    for (vector<Component*>::reverse_iterator cp = components.rbegin(); cp != components.rend(); cp++) {
-        delete (*cp);
+    for (vector<unique_ptr<Component>>::reverse_iterator cp = components.rbegin(); cp != components.rend(); cp++) {
+        (*cp).reset();
     }
     components.clear();
 }
 
 void GameObject::Update(float dt) {
-    for (vector<Component*>::iterator cp = components.begin(); cp != components.end(); cp++) {
+    for (vector<unique_ptr<Component>>::iterator cp = components.begin(); cp != components.end(); cp++) {
         (*cp)->Update(dt);
     }
 }
 
 void GameObject::Render() {
-    for (vector<Component*>::iterator cp = components.begin(); cp != components.end(); cp++) {
+    for (vector<unique_ptr<Component>>::iterator cp = components.begin(); cp != components.end(); cp++) {
         (*cp)->Render();
     }
 }
@@ -30,10 +30,11 @@ bool GameObject::IsDead() {
 
 void GameObject::RequestDelete() {
     isDead = true;
+    cout << "is dead" << endl;
 }
 
 void GameObject::AddComponent(Component* cpt) {
-    components.push_back(cpt);
+    components.emplace_back(cpt);
 }
 
 void GameObject::RemoveComponent(Component* cpt) {
@@ -42,7 +43,11 @@ void GameObject::RemoveComponent(Component* cpt) {
     }
 }
 
-Component* GetComponent(string type) {
-    Component* a;
-    return a;
+Component* GameObject::GetComponent(string type) {
+    for (int i = 0; i < components.size(); i++) {
+        if(components[i]->Is(type)) {
+            return components[i].get();
+        }
+    }
+    return nullptr;
 }

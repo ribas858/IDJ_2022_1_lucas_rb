@@ -10,5 +10,6 @@ using namespace std;
 #include "../headers/SDL_include.h"
 
 #include <vector>
+#include <cmath>
 
 #endif

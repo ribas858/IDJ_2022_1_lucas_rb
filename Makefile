@@ -1,5 +1,5 @@
-all: 	main.o Game.o Component.o State.o Sprite.o Music.o GameObject.o Face.o Rect.o Vec2.o
-	g++ -o main main.o Game.o Component.o State.o Sprite.o Music.o GameObject.o Face.o Rect.o Vec2.o -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
+all: 	main.o Game.o Component.o State.o Sprite.o Music.o GameObject.o Face.o Rect.o Vec2.o Sound.o
+	g++ -o main main.o Game.o Component.o State.o Sprite.o Music.o GameObject.o Face.o Rect.o Vec2.o Sound.o -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
 	rm -rf *.o
 
 main.o: main.cpp 
@@ -32,6 +32,8 @@ Rect.o: sources/Rect.cpp
 Vec2.o: sources/Vec2.cpp
 	g++ -c sources/Vec2.cpp
 
+Sound.o: sources/Sound.cpp
+	g++ -c sources/Sound.cpp
 
 run:
 	./main

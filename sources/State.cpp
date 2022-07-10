@@ -4,9 +4,11 @@
 #include "../headers/Face.h"
 #include "../headers/Vec2.h"
 
+#include "../headers/Sound.h"
+
 State::State() {
     cout << "State criado!!" << endl;
-    music = new Music("sounds/stageState.ogg");
+    music = new Music("music/stageState.ogg");
     music->Play();
     quitRequested = false;
 
@@ -57,12 +59,15 @@ void State::AddObject(int mouseX, int mouseY) {
     GameObject* gob = new GameObject();
 
     Sprite* penguin = new Sprite("images/penguinface.png", *gob);
+    Sound* boom = new Sound(*gob, "sounds/boom.wav");
     Face* logk = new Face(*gob);
 
     gob->box.x = mouseX;
     gob->box.y = mouseY;
     gob->AddComponent(penguin);
+    gob->AddComponent(boom);
     gob->AddComponent(logk);
+
 
     objectArray.emplace_back(gob);
 

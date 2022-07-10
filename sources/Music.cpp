@@ -7,8 +7,10 @@ Music::Music() {
 }
 
 Music::~Music() {
-    Stop();
-    Mix_FreeMusic(music);
+    if(!music) {
+        Stop();
+        Mix_FreeMusic(music);
+    }
 }
 
 Music::Music(string file) {
@@ -27,7 +29,7 @@ void Music::Stop(int msToStop) {
 void Music::Open(string file) {
     
     if(!IsOpen()) {
-        music = Mix_LoadMUS("sounds/stageState.ogg");
+        music = Mix_LoadMUS(file.c_str());
         if (!music) {
             SDL_Log("Erro ao carregar Musica: %s", Mix_GetError());
         } else {

@@ -1,4 +1,5 @@
 #include "../headers/Face.h"
+#include "../headers/Sound.h"
 
 Face::Face(GameObject& associated) : Component(associated) {
     hitpoints = 30;
@@ -7,7 +8,12 @@ Face::Face(GameObject& associated) : Component(associated) {
 void Face::Damage (int damage){
     hitpoints -= damage;
     if (hitpoints <= 0){
-        cout << "Chama RequesteDelete" << endl;
+        Component* cp = associated.GetComponent("Sound"); 
+        if (cp) {
+            Sound* som = (Sound*)cp;
+            som->Play();
+            cout << "BOOMMMMM..." << endl;
+        }
         associated.RequestDelete();
     }
     cout << "Hitpoints: " << hitpoints << endl;

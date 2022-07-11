@@ -22,6 +22,11 @@ class Sprite : public Component {
         void Update(float dt) override;
         bool Is(string type) override;
 
+        void Render(float x, float y);
+
+        SDL_Rect return_clipRect();
+        SDL_Texture* return_texture();
+
     private:
         SDL_Texture* texture;
         int width;

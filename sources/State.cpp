@@ -6,6 +6,8 @@
 
 #include "../headers/Sound.h"
 
+
+
 State::State() {
     cout << "State criado!!" << endl;
     music = new Music("music/stageState.ogg");

@@ -83,3 +83,21 @@ bool Sprite::Is(string type) {
         return false;
     }
 }
+
+SDL_Rect Sprite::return_clipRect() {
+    return clipRect;
+}
+
+SDL_Texture* Sprite::return_texture() {
+    return texture;
+}
+
+void Sprite::Render(float x, float y) {
+    SDL_Rect dstrect;
+    dstrect.w = clipRect.w;
+    dstrect.h = clipRect.h;
+    dstrect.x = x;
+    dstrect.y = y;
+    
+    SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstrect);
+}

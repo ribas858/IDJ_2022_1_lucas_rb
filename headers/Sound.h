@@ -1,3 +1,6 @@
+#ifndef SOUND_H
+#define SOUND_H
+
 #include "GameObject.h"
 
 class Sound : public Component {
@@ -19,3 +22,5 @@ class Sound : public Component {
         Mix_Chunk* chunk;
         int channel;
 };
+
+#endif

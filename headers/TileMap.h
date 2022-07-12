@@ -16,6 +16,9 @@ class TileMap : public Component {
         int GetHeight();
         int GetDepth();
 
+        void Update(float dt) override;
+        bool Is(string type) override;
+
     private:
         vector<int> tileMatrix;
         TileSet* tileSet;

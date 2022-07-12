@@ -8,6 +8,8 @@ class TileSet {
         TileSet(int tileWidth, int tileHeight, string file);
         void RenderTile(unsigned index, float x, float y);
 
+        ~TileSet();
+
         int GetTileWidth();
         int GetTileHeight();
 

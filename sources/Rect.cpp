@@ -5,6 +5,9 @@ bool Rect::Contem(float mouseX, float mouseY) {
     px = mouseX - x;
     py = mouseY - y;
 
+    // cout << "mousex:" << mouseX << " x:" << x << endl;
+    // cout << " mousey:" << mouseY << " y:" << y<< endl;
+
     // cout << "w:" << w;
     // cout << " h:" << h << endl;
     // cout << "px:" << px;

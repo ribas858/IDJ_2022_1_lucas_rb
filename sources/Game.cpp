@@ -94,13 +94,12 @@ void Game::Run(string title, int width, int height) {
     Cria_Window(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, 0);
     state = new State();
 
-    TileSet* t = new TileSet(40, 40, "images/tileset.png");
-    t->RenderTile(20, 800, 430);
+    // TileSet* t = new TileSet(40, 40, "images/tileset.png");
+    // t->RenderTile(20, 800, 430);
 
     while (!state->QuitRequested()) {
         state->Update(0);
-        //SDL_RenderClear(renderer);
-        //state->Render();
+        state->Render();
         SDL_RenderPresent(renderer);
         SDL_Delay(33);
     }

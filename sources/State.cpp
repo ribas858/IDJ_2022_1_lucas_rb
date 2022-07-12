@@ -5,6 +5,7 @@
 #include "../headers/Vec2.h"
 
 #include "../headers/Sound.h"
+#include "../headers/TileMap.h"
 
 
 
@@ -19,9 +20,11 @@ State::State() {
     back->AddComponent(bg);
     objectArray.emplace_back(back);
 
-    
-    
-    //bg = new Sprite("images/ocean.jpg");
+    GameObject* map_obj = new GameObject();
+    TileSet* t = new TileSet(64, 64, "images/tileset.png");
+    TileMap* tmap = new TileMap(*map_obj, "maps/tileMap.txt", t);
+    map_obj->AddComponent(tmap);
+    objectArray.emplace_back(map_obj);
 }
 
 State::~State() {
@@ -83,8 +86,8 @@ void State::Input() {
 
 	// Obtenha as coordenadas do mouse
 	SDL_GetMouseState(&mouseX, &mouseY);
-    // cout << "Mouse X: " << mouseX;
-    // cout << " Mouse Y: " << mouseY << endl;
+    //cout << "Mouse X: " << mouseX;
+    //cout << " Mouse Y: " << mouseY << endl;
 
 	// SDL_PollEvent retorna 1 se encontrar eventos, zero caso contrário
 	while (SDL_PollEvent(&event)) {

@@ -1,5 +1,6 @@
 #include "../headers/Face.h"
 #include "../headers/Sound.h"
+#include "../headers/Game.h"
 
 Face::Face(GameObject& associated) : Component(associated) {
     hitpoints = 30;
@@ -14,6 +15,8 @@ void Face::Damage (int damage){
             som->Play();
             cout << "BOOMMMMM..." << endl;
         }
+        
+        SDL_RenderClear(Game::GetInstance().GetRenderer());
         associated.RequestDelete();
     }
     cout << "Hitpoints: " << hitpoints << endl;

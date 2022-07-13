@@ -2,6 +2,7 @@
 #include "../headers/State.h"
 
 #include "../headers/TileSet.h"
+#include "../headers/Resources.h"
 
 void Game::Init_Sdl() {
     if (SDL_Init(SDL_INIT_VIDEO || SDL_INIT_AUDIO || SDL_INIT_TIMER) != 0) {
@@ -103,5 +104,8 @@ void Game::Run(string title, int width, int height) {
         SDL_RenderPresent(renderer);
         SDL_Delay(33);
     }
-    
+
+    Resources::ClearImages();
+    Resources::ClearSounds();
+    Resources::ClearMusics();
 }

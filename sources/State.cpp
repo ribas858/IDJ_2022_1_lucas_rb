@@ -14,20 +14,20 @@ State::State() {
     cout << "State criado!!" << endl;
 
     GameObject* musica = new GameObject();
-    music = new Music(*musica, "music/stageState.ogg");
+    music = new Music(*musica, "resources/music/stageState.ogg");
     music->Play();
 
-    music = new Music(*musica, "music/stageState.ogg");
+    // music = new Music(*musica, "music/stageState.ogg");
     
 
     GameObject* background = new GameObject();
-    bg = new Sprite(*background, "images/ocean.jpg");
+    bg = new Sprite(*background, "resources/images/ocean.jpg");
     background->AddComponent(bg);
     objectArray.emplace_back(background);
 
     GameObject* map_obj = new GameObject();
-    TileSet* tset = new TileSet(64, 64, "images/tileset.png");
-    TileMap* tmap = new TileMap(*map_obj, "maps/tileMap.txt", tset);
+    TileSet* tset = new TileSet(64, 64, "resources/images/tileset.png");
+    TileMap* tmap = new TileMap(*map_obj, "resources/maps/tileMap.txt", tset);
     map_obj->AddComponent(tmap);
     objectArray.emplace_back(map_obj);
 }
@@ -69,9 +69,9 @@ void State::Render() {
 
 void State::AddObject(int mouseX, int mouseY) {
     GameObject* gob = new GameObject();
-    Sprite* penguin = new Sprite(*gob, "images/penguinface.png");
+    Sprite* penguin = new Sprite(*gob, "resources/images/penguinface.png");
     
-    Sound* boom = new Sound(*gob, "sounds/boom.wav");
+    Sound* boom = new Sound(*gob, "resources/sounds/boom.wav");
     Face* logk = new Face(*gob);
 
     gob->box.x = mouseX;

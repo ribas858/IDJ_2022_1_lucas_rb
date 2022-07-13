@@ -6,13 +6,13 @@
 class Resources {
     public:
         static SDL_Texture* GetImage(string file);
-        void ClearImages();
+        static void ClearImages();
 
         static Mix_Music* GetMusic(string file);
-        void ClearMusics();
+        static void ClearMusics();
 
         static Mix_Chunk* GetSound(string file);
-        void ClearSounds();
+        static void ClearSounds();
 
         static bool FindImage(string file);
         static void InsertImage(string file, SDL_Texture* texture);

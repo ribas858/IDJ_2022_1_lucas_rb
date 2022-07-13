@@ -8,7 +8,7 @@ class Sprite : public Component {
     public:
         Sprite(class GameObject& associated);
         
-        Sprite(string file, class GameObject& associated);
+        Sprite(class GameObject& associated, string file);
         
         ~Sprite() override;
         

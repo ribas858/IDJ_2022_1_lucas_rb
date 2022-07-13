@@ -1,7 +1,7 @@
 #ifndef SOUND_H
 #define SOUND_H
 
-#include "GameObject.h"
+#include "../headers/GameObject.h"
 
 class Sound : public Component {
     public:

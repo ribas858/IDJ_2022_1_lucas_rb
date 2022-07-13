@@ -1,5 +1,5 @@
-all: 	main.o Game.o Component.o State.o Sprite.o Music.o GameObject.o Face.o Rect.o Vec2.o Sound.o TileSet.o TileMap.o
-	g++ -o main main.o Game.o Component.o State.o Sprite.o Music.o GameObject.o Face.o Rect.o Vec2.o Sound.o TileSet.o TileMap.o -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
+all: 	main.o Game.o Component.o State.o Sprite.o Music.o GameObject.o Face.o Rect.o Vec2.o Sound.o TileSet.o TileMap.o Resources.o
+	g++ -o main main.o Game.o Component.o State.o Sprite.o Music.o GameObject.o Face.o Rect.o Vec2.o Sound.o TileSet.o TileMap.o Resources.o -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
 	rm -rf *.o
 
 main.o: main.cpp 
@@ -40,6 +40,9 @@ TileSet.o: sources/TileSet.cpp
 
 TileMap.o: sources/TileMap.cpp
 	g++ -c sources/TileMap.cpp
+
+Resources.o: sources/Resources.cpp
+	g++ -c sources/Resources.cpp
 
 run:
 	./main

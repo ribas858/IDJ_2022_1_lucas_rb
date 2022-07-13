@@ -5,7 +5,7 @@
 
 TileSet::TileSet(int tileWidth, int tileHeight, string file) : tileWidth(tileWidth), tileHeight(tileHeight) {
     GameObject* sp_tile = new GameObject();
-    tileSet = new Sprite(file, *sp_tile);
+    tileSet = new Sprite(*sp_tile, file);
     
     if (tileSet){
         // c = w / tw

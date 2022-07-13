@@ -1,18 +1,16 @@
 #include "../headers/Sound.h"
+#include "../headers/Resources.h"
 
 Sound::Sound(GameObject& associated) : Component(associated) {
     chunk = nullptr;
 }
 
-Sound::Sound(GameObject& associated, string file) : Component(associated) {
+Sound::Sound(GameObject& associated, string file) : Sound(associated) {
     Open(file);
 }
 
 Sound::~Sound() {
-    if(!chunk) {
-        Stop();
-        Mix_FreeChunk(chunk);
-    }
+    
 }
 
 void Sound::Play( int times) {
@@ -26,15 +24,18 @@ void Sound::Stop() {
 }
  
 void Sound::Open(string file) {
-    if(!IsOpen()) {
+    if(!Resources::FindSound(file)) {
         chunk = Mix_LoadWAV(file.c_str());
         if (!chunk) {
             SDL_Log("Erro ao carregar Som: %s", Mix_GetError());
         } else {
-            cout << "Som Carregado!!" << endl;
+            cout << "Som Carregado!!" << endl << endl;
+            Resources::InsertSound(file, chunk);
         }
     } else {
         cout << "Som ja está aberto" << endl;
+        cout << "Buscando Som na tabela..." << endl << endl;
+        chunk = Resources::GetSound(file);
     }
 }
 

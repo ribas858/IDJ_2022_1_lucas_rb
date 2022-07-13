@@ -10,19 +10,24 @@
 
 
 State::State() {
-    cout << "State criado!!" << endl;
-    music = new Music("music/stageState.ogg");
-    music->Play();
     quitRequested = false;
+    cout << "State criado!!" << endl;
 
-    GameObject* back = new GameObject();
-    bg = new Sprite("images/ocean.jpg", *back);
-    back->AddComponent(bg);
-    objectArray.emplace_back(back);
+    GameObject* musica = new GameObject();
+    music = new Music(*musica, "music/stageState.ogg");
+    music->Play();
+
+    music = new Music(*musica, "music/stageState.ogg");
+    
+
+    GameObject* background = new GameObject();
+    bg = new Sprite(*background, "images/ocean.jpg");
+    background->AddComponent(bg);
+    objectArray.emplace_back(background);
 
     GameObject* map_obj = new GameObject();
-    TileSet* t = new TileSet(64, 64, "images/tileset.png");
-    TileMap* tmap = new TileMap(*map_obj, "maps/tileMap.txt", t);
+    TileSet* tset = new TileSet(64, 64, "images/tileset.png");
+    TileMap* tmap = new TileMap(*map_obj, "maps/tileMap.txt", tset);
     map_obj->AddComponent(tmap);
     objectArray.emplace_back(map_obj);
 }
@@ -49,7 +54,7 @@ void State::Update(float dt) {
     for(int i=0; i<objectArray.size(); i++) {
         if(objectArray[i]->IsDead()) {
             objectArray.erase(objectArray.begin() + i);
-            cout << "limpa no objectArray" << endl;
+            cout << "limpa no objectArray" << endl << endl;
         }
     }
 }
@@ -60,10 +65,12 @@ void State::Render() {
     }
 }
 
+
+
 void State::AddObject(int mouseX, int mouseY) {
     GameObject* gob = new GameObject();
-
-    Sprite* penguin = new Sprite("images/penguinface.png", *gob);
+    Sprite* penguin = new Sprite(*gob, "images/penguinface.png");
+    
     Sound* boom = new Sound(*gob, "sounds/boom.wav");
     Face* logk = new Face(*gob);
 
@@ -114,7 +121,7 @@ void State::Input() {
 					Face* face = (Face*)go->GetComponent("Face");
                     
 					if (face != nullptr ) {
-                        cout << "É inimigo.. Destroyyyy" << endl;
+                        //cout << "É inimigo.. Destroyyyy" << endl;
 						// Aplica dano
 						face->Damage(std::rand() % 10 + 10);
 						// Sai do loop (só queremos acertar um)
@@ -133,8 +140,8 @@ void State::Input() {
 			// Se não, crie um objeto
 			else {
 				Vec2 objPos = Vec2(200, 0).Rotate( -PI + PI*(rand() % 1001)/500.0 ).Soma(Vec2( mouseX, mouseY ));
-                cout << "objPos.x: " << objPos.x;
-                cout << " objPos.y: " << objPos.y << endl;
+                // cout << "objPos.x: " << objPos.x;
+                // cout << " objPos.y: " << objPos.y << endl;
 				AddObject((int)objPos.x, (int)objPos.y);
                 //AddObject(300, 300);
 			}

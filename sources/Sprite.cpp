@@ -2,36 +2,44 @@
 
 #include "../headers/Game.h"
 
+#include "../headers/Resources.h"
+
+//Resources* recurso = new Resources();
+
 Sprite::Sprite(GameObject& associated) : Component(associated) {
     texture = nullptr;
 }
 
-Sprite::Sprite(string file, GameObject& associated) : Component(associated) {
-    texture = nullptr;
+Sprite::Sprite(GameObject& associated, string file) : Sprite(associated) {
     Open(file);
 }
 
 Sprite::~Sprite() {
-    SDL_DestroyTexture(texture);
+
 }
 
 
 void Sprite::Open(string file) {
-    if(!IsOpen()){
+    if(!Resources::FindImage(file)){
         texture = IMG_LoadTexture(Game::GetInstance().GetRenderer(), file.c_str());
+        
         if (!texture) {
             SDL_Log("Impossível carregar imagem: %s", SDL_GetError());
         } else {
             cout << "Sprite carregado com sucesso!!" << endl;
-            SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
-            SetClip(0, 0, width, height);
+            Resources::InsertImage(file, texture);
         }
     } else {
         cout << "Sprite já foi carregado..." << endl;
-        SDL_DestroyTexture(texture);
-        Open(file);
+        cout << "Buscando na tabela..." << endl;
+        texture = Resources::GetImage(file);
+        //Open(file);
     }
-    
+
+    if(texture) {
+        SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
+        SetClip(0, 0, width, height);
+    }
 }
 
 

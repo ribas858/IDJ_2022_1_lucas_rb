@@ -13,6 +13,9 @@ class Game {
         static Game& GetInstance();
         class State& GetState();
         SDL_Renderer* GetRenderer();
+
+        ////////////////////////////
+        float GetDeltaTime();
     
     private:
         void Init_Sdl();
@@ -26,6 +29,11 @@ class Game {
         SDL_Window* window;
         SDL_Renderer* renderer;
         class State* state;
+
+        /////////////////////////////
+        void CalculateDeltaTime();
+        int frameStart;
+        float dt;
 
         Game (string title, int width, int height) {
             if (instance) {

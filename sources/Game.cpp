@@ -4,6 +4,8 @@
 #include "../headers/TileSet.h"
 #include "../headers/Resources.h"
 
+#include "../headers/InputManager.h"
+
 void Game::Init_Sdl() {
     if (SDL_Init(SDL_INIT_VIDEO || SDL_INIT_AUDIO || SDL_INIT_TIMER) != 0) {
         SDL_Log("Impossível inicializar a SDL: %s", SDL_GetError());
@@ -98,7 +100,7 @@ void Game::Run(string title, int width, int height) {
     // TileSet* t = new TileSet(40, 40, "images/tileset.png");
     // t->RenderTile(20, 800, 430);
 
-    while (!state->QuitRequested()) {
+    while (!InputManager::GetInstance().QuitRequested()) {
         state->Update(0);
         state->Render();
         SDL_RenderPresent(renderer);

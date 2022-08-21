@@ -20,23 +20,34 @@ class InputManager {
 
         bool QuitRequested();
 
-        InputManager& GetInstance();
+        static InputManager& GetInstance();
 
     private:
-        ~InputManager();
+        InputManager() {
+            cout << "kk eae man" << endl;
+            mouseState[6] = {};
+            mouseUpdate[6] = {};
+            quitRequested = false;
+            updateCounter = 0;
+            mouseX = 0;
+            mouseY = 0;
+        }
+        
+        ~InputManager() {
+            cout << "kk destroy" << endl;
+        }
 
         bool mouseState[6];
         int mouseUpdate[6];
 
-        // keyState;
-        // keyUpdate;
+        unordered_map<int, bool> keyState;
+        unordered_map<int, int> keyUpdate;
 
         bool quitRequested;
         int updateCounter;
         int mouseX;
         int mouseY;
 
-        InputManager();
         
 };
 

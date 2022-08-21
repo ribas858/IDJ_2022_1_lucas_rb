@@ -7,6 +7,7 @@
 #include "../headers/Sound.h"
 #include "../headers/TileMap.h"
 
+#include "../headers/InputManager.h"
 
 
 State::State() {
@@ -43,10 +44,11 @@ bool State::QuitRequested() {
 void State::LoadAssets() {}
 
 void State::Update(float dt) {
-    // if(SDL_QuitRequested()) {
+    // if(InputManager::GetInstance().QuitRequested()) {
     //     quitRequested = true;
     // }
-    Input();
+    //Input();
+    InputManager::GetInstance().Update();
 
     for(int i=0; i<objectArray.size(); i++) {
         objectArray[i]->Update(0);

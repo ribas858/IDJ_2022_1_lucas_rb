@@ -3,17 +3,17 @@
 
 #include "../headers/Resources.h"
 
-Music::Music(GameObject& associated) : Component(associated) {
+Music::Music() {
     cout << "\nEntrou em MUSIC" << endl;
     music = nullptr;
 }
 
-Music::~Music() {
-    
+Music::Music(std::string file) : Music() {
+    Open(file);
 }
 
-Music::Music(GameObject& associated, string file) : Music(associated) {
-    Open(file);
+Music::~Music() {
+    Stop();
 }
 
 void Music::Play(int times) {
@@ -49,7 +49,3 @@ bool Music::IsOpen() {
         return false;
     }
 }
-
-void Music::Update(float dt) {}
-void Music::Render() {}
-bool Music::Is(string type) { return false; }

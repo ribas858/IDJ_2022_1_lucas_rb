@@ -22,32 +22,52 @@ class InputManager {
 
         static InputManager& GetInstance();
 
+        bool FindKey(int key);
+
+        const int& GetUpdateCounter() const {
+            return updateCounter;
+        }
+
+        int& SetUpdateCounter() {
+            return updateCounter;
+        }
+
+        const string& GetLastAdressFace() const {
+            return lastAdressFace;
+        }
+
+        string& SetLastAdressFace() {
+            return lastAdressFace;
+        }
+
+        const int& GetLastFrame() const {
+            return lastFrame;
+        }
+
+        int& SetLastFrame() {
+            return lastFrame;
+        }
+
+
     private:
-        InputManager() {
-            cout << "kk eae man" << endl;
-            mouseState[6] = {};
-            mouseUpdate[6] = {};
-            quitRequested = false;
-            updateCounter = 0;
-            mouseX = 0;
-            mouseY = 0;
-        }
+        InputManager() = default;
+        ~InputManager() = default;
+        InputManager(const InputManager&)= delete;
+        InputManager& operator=(const InputManager&)= delete;
+
+        bool mouseState[6] = { false };
+        int mouseUpdate[6] = { 0 };
         
-        ~InputManager() {
-            cout << "kk destroy" << endl;
-        }
-
-        bool mouseState[6];
-        int mouseUpdate[6];
-
         unordered_map<int, bool> keyState;
         unordered_map<int, int> keyUpdate;
 
-        bool quitRequested;
-        int updateCounter;
-        int mouseX;
-        int mouseY;
+        bool quitRequested = false;
+        int updateCounter = 0;
+        int mouseX = 0;
+        int mouseY = 0;
 
+        string lastAdressFace = "";
+        int lastFrame = 0;
         
 };
 

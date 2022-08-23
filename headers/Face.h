@@ -12,6 +12,8 @@ class Face : public Component {
         void Render() override;
         bool Is(string type) override;
 
+        void Update(vector<unique_ptr<GameObject>>& objectArray);
+
     private:
         int hitpoints;
 };

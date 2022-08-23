@@ -19,7 +19,7 @@ class State {
     
     private:
         class Sprite* bg;
-        Music* music;
+        Music music;
         bool quitRequested;
         
         vector<unique_ptr<GameObject>> objectArray;

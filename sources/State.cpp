@@ -10,15 +10,11 @@
 #include "../headers/InputManager.h"
 
 
-State::State() {
+State::State() : music("resources/music/stageState.ogg"){
     quitRequested = false;
     cout << "State criado!!" << endl;
 
-    GameObject* musica = new GameObject();
-    music = new Music(*musica, "resources/music/stageState.ogg");
-    music->Play();
-
-    // music = new Music(*musica, "music/stageState.ogg");
+    music.Play();
     
 
     GameObject* background = new GameObject();
@@ -31,6 +27,7 @@ State::State() {
     TileMap* tmap = new TileMap(*map_obj, "resources/maps/tileMap.txt", tset);
     map_obj->AddComponent(tmap);
     objectArray.emplace_back(map_obj);
+
 }
 
 State::~State() {
@@ -44,15 +41,33 @@ bool State::QuitRequested() {
 void State::LoadAssets() {}
 
 void State::Update(float dt) {
-    // if(InputManager::GetInstance().QuitRequested()) {
-    //     quitRequested = true;
-    // }
-    //Input();
-    InputManager::GetInstance().Update();
-
-    for(int i=0; i<objectArray.size(); i++) {
-        objectArray[i]->Update(0);
+    if(InputManager::GetInstance().QuitRequested() || InputManager::GetInstance().KeyPress(SDLK_ESCAPE)) {
+        music.~Music();
+        quitRequested = true;
     }
+
+    if (InputManager::GetInstance().KeyPress(SDLK_SPACE)) {
+        float PI = 3.14159;
+        Vec2 objPos = Vec2(200, 0).Rotate( -PI + PI*(rand() % 1001)/500.0 ).Soma(Vec2
+            ( InputManager::GetInstance().GetMouseX(), InputManager::GetInstance().GetMouseY() ));
+
+        AddObject((int)objPos.x, (int)objPos.y);
+    }
+    
+    //InputManager::GetInstance().MousePress(SDL_BUTTON_LEFT);
+    // cout << objectArray.size() << endl;
+    
+    for(int i=0; i<objectArray.size(); i++) {
+        if (objectArray[i]->GetComponent("Face")) {
+            Face* face = (Face*) objectArray[i]->GetComponent("Face");
+            face->Update(objectArray);
+        } else {
+            if(!objectArray[i]->GetComponent("Face")) {
+                objectArray[i]->Update(0);
+            }
+        }
+    }
+    
     for(int i=0; i<objectArray.size(); i++) {
         if(objectArray[i]->IsDead()) {
             objectArray.erase(objectArray.begin() + i);
@@ -103,6 +118,7 @@ void State::Input() {
 
 		// Se o evento for quit, setar a flag para terminação
 		if(event.type == SDL_QUIT) {
+            music.~Music();
 			quitRequested = true;
 		}
 		
@@ -137,6 +153,7 @@ void State::Input() {
 		if( event.type == SDL_KEYDOWN ) {
 			// Se a tecla for ESC, setar a flag de quit
 			if( event.key.keysym.sym == SDLK_ESCAPE ) {
+                music.~Music();
 				quitRequested = true;
 			}
 			// Se não, crie um objeto

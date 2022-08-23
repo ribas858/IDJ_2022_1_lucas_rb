@@ -100,11 +100,14 @@ void Game::Run(string title, int width, int height) {
     // TileSet* t = new TileSet(40, 40, "images/tileset.png");
     // t->RenderTile(20, 800, 430);
 
-    while (!InputManager::GetInstance().QuitRequested()) {
+    while (!state->QuitRequested()) {
+        InputManager::GetInstance().Update();
         state->Update(0);
         state->Render();
         SDL_RenderPresent(renderer);
         SDL_Delay(33);
+
+        InputManager::GetInstance().SetUpdateCounter()++;        
     }
 
     Resources::ClearImages();

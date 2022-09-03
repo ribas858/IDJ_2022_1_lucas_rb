@@ -5,6 +5,7 @@
 #include "../headers/Resources.h"
 
 #include "../headers/InputManager.h"
+#include "../headers/Camera.h"
 
 void Game::Init_Sdl() {
     if (SDL_Init(SDL_INIT_VIDEO || SDL_INIT_AUDIO || SDL_INIT_TIMER) != 0) {
@@ -90,24 +91,35 @@ State& Game::GetState() {
     return *state;
 }
 
+float Game::GetDeltaTime() {
+    return dt / 1000;
+}
+
 void Game::Run(string title, int width, int height) {
     Init_Sdl();
     Init_Sdl_Image();
     Init_Sdl_Audio();
     Cria_Window(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, 0);
     state = new State();
+    Camera::tela.x = width;
+    Camera::tela.y = height;
 
     // TileSet* t = new TileSet(40, 40, "images/tileset.png");
     // t->RenderTile(20, 800, 430);
 
     while (!state->QuitRequested()) {
+        CalculateDeltaTime();
         InputManager::GetInstance().Update();
-        state->Update(0);
+        state->Update(GetDeltaTime());
         state->Render();
         SDL_RenderPresent(renderer);
         SDL_Delay(33);
 
-        InputManager::GetInstance().SetUpdateCounter()++;        
+        InputManager::GetInstance().SetUpdateCounter()++;
+
+        if (InputManager::GetInstance().IsKeyDown(SDLK_d)) {
+            cout << "dt: " << GetDeltaTime() << " segs" << endl;
+        }      
     }
 
     Resources::ClearImages();

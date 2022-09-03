@@ -1,10 +1,12 @@
 #include "../headers/TileMap.h"
+#include "../headers/Camera.h"
 
 TileMap::TileMap(GameObject& associated, string file, TileSet* tileSet) : Component(associated) {
     Load(file);
-    TileMap::tileSet = tileSet;
-    associated.box.x = 200;
-    associated.box.y = 200;
+    SetTileSet(tileSet);
+    // cout << "wid: " << tileSet->GetTileWidth() << endl;
+    associated.box.w = (mapWidth - 1) * tileSet->GetTileWidth();
+    associated.box.h = (mapHeight - 1) * tileSet->GetTileHeight();
 }
 
 void TileMap::Load(string file) {
@@ -71,25 +73,40 @@ int& TileMap::At(int x, int y, int z) {
 }
 
 void TileMap::Render() {
+    // cout << "DEEP: " << GetDepth() << endl;
     for(int deep = 0; deep < GetDepth(); deep++) {
-        RenderLayer(deep);
+        RenderLayer(deep, Camera::pos.x, Camera::pos.y);
     }
     
 }
 
-void TileMap::RenderLayer(int layer, int cameraX, int cameraY) {
+void TileMap::RenderLayer(int layer, float cameraX, float cameraY) {
+    int area = GetWidth() * GetHeight();
+    int num_tiles = area;
 
-    int area = (GetWidth() * GetHeight());
-    int index = area * layer;
-    int stop = index + area;
+    // cout << "area: " << area << endl; 
+    int index = (layer * area);
+    // cout << "index: " << index <<  " num_tiles: " << num_tiles << endl;
+    int stop = index + num_tiles;
+    // cout << "stop: " << stop << endl;
     while ( index < stop ) {
         for(int lin = 0; lin < GetHeight(); lin++) {
+            
             for(int col = 0; col < GetWidth(); col++) {
-                tileSet->RenderTile(tileMatrix[index], col * tileSet->GetTileWidth(), lin * tileSet->GetTileWidth());
+                // cout << "lin: " << lin << " col: " << col << " index loop: " << index << " tile matrix 0: " << tileMatrix[index] << endl;
+
+                //cout << "camera x: " << cameraX << " | camera y: " << cameraY << endl;
+                
+                tileSet->RenderTile(tileMatrix[index], (cameraX + col) * tileSet->GetTileWidth(), (cameraY + lin) * tileSet->GetTileWidth());
+                
                 index++;
+                
+                
             }
         }
     }
+    associated.box.x = (cameraX) * tileSet->GetTileWidth();
+    associated.box.y = (cameraY) * tileSet->GetTileWidth();
 }
 
 int TileMap::GetWidth() {

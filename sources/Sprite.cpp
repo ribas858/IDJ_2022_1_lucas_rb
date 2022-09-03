@@ -3,7 +3,8 @@
 #include "../headers/Game.h"
 
 #include "../headers/Resources.h"
-
+#include "../headers/InputManager.h"
+#include "../headers/Camera.h"
 //Resources* recurso = new Resources();
 
 Sprite::Sprite(GameObject& associated) : Component(associated) {
@@ -55,12 +56,32 @@ void Sprite::SetClip(int x, int y, int w, int h) {
 }
 
 void Sprite::Render() {
+    if (associated.GetComponent("Face")) {
+        // if (InputManager::GetInstance().IsKeyDown(LEFT_ARROW_KEY)) {
+        if (Camera::flag.x == 1) {
+            associated.box.x += Camera::speed.x * Camera::tileSetTam.x;
+        }
+        if (Camera::flag.x == -1) {
+            associated.box.x -= Camera::speed.x * Camera::tileSetTam.x;
+        }
+        if (Camera::flag.y == 1) {
+            associated.box.y += Camera::speed.y * Camera::tileSetTam.y;
+        }
+        if (Camera::flag.y == -1) {
+            associated.box.y -= Camera::speed.y * Camera::tileSetTam.y;
+        }
+    }
+    if (associated.GetComponent("Face") && InputManager::GetInstance().MousePress(RIGHT_MOUSE_BUTTON) ) {
+        cout << "associated.box.x: " << associated.box.x << " associated.box.y: " << associated.box.y << endl;
+    }
+   
     SDL_Rect dstrect;
     dstrect.w = clipRect.w;
     dstrect.h = clipRect.h;
     dstrect.x = associated.box.x;
     dstrect.y = associated.box.y;
-    //cout << "Render Sprite..." << endl;
+    // cout << "Render Sprite..." << endl;
+    
     
     SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstrect);
 }

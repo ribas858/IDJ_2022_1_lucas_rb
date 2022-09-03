@@ -31,8 +31,15 @@ class Game {
         class State* state;
 
         /////////////////////////////
-        void CalculateDeltaTime();
-        int frameStart;
+        void CalculateDeltaTime() {
+            temp_atual = SDL_GetTicks();
+            dt = temp_atual - frameStart;
+            frameStart = temp_atual;
+        }
+
+
+        float frameStart;
+        float temp_atual;
         float dt;
 
         Game (string title, int width, int height) {
@@ -46,6 +53,9 @@ class Game {
             window = nullptr;
             renderer = nullptr;
             state = nullptr;
+            frameStart = 0;
+            temp_atual = 0;
+            dt = 0;
             Run(title, width, height);
         }
 };

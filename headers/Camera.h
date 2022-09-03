@@ -7,15 +7,21 @@
 class Camera {
 
     public:
-        void Follow(GameObject* newFocus);
-        void Unfollow();
-        void Update(float dt);
+        static void Follow(GameObject* newFocus);
+        static void Unfollow();
+        static void Update(float dt);
 
-        Vec2 pos;
-        Vec2 speed;
+        static Vec2 pos;
+        static Vec2 speed;
+
+        static Vec2 tileSetTam;
+
+        static Vec2 flag;
+        static Vec2 mouseAcc;
+        static Vec2 tela;
 
     private:
-        GameObject* focus;
+        static GameObject* focus;
 
 };
 

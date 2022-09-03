@@ -8,13 +8,18 @@
 #include "../headers/TileMap.h"
 
 #include "../headers/InputManager.h"
+#include "../headers/Camera.h"
+
 
 
 State::State() : music("resources/music/stageState.ogg"){
+    Vec2 tileSetTam(64,64);
+    Camera::tileSetTam = tileSetTam;
+
     quitRequested = false;
     cout << "State criado!!" << endl;
 
-    music.Play();
+    // music.Play();
     
 
     GameObject* background = new GameObject();
@@ -23,7 +28,11 @@ State::State() : music("resources/music/stageState.ogg"){
     objectArray.emplace_back(background);
 
     GameObject* map_obj = new GameObject();
-    TileSet* tset = new TileSet(64, 64, "resources/images/tileset.png");
+    map_obj->box.x = 0;
+    map_obj->box.y = 0;
+    map_obj->box.w = 0;
+    map_obj->box.h = 0; 
+    TileSet* tset = new TileSet(tileSetTam.x, tileSetTam.y, "resources/images/tileset.png");
     TileMap* tmap = new TileMap(*map_obj, "resources/maps/tileMap.txt", tset);
     map_obj->AddComponent(tmap);
     objectArray.emplace_back(map_obj);
@@ -41,21 +50,27 @@ bool State::QuitRequested() {
 void State::LoadAssets() {}
 
 void State::Update(float dt) {
-    if(InputManager::GetInstance().QuitRequested() || InputManager::GetInstance().KeyPress(SDLK_ESCAPE)) {
-        music.~Music();
+    if(InputManager::GetInstance().QuitRequested() || InputManager::GetInstance().KeyPress(ESCAPE_KEY)) {
+        // music.~Music(); // Descomentar
         quitRequested = true;
     }
 
     if (InputManager::GetInstance().KeyPress(SDLK_SPACE)) {
         float PI = 3.14159;
         Vec2 objPos = Vec2(200, 0).Rotate( -PI + PI*(rand() % 1001)/500.0 ).Soma(Vec2
-            ( InputManager::GetInstance().GetMouseX(), InputManager::GetInstance().GetMouseY() ));
+            ( InputManager::GetInstance().GetMouseX() , InputManager::GetInstance().GetMouseY() ));
 
+        // cout << "objPos.x: " << objPos.x << " objPos.y: " << objPos.y << endl;
         AddObject((int)objPos.x, (int)objPos.y);
     }
     
-    //InputManager::GetInstance().MousePress(SDL_BUTTON_LEFT);
+    // InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON);
+    // InputManager::GetInstance().MouseRelease(LEFT_MOUSE_BUTTON);
     // cout << objectArray.size() << endl;
+
+    
+    // InputManager::GetInstance().IsKeyDown(SDLK_c);
+    // InputManager::GetInstance().IsMouseDown(LEFT_MOUSE_BUTTON);
     
     for(int i=0; i<objectArray.size(); i++) {
         if (objectArray[i]->GetComponent("Face")) {
@@ -63,7 +78,7 @@ void State::Update(float dt) {
             face->Update(objectArray);
         } else {
             if(!objectArray[i]->GetComponent("Face")) {
-                objectArray[i]->Update(0);
+                objectArray[i]->Update(dt);
             }
         }
     }
@@ -74,6 +89,8 @@ void State::Update(float dt) {
             cout << "limpa no objectArray" << endl << endl;
         }
     }
+
+    Camera::Update(dt);
 }
 
 void State::Render() {
@@ -90,6 +107,22 @@ void State::AddObject(int mouseX, int mouseY) {
     
     Sound* boom = new Sound(*gob, "resources/sounds/boom.wav");
     Face* logk = new Face(*gob);
+
+     if (mouseX < 0 || mouseX + gob->box.w > Camera::tela.x || mouseY < 0 || mouseY + gob->box.h > Camera::tela.y) {
+        if (mouseX < 0) {
+            mouseX = 0; 
+        }
+        if (mouseX + gob->box.w > Camera::tela.x) {
+            mouseX = Camera::tela.x - gob->box.w;
+        }
+        if (mouseY < 0) {
+            mouseY = 0;
+        }
+        if (mouseY + gob->box.h > Camera::tela.y) {
+            mouseY = Camera::tela.y - gob->box.h;
+        }
+        // cout << "Saiu fora" << " objPos.x: " << mouseX << " objPos.y: " << mouseY << endl << endl;
+    }
 
     gob->box.x = mouseX;
     gob->box.y = mouseY;

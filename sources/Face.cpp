@@ -2,6 +2,7 @@
 #include "../headers/Sound.h"
 #include "../headers/Game.h"
 #include "../headers/InputManager.h"
+#include "../headers/Camera.h"
 
 Face::Face(GameObject& associated) : Component(associated) {
     hitpoints = 30;
@@ -14,7 +15,7 @@ void Face::Damage (int damage){
         Component* cp = associated.GetComponent("Sound"); 
         if (cp) {
             Sound* som = (Sound*)cp;
-            som->Play();
+            // som->Play();
             //cout << "BOOMMMMM..." << endl;
         }
         
@@ -29,20 +30,36 @@ void Face::Update(float dt) {
 }
 
 void Face::Update(vector<unique_ptr<GameObject>>& objectArray) {
-    if(InputManager::GetInstance().MousePress(SDL_BUTTON_LEFT)) {
+    
+    if(InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON)) {
+        cout << "face attack" << endl;
         Face* face = nullptr;
         for(int i = objectArray.size() - 1; i >= 0; --i) {
-            if(objectArray[i]->box.Contem( (float)InputManager::GetInstance().GetMouseX(), (float)InputManager::GetInstance().GetMouseY() )) {
+
+            float mouseX = (float)InputManager::GetInstance().GetMouseX();
+            float mouseY = (float)InputManager::GetInstance().GetMouseY();
+            cout << "FACE mouseX: " << mouseX << " FACE mouseY: " << mouseY << endl;
+
+            if(objectArray[i]->box.Contem( mouseX, mouseY )) {
                 face = (Face*) objectArray[i]->GetComponent("Face");
                 if (face != nullptr) {
+                    cout << "face attack invest" << endl;
                     break;
                 }
             }
         }
         ostringstream endereco_face; 
         endereco_face << face;
-        // cout << "Update counter: " << InputManager::GetInstance().GetUpdateCounter() << " last frame: " << InputManager::GetInstance().GetLastFrame() << endl;
-        if (face != nullptr && (InputManager::GetInstance().GetLastAdressFace() == endereco_face.str() &&
+        cout << "set lastAdr: " << InputManager::GetInstance().GetLastAdressFace() << endl;
+        if (InputManager::GetInstance().GetLastAdressFace().empty() && face != nullptr) {
+            cout << "atribuiu" << endl;
+            InputManager::GetInstance().SetLastAdressFace() = endereco_face.str();
+            
+        }
+        
+        cout << "face: " << face << " lastAdr: " << InputManager::GetInstance().GetLastAdressFace() << " adr face: " << endereco_face.str() << endl;
+        cout << "Update counter: " << InputManager::GetInstance().GetUpdateCounter() << " last frame: " << InputManager::GetInstance().GetLastFrame() << endl << endl;
+        if (face != nullptr && (
                 InputManager::GetInstance().GetUpdateCounter() != InputManager::GetInstance().GetLastFrame()) ) {
             
             int aux = rand() % 10 + 10;
@@ -51,14 +68,18 @@ void Face::Update(vector<unique_ptr<GameObject>>& objectArray) {
             
             
         }
-        InputManager::GetInstance().SetLastAdressFace() = endereco_face.str();
+        if (face != nullptr) {
+            InputManager::GetInstance().SetLastAdressFace() = endereco_face.str();
+        }
         InputManager::GetInstance().SetLastFrame() = InputManager::GetInstance().GetUpdateCounter();
         //cout << "obj: " << endereco_face.str() << endl;
         // cout << endl;
     }
 }
 
-void Face::Render() {}
+void Face::Render() {
+    // cout << "render face" << endl;
+}
 
 bool Face::Is(string type) {
     string face = "Face";

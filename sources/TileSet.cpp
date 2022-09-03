@@ -6,7 +6,8 @@
 TileSet::TileSet(int tileWidth, int tileHeight, string file) : tileWidth(tileWidth), tileHeight(tileHeight) {
     GameObject* sp_tile = new GameObject();
     tileSet = new Sprite(*sp_tile, file);
-    
+
+    // cout << "wid s: " << GetTileWidth() << endl;
     if (tileSet){
         // c = w / tw
         // l = h / th
@@ -22,7 +23,7 @@ TileSet::~TileSet() {
 void TileSet::RenderTile(unsigned index, float x, float y) {
     int la, ca, xct, yct;
     int num_tiles = rows * columns;
-    // cout << "num_tile:" << num_tiles << " | linhas:" << rows << " | columns:" << columns << endl;
+    // cout << "unsigned index: " << index << " num_tile:" << num_tiles << " | linhas:" << rows << " | columns:" << columns << endl;
     if (index >= 0 && index < num_tiles) {
         // LA = I / C
         // CA = I - (LA * C)
@@ -33,9 +34,10 @@ void TileSet::RenderTile(unsigned index, float x, float y) {
         xct = tileWidth * ca;
         yct = tileHeight * la;
 
-        //cout << "la: " << la << " ca: " << ca << " xct:" << xct << " yct:" << yct << endl;
+        // cout << "la: " << la << " ca: " << ca << " xct:" << xct << " yct:" << yct << endl;
         tileSet->SetClip(xct, yct, tileWidth, tileHeight);
        
+        // cout << "x: " << x << " y: " << y << endl << endl;
         tileSet->Render(x, y);
 
     }

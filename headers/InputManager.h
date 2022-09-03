@@ -3,6 +3,14 @@
 
 #include "../headers/base_includes.h"
 
+#define LEFT_ARROW_KEY SDLK_LEFT
+#define RIGHT_ARROW_KEY SDLK_RIGHT
+#define UP_ARROW_KEY SDLK_UP
+#define DOWN_ARROW_KEY SDLK_DOWN
+#define ESCAPE_KEY SDLK_ESCAPE
+#define LEFT_MOUSE_BUTTON SDL_BUTTON_LEFT
+#define RIGHT_MOUSE_BUTTON SDL_BUTTON_RIGHT
+
 class InputManager {
     public:
         void Update();
@@ -23,31 +31,12 @@ class InputManager {
         static InputManager& GetInstance();
 
         bool FindKey(int key);
-
-        const int& GetUpdateCounter() const {
-            return updateCounter;
-        }
-
-        int& SetUpdateCounter() {
-            return updateCounter;
-        }
-
-        const string& GetLastAdressFace() const {
-            return lastAdressFace;
-        }
-
-        string& SetLastAdressFace() {
-            return lastAdressFace;
-        }
-
-        const int& GetLastFrame() const {
-            return lastFrame;
-        }
-
-        int& SetLastFrame() {
-            return lastFrame;
-        }
-
+        const int& GetUpdateCounter() const;
+        int& SetUpdateCounter();
+        const string& GetLastAdressFace() const;
+        string& SetLastAdressFace();
+        const int& GetLastFrame() const;
+        int& SetLastFrame();
 
     private:
         InputManager() = default;

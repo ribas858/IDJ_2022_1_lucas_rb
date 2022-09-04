@@ -19,6 +19,8 @@ class Camera {
         static Vec2 flag;
         static Vec2 mouseAcc;
         static Vec2 tela;
+        static Vec2 lastPos;
+        static float accSpeed;
 
     private:
         static GameObject* focus;

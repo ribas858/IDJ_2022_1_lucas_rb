@@ -56,7 +56,7 @@ void Sprite::SetClip(int x, int y, int w, int h) {
 }
 
 void Sprite::Render() {
-    if (associated.GetComponent("Face")) {
+    if (associated.GetComponent("NotCameraFollower")) {
         // if (InputManager::GetInstance().IsKeyDown(LEFT_ARROW_KEY)) {
         if (Camera::flag.x == 1) {
             associated.box.x += Camera::speed.x * Camera::tileSetTam.x;
@@ -71,9 +71,9 @@ void Sprite::Render() {
             associated.box.y -= Camera::speed.y * Camera::tileSetTam.y;
         }
     }
-    if (associated.GetComponent("Face") && InputManager::GetInstance().MousePress(RIGHT_MOUSE_BUTTON) ) {
-        cout << "associated.box.x: " << associated.box.x << " associated.box.y: " << associated.box.y << endl;
-    }
+    // if (associated.GetComponent("Face") && InputManager::GetInstance().MousePress(RIGHT_MOUSE_BUTTON) ) {
+    //     cout << "associated.box.x: " << associated.box.x << " associated.box.y: " << associated.box.y << endl;
+    // }
    
     SDL_Rect dstrect;
     dstrect.w = clipRect.w;

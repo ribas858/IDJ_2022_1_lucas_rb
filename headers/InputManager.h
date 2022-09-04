@@ -54,8 +54,6 @@ class InputManager {
         int updateCounter = 0;
         int mouseX = 0;
         int mouseY = 0;
-
-        string lastAdressFace = "";
         int lastFrame = 0;
         
 };

@@ -16,5 +16,6 @@ using namespace std;
 #include <string>
 
 #include <sstream>
+#include<tuple>
 
 #endif

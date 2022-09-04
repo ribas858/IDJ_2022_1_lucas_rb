@@ -30,7 +30,6 @@ bool GameObject::IsDead() {
 
 void GameObject::RequestDelete() {
     isDead = true;
-    cout << "is dead" << endl;
 }
 
 void GameObject::AddComponent(Component* cpt) {

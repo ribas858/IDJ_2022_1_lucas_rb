@@ -241,14 +241,6 @@ int& InputManager::SetUpdateCounter() {
     return updateCounter;
 }
 
-const string& InputManager::GetLastAdressFace() const {
-    return lastAdressFace;
-}
-
-string& InputManager::SetLastAdressFace() {
-    return lastAdressFace;
-}
-
 const int& InputManager::GetLastFrame() const {
     return lastFrame;
 }

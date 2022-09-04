@@ -22,7 +22,12 @@ void Face::Damage (int damage){
         SDL_RenderClear(Game::GetInstance().GetRenderer());
         associated.RequestDelete();
     }
-    cout << "Hitpoints apos dano: " << hitpoints << endl << endl;
+    if (hitpoints <= 0) {
+        cout << "Hitpoints Após o Dano: " << hitpoints << endl;
+        cout << "E Morreu.." << endl << endl;
+    } else {
+        cout << "Hitpoints Após o Dano: " << hitpoints << endl << endl;
+    }
 }
 
 void Face::Update(float dt) {
@@ -32,47 +37,32 @@ void Face::Update(float dt) {
 void Face::Update(vector<unique_ptr<GameObject>>& objectArray) {
     
     if(InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON)) {
-        cout << "face attack" << endl;
+        //cout << "face attack" << endl;
         Face* face = nullptr;
         for(int i = objectArray.size() - 1; i >= 0; --i) {
 
             float mouseX = (float)InputManager::GetInstance().GetMouseX();
             float mouseY = (float)InputManager::GetInstance().GetMouseY();
-            cout << "FACE mouseX: " << mouseX << " FACE mouseY: " << mouseY << endl;
+            // cout << "FACE mouseX: " << mouseX << " FACE mouseY: " << mouseY << endl;
 
             if(objectArray[i]->box.Contem( mouseX, mouseY )) {
                 face = (Face*) objectArray[i]->GetComponent("Face");
                 if (face != nullptr) {
-                    cout << "face attack invest" << endl;
+                   // cout << "face attack invest" << endl;
                     break;
                 }
             }
         }
-        ostringstream endereco_face; 
-        endereco_face << face;
-        cout << "set lastAdr: " << InputManager::GetInstance().GetLastAdressFace() << endl;
-        if (InputManager::GetInstance().GetLastAdressFace().empty() && face != nullptr) {
-            cout << "atribuiu" << endl;
-            InputManager::GetInstance().SetLastAdressFace() = endereco_face.str();
-            
-        }
         
-        cout << "face: " << face << " lastAdr: " << InputManager::GetInstance().GetLastAdressFace() << " adr face: " << endereco_face.str() << endl;
-        cout << "Update counter: " << InputManager::GetInstance().GetUpdateCounter() << " last frame: " << InputManager::GetInstance().GetLastFrame() << endl << endl;
-        if (face != nullptr && (
-                InputManager::GetInstance().GetUpdateCounter() != InputManager::GetInstance().GetLastFrame()) ) {
-            
+        
+        // cout << "face: " << face << endl;
+        // cout << "Update counter: " << InputManager::GetInstance().GetUpdateCounter() << " last frame: " << InputManager::GetInstance().GetLastFrame() << endl << endl;
+        if (face != nullptr && InputManager::GetInstance().GetUpdateCounter() != InputManager::GetInstance().GetLastFrame() ) {
             int aux = rand() % 10 + 10;
             // cout << "Dano: " << aux << " obj: " << face << endl;
             face->Damage(aux);
-            
-            
-        }
-        if (face != nullptr) {
-            InputManager::GetInstance().SetLastAdressFace() = endereco_face.str();
         }
         InputManager::GetInstance().SetLastFrame() = InputManager::GetInstance().GetUpdateCounter();
-        //cout << "obj: " << endereco_face.str() << endl;
         // cout << endl;
     }
 }

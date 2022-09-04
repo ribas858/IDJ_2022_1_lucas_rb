@@ -1,6 +1,7 @@
 #include "../headers/TileMap.h"
 #include "../headers/Camera.h"
 
+
 TileMap::TileMap(GameObject& associated, string file, TileSet* tileSet) : Component(associated) {
     Load(file);
     SetTileSet(tileSet);
@@ -52,6 +53,12 @@ void TileMap::Load(string file) {
         cout << "Erro ao abrir Arquivo texto TileMap" << endl;
     }
     arq_map.close();
+    
+    for (int i = 0; i < mapDepth; i++) {
+        vetorLayerSpeed.push_back(make_pair(i, 1));
+    }
+
+    SetLayerSpeed(1, 1.2);
 }
 
 void TileMap::SetTileSet(TileSet* tileSet) {
@@ -73,16 +80,19 @@ int& TileMap::At(int x, int y, int z) {
 }
 
 void TileMap::Render() {
-    // cout << "DEEP: " << GetDepth() << endl;
-    for(int deep = 0; deep < GetDepth(); deep++) {
-        RenderLayer(deep, Camera::pos.x, Camera::pos.y);
+    int layer;
+    float speed;
+    for(int i = 0; i < GetDepth(); i++) {
+        layer = vetorLayerSpeed[i].first;
+        speed = vetorLayerSpeed[i].second;
+        RenderLayer(layer, speed, Camera::pos.x, Camera::pos.y);
     }
-    
 }
 
-void TileMap::RenderLayer(int layer, float cameraX, float cameraY) {
+void TileMap::RenderLayer(int layer, float speed, float cameraX, float cameraY) {
     int area = GetWidth() * GetHeight();
     int num_tiles = area;
+    //cout << "layer: " << layer << " speed: " << speed << endl;
 
     // cout << "area: " << area << endl; 
     int index = (layer * area);
@@ -94,10 +104,7 @@ void TileMap::RenderLayer(int layer, float cameraX, float cameraY) {
             
             for(int col = 0; col < GetWidth(); col++) {
                 // cout << "lin: " << lin << " col: " << col << " index loop: " << index << " tile matrix 0: " << tileMatrix[index] << endl;
-
-                //cout << "camera x: " << cameraX << " | camera y: " << cameraY << endl;
-                
-                tileSet->RenderTile(tileMatrix[index], (cameraX + col) * tileSet->GetTileWidth(), (cameraY + lin) * tileSet->GetTileWidth());
+                tileSet->RenderTile(tileMatrix[index], ( (cameraX * speed) + col) * tileSet->GetTileWidth(), ( (cameraY * speed)+ lin) * tileSet->GetTileWidth());
                 
                 index++;
                 
@@ -121,9 +128,7 @@ int TileMap::GetDepth() {
     return mapDepth;
 }
 
-void TileMap::Update(float dt) {
-    
-}
+void TileMap::Update(float dt) { }
 
 bool TileMap::Is(string type) {
     string tileM = "TileMap";
@@ -132,4 +137,8 @@ bool TileMap::Is(string type) {
     } else {
         return false;
     }
+}
+
+void TileMap::SetLayerSpeed(int index, float speed) {
+    get<1>(vetorLayerSpeed[index]) = speed;
 }

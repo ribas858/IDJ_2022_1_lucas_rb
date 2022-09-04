@@ -9,6 +9,7 @@
 
 #include "../headers/InputManager.h"
 #include "../headers/Camera.h"
+#include "../headers/NotCameraFollower.h"
 
 
 
@@ -26,6 +27,7 @@ State::State() : music("resources/music/stageState.ogg"){
     bg = new Sprite(*background, "resources/images/ocean.jpg");
     background->AddComponent(bg);
     objectArray.emplace_back(background);
+    
 
     GameObject* map_obj = new GameObject();
     map_obj->box.x = 0;
@@ -76,17 +78,14 @@ void State::Update(float dt) {
         if (objectArray[i]->GetComponent("Face")) {
             Face* face = (Face*) objectArray[i]->GetComponent("Face");
             face->Update(objectArray);
-        } else {
-            if(!objectArray[i]->GetComponent("Face")) {
-                objectArray[i]->Update(dt);
-            }
         }
+        objectArray[i]->Update(dt);
     }
     
     for(int i=0; i<objectArray.size(); i++) {
         if(objectArray[i]->IsDead()) {
             objectArray.erase(objectArray.begin() + i);
-            cout << "limpa no objectArray" << endl << endl;
+            // cout << "limpa no objectArray" << endl << endl;
         }
     }
 
@@ -106,7 +105,8 @@ void State::AddObject(int mouseX, int mouseY) {
     Sprite* penguin = new Sprite(*gob, "resources/images/penguinface.png");
     
     Sound* boom = new Sound(*gob, "resources/sounds/boom.wav");
-    Face* logk = new Face(*gob);
+    Face* logik = new Face(*gob);
+    NotCameraFollower* notCam = new NotCameraFollower(*gob);
 
      if (mouseX < 0 || mouseX + gob->box.w > Camera::tela.x || mouseY < 0 || mouseY + gob->box.h > Camera::tela.y) {
         if (mouseX < 0) {
@@ -128,7 +128,8 @@ void State::AddObject(int mouseX, int mouseY) {
     gob->box.y = mouseY;
     gob->AddComponent(penguin);
     gob->AddComponent(boom);
-    gob->AddComponent(logk);
+    gob->AddComponent(logik);
+    gob->AddComponent(notCam);
 
 
     objectArray.emplace_back(gob);

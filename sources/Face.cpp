@@ -15,7 +15,7 @@ void Face::Damage (int damage){
         Component* cp = associated.GetComponent("Sound"); 
         if (cp) {
             Sound* som = (Sound*)cp;
-            // som->Play();
+            som->Play();
             //cout << "BOOMMMMM..." << endl;
         }
         

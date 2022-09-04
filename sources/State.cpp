@@ -20,12 +20,14 @@ State::State() : music("resources/music/stageState.ogg"){
     quitRequested = false;
     cout << "State criado!!" << endl;
 
-    // music.Play();
+    music.Play();
     
 
     GameObject* background = new GameObject();
     bg = new Sprite(*background, "resources/images/ocean.jpg");
     background->AddComponent(bg);
+    // NotCameraFollower* notCam = new NotCameraFollower(*background);
+    // background->AddComponent(notCam);
     objectArray.emplace_back(background);
     
 
@@ -53,7 +55,7 @@ void State::LoadAssets() {}
 
 void State::Update(float dt) {
     if(InputManager::GetInstance().QuitRequested() || InputManager::GetInstance().KeyPress(ESCAPE_KEY)) {
-        // music.~Music(); // Descomentar
+        music.~Music(); // Descomentar
         quitRequested = true;
     }
 

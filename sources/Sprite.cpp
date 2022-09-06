@@ -53,8 +53,8 @@ void Sprite::SetClip(int x, int y, int w, int h) {
     clipRect.h = h;
     clipRect.x = x;
     clipRect.y = y;
-    associated.box.x = x;
-    associated.box.y = y;
+    // associated.box.x = x;
+    // associated.box.y = y;
     associated.box.w = w;
     associated.box.h = h;
 }

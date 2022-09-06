@@ -32,9 +32,10 @@ class Alien : public Component {
         queue<Action> taskQueue;
         vector <unique_ptr<Component>> minionArray;
 
-        static Vec2 posD;
-        static Vec2 flagDs;
-        static int flagSpeed;
+        static Vec2 Desloc;
+        static Vec2 fimDesloc;
+        static int flag;
+        static Vec2 inicialPos;
 
 
 };

@@ -30,10 +30,6 @@ void State::LoadAssets() {
     
 
     GameObject* map_obj = new GameObject();
-    // map_obj->box.x = 0;
-    // map_obj->box.y = 0;
-    // map_obj->box.w = 0;
-    // map_obj->box.h = 0;
     InputManager::GetInstance().ZeroPosGameObject(map_obj);
     TileSet* tset = new TileSet(tileSetTam.x, tileSetTam.y, "resources/images/tileset.png");
     TileMap* tmap = new TileMap(*map_obj, "resources/maps/tileMap.txt", tset);
@@ -44,6 +40,8 @@ void State::LoadAssets() {
 
     GameObject* alien = new GameObject();
     InputManager::GetInstance().ZeroPosGameObject(alien);
+    alien->box.x = 439;
+    alien->box.y = 218.5;
     Alien* ali = new Alien(*alien, 1);
     alien->AddComponent(ali);
     shared_ptr<GameObject> aliShared(alien);

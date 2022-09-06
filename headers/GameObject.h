@@ -17,8 +17,11 @@ class GameObject {
         void RemoveComponent(Component* cpt);
         
         Component* GetComponent(string type);
-
         Rect box;
+
+        void Start();
+
+        bool started;
 
     private:
         vector <unique_ptr<Component>> components;

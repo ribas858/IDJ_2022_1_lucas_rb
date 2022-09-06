@@ -6,6 +6,7 @@
 class Vec2 {
 
     public:
+        Vec2();
         float x, y;
 
         Vec2(float xi, float yi) : x(xi), y(yi) {}

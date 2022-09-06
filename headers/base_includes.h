@@ -17,5 +17,6 @@ using namespace std;
 
 #include <sstream>
 #include<tuple>
+#include <queue>
 
 #endif

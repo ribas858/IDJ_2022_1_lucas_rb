@@ -1,8 +1,16 @@
 #include "../headers/GameObject.h"
 
+void GameObject::Start()  {
+    for (int i = 0; i < components.size(); i++) {
+        components[i]->Start();
+        // cout << "i: " << i << endl;
+    }
+    started = true;
+    cout << "start gameObject" << endl << endl;
+}
 
-GameObject::GameObject() {
-    isDead = false;
+GameObject::GameObject() : started(false), isDead(false) {
+
 }
 
 GameObject::~GameObject() {
@@ -33,6 +41,9 @@ void GameObject::RequestDelete() {
 }
 
 void GameObject::AddComponent(Component* cpt) {
+    if(started) {
+        cpt->Start();
+    }
     components.emplace_back(cpt);
 }
 

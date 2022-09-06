@@ -1,5 +1,5 @@
-all: 	main.o Game.o Component.o State.o Sprite.o Music.o GameObject.o Face.o Rect.o Vec2.o Sound.o TileSet.o TileMap.o Resources.o InputManager.o Camera.o NotCameraFollower.o
-	g++ -o main main.o Game.o Component.o State.o Sprite.o Music.o GameObject.o Face.o Rect.o Vec2.o Sound.o TileSet.o TileMap.o Resources.o InputManager.o Camera.o NotCameraFollower.o -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
+all: 	main.o Game.o Component.o State.o Sprite.o Music.o GameObject.o Rect.o Vec2.o Sound.o TileSet.o TileMap.o Resources.o InputManager.o Camera.o NotCameraFollower.o Alien.o
+	g++ -o main main.o Game.o Component.o State.o Sprite.o Music.o GameObject.o Rect.o Vec2.o Sound.o TileSet.o TileMap.o Resources.o InputManager.o Camera.o NotCameraFollower.o Alien.o -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
 	rm -rf *.o
 
 main.o: main.cpp 
@@ -23,8 +23,8 @@ Music.o: sources/Music.cpp
 GameObject.o: sources/GameObject.cpp
 	g++ -c sources/GameObject.cpp
 
-Face.o: sources/Face.cpp
-	g++ -c sources/Face.cpp
+# Face.o: sources/Face.cpp
+# 	g++ -c sources/Face.cpp
 
 Rect.o: sources/Rect.cpp
 	g++ -c sources/Rect.cpp
@@ -52,6 +52,9 @@ Camera.o: sources/Camera.cpp
 
 NotCameraFollower.o: sources/NotCameraFollower.cpp
 	g++ -c sources/NotCameraFollower.cpp
+
+Alien.o: sources/Alien.cpp
+	g++ -c sources/Alien.cpp
 
 run:
 	./main

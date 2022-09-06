@@ -21,3 +21,7 @@ bool NotCameraFollower::Is(string type) {
         return false;
     }
 }
+
+void NotCameraFollower::Start() {
+    cout << "start not camera" << endl;
+}

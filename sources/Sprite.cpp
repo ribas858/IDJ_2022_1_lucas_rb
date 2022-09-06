@@ -7,6 +7,10 @@
 #include "../headers/Camera.h"
 //Resources* recurso = new Resources();
 
+void Sprite::Start() {
+    cout << "start sprite" << endl;
+}
+
 Sprite::Sprite(GameObject& associated) : Component(associated) {
     texture = nullptr;
 }
@@ -71,10 +75,7 @@ void Sprite::Render() {
             associated.box.y -= Camera::speed.y * Camera::tileSetTam.y;
         }
     }
-    // if (associated.GetComponent("Face") && InputManager::GetInstance().MousePress(RIGHT_MOUSE_BUTTON) ) {
-    //     cout << "associated.box.x: " << associated.box.x << " associated.box.y: " << associated.box.y << endl;
-    // }
-   
+    
     SDL_Rect dstrect;
     dstrect.w = clipRect.w;
     dstrect.h = clipRect.h;

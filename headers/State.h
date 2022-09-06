@@ -13,16 +13,21 @@ class State {
         void LoadAssets();
         void Update(float dt);
         void Render();
+        // void AddObject(int mouseX, int mouseY);
 
-        void Input();
-        void AddObject(int mouseX, int mouseY);
+        void Start();
+        weak_ptr<GameObject> AddObject(GameObject* go);
+        weak_ptr<GameObject> GetObjectPtr(GameObject* go);
+
+
     
     private:
         class Sprite* bg;
         Music music;
         bool quitRequested;
         
-        vector<unique_ptr<GameObject>> objectArray;
+        bool started;
+        vector<shared_ptr<GameObject>> objectArray;
 };
 
 #endif

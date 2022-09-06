@@ -1,5 +1,9 @@
 #include "../headers/Vec2.h"
 
+Vec2::Vec2() {
+    
+}
+
 Vec2 Vec2::Rotate(float ang) {
     // x' = x * cos(ang) - y * sin(ang)
     // y' = y * cos(ang) + x * sin(ang)

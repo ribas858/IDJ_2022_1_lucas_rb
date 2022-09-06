@@ -107,6 +107,9 @@ void Game::Run(string title, int width, int height) {
     // TileSet* t = new TileSet(40, 40, "images/tileset.png");
     // t->RenderTile(20, 800, 430);
 
+
+    state->Start();
+
     while (!state->QuitRequested()) {
         CalculateDeltaTime();
         InputManager::GetInstance().Update();

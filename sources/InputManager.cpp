@@ -1,6 +1,7 @@
 #include "../headers/InputManager.h"
 #include "../headers/Camera.h"
 
+
 InputManager& InputManager::GetInstance() {
     static InputManager instanceMg;
     return instanceMg;
@@ -67,8 +68,8 @@ void InputManager::Update() {
                     mouseState[3] = true;
                     mouseUpdate[3] = updateCounter;
                     // cout << "mouse: " <<  "Direito - Frame: " << updateCounter << endl;
-                    cout << "Mouse X: " << mouseX;
-                    cout << " Mouse Y: " << mouseY << endl;
+                    // cout << "Mouse X: " << mouseX;
+                    // cout << " Mouse Y: " << mouseY << endl;
                 }
                 else if (inputEvent.button.button == SDL_BUTTON_X1) {
                     mouseState[4] = true;
@@ -247,4 +248,11 @@ const int& InputManager::GetLastFrame() const {
 
 int& InputManager::SetLastFrame() {
     return lastFrame;
+}
+
+void InputManager::ZeroPosGameObject(GameObject* associated) {
+    associated->box.w = 0;
+    associated->box.h = 0;
+    associated->box.x = 0;
+    associated->box.y = 0;
 }

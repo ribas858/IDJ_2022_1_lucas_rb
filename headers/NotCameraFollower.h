@@ -12,6 +12,8 @@ class NotCameraFollower : public Component {
         void Render() override;
         bool Is(string type) override;
 
+        void Start() override;
+
     private:
 };
 

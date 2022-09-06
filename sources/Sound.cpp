@@ -1,6 +1,10 @@
 #include "../headers/Sound.h"
 #include "../headers/Resources.h"
 
+void Sound::Start() {
+    cout << "start sound" << endl;
+}
+
 Sound::Sound(GameObject& associated) : Component(associated) {
     chunk = nullptr;
 }

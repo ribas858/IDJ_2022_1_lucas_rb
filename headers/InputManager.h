@@ -33,10 +33,10 @@ class InputManager {
         bool FindKey(int key);
         const int& GetUpdateCounter() const;
         int& SetUpdateCounter();
-        const string& GetLastAdressFace() const;
-        string& SetLastAdressFace();
+        
         const int& GetLastFrame() const;
         int& SetLastFrame();
+        void ZeroPosGameObject(class GameObject* associated);
 
     private:
         InputManager() = default;

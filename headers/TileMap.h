@@ -21,6 +21,7 @@ class TileMap : public Component {
         void Render() override;
         void Update(float dt) override;
         bool Is(string type) override;
+        void Start() override;
 
         void SetLayerSpeed(int index, float speed);
 

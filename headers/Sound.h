@@ -17,6 +17,7 @@ class Sound : public Component {
         void Update(float dt) override;
         void Render() override;
         bool Is(string type) override;
+        void Start() override;
 
     private:
         Mix_Chunk* chunk;

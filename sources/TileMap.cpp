@@ -1,6 +1,9 @@
 #include "../headers/TileMap.h"
 #include "../headers/Camera.h"
 
+void TileMap::Start() {
+    cout << "start tileMap" << endl;
+}
 
 TileMap::TileMap(GameObject& associated, string file, TileSet* tileSet) : Component(associated) {
     Load(file);

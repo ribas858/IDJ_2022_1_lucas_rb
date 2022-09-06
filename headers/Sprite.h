@@ -24,6 +24,8 @@ class Sprite : public Component {
 
         void Render(float x, float y);
 
+        void Start() override;
+
         SDL_Rect return_clipRect();
         SDL_Texture* return_texture();
 

@@ -5,6 +5,10 @@
 // Component::Component(GameObject& associated) {
 // }
 
+void Component::Start() {
+    
+}
+
 Component::~Component() {
     
 }

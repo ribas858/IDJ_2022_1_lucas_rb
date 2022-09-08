@@ -20,6 +20,7 @@ class Minion : public Component {
         Vec2 origin;
 
         static int flag;
+        static int flag2;
 
 };
 

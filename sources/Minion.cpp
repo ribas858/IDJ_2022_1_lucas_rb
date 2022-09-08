@@ -4,9 +4,10 @@
 
 const float PI = 3.14159;
 int Minion::flag = 0;
+int Minion::flag2 = 0;
  
 Minion::Minion(GameObject& associated, weak_ptr<GameObject> alienCenter, float arcOffsetDeg) : alienCenter(*alienCenter.lock()) , arc(arcOffsetDeg), Component(associated) {
-    Sprite* minionSprite = new Sprite(associated, "resources/images/minion.png");
+    Sprite* minionSprite = new Sprite(associated, "resources/images/minion_pt.png");
     associated.AddComponent(minionSprite);
     // origin.x = Minion::alienCenter.box.x - associated.box.w/2;
     // origin.y = Minion::alienCenter.box.y - associated.box.h/2;
@@ -28,7 +29,7 @@ void Minion::Update(float dt) {
     
     float xl =  (associated.box.x - origin.x) * cos(arc * PI/180 ) + (associated.box.y -origin.y) * sin(arc * PI/180);
     float yl =  ((-1) * (associated.box.x - origin.x) ) * sin(arc * PI/180) + (associated.box.y - origin.y) * cos(arc * PI/180);
-    cout << "xl: " << xl << " yl: " << yl << endl;
+    //cout << "xl: " << xl << " yl: " << yl << endl;
 
     if (xl == 0 && yl == 0) {
         cout << "foi" << endl;
@@ -37,8 +38,8 @@ void Minion::Update(float dt) {
         if (flag == 0) {
             cout << "flag" << endl;
             associated.box.x = 0;
-            origin.x = 300; 
-            origin.y = 300;
+            origin.x = 502 - 25; 
+            origin.y = 290 - 25;
             flag = 1;
         }
         associated.box.x = xl;
@@ -46,9 +47,11 @@ void Minion::Update(float dt) {
     }
     
     
+    // cout << "mini x: " << associated.box.x << " mini y: " << associated.box.y << endl << endl; 
     
+
     
-    //cout << "mini x: " << associated.box.x << " mini y: " << associated.box.y << endl;
+    // cout << "mini x: " << associated.box.x << " mini y: " << associated.box.y << endl;
     //cout << "alien x: " << Minion::alienCenter.box.x << " alien y: " << Minion::alienCenter.box.y << endl;
     //cout << "alienCenter x: " << Minion::alienCenter.box.x + (Minion::alienCenter.box.w / 2) << " alienCenter y: " << Minion::alienCenter.box.y + (Minion::alienCenter.box.h / 2) << endl;
 

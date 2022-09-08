@@ -11,6 +11,10 @@ int Alien::flag = 0;
 Alien::Alien(GameObject & associated, int nMinions) : Component(associated) {
     Sprite* alienSprite = new Sprite(associated, "resources/images/alien.png");
     associated.AddComponent(alienSprite);
+    associated.box.x = associated.box.x - (associated.box.w / 2);
+    associated.box.y =  associated.box.y - (associated.box.h / 2);
+
+    cout << "alien x: " << associated.box.x << " alien y: " << associated.box.y << endl;
     speed.x = 0;
     speed.y = 0;
 }

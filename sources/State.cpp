@@ -38,8 +38,8 @@ void State::LoadAssets() {
     objectArray.push_back(mapShared);
 
     GameObject* alien = new GameObject();
-    alien->box.x = 439;
-    alien->box.y = 218.5;
+    alien->box.x = 512;
+    alien->box.y = 300;
     Alien* ali = new Alien(*alien, 1);
     alien->AddComponent(ali);
     shared_ptr<GameObject> aliShared(alien);
@@ -54,10 +54,10 @@ void State::LoadAssets() {
     objectArray.push_back(miniShared);
 
     GameObject* ponto = new GameObject();
-    Sprite* pt = new Sprite(*ponto, "resources/images/minion.png");
+    Sprite* pt = new Sprite(*ponto, "resources/images/minion_pt.png");
     ponto->AddComponent(pt);
-    ponto->box.x = 300;
-    ponto->box.y = 300;
+    ponto->box.x = 502;
+    ponto->box.y = 290;
     shared_ptr<GameObject> ptShared(ponto);
     objectArray.push_back(ptShared);
 

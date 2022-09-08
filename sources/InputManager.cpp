@@ -249,10 +249,3 @@ const int& InputManager::GetLastFrame() const {
 int& InputManager::SetLastFrame() {
     return lastFrame;
 }
-
-void InputManager::ZeroPosGameObject(GameObject* associated) {
-    associated->box.w = 0;
-    associated->box.h = 0;
-    associated->box.x = 0;
-    associated->box.y = 0;
-}

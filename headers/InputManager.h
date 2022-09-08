@@ -36,7 +36,6 @@ class InputManager {
         
         const int& GetLastFrame() const;
         int& SetLastFrame();
-        void ZeroPosGameObject(class GameObject* associated);
 
     private:
         InputManager() = default;

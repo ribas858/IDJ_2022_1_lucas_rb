@@ -10,7 +10,10 @@ void GameObject::Start()  {
 }
 
 GameObject::GameObject() : started(false), isDead(false) {
-
+    box.w = 0;
+    box.h = 0;
+    box.x = 0;
+    box.y = 0;
 }
 
 GameObject::~GameObject() {

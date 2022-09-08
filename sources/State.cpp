@@ -10,6 +10,7 @@
 #include "../headers/Camera.h"
 #include "../headers/NotCameraFollower.h"
 #include "../headers/Alien.h"
+#include "../headers/Minion.h"
 
 
 
@@ -20,17 +21,15 @@ void State::LoadAssets() {
     music = Music("resources/music/stageState.ogg");
 
     GameObject* background = new GameObject();
-    InputManager::GetInstance().ZeroPosGameObject(background);
     bg = new Sprite(*background, "resources/images/ocean.jpg");
     background->AddComponent(bg);
-    // NotCameraFollower* notCam = new NotCameraFollower(*background);
-    // background->AddComponent(notCam);
+    NotCameraFollower* notCam = new NotCameraFollower(*background);
+    background->AddComponent(notCam);
     shared_ptr<GameObject> backShared(background);
     objectArray.push_back(backShared);
     
 
     GameObject* map_obj = new GameObject();
-    InputManager::GetInstance().ZeroPosGameObject(map_obj);
     TileSet* tset = new TileSet(tileSetTam.x, tileSetTam.y, "resources/images/tileset.png");
     TileMap* tmap = new TileMap(*map_obj, "resources/maps/tileMap.txt", tset);
     map_obj->AddComponent(tmap);
@@ -39,13 +38,28 @@ void State::LoadAssets() {
     objectArray.push_back(mapShared);
 
     GameObject* alien = new GameObject();
-    InputManager::GetInstance().ZeroPosGameObject(alien);
     alien->box.x = 439;
     alien->box.y = 218.5;
     Alien* ali = new Alien(*alien, 1);
     alien->AddComponent(ali);
     shared_ptr<GameObject> aliShared(alien);
+    weak_ptr<GameObject> aliWeak(aliShared);
+
+    GameObject* minion = new GameObject();
+    Minion* mini = new Minion(*minion, aliWeak);
+    minion->AddComponent(mini);
+    shared_ptr<GameObject> miniShared(minion);
+
     objectArray.push_back(aliShared);
+    objectArray.push_back(miniShared);
+
+    GameObject* ponto = new GameObject();
+    Sprite* pt = new Sprite(*ponto, "resources/images/minion.png");
+    ponto->AddComponent(pt);
+    ponto->box.x = 300;
+    ponto->box.y = 300;
+    shared_ptr<GameObject> ptShared(ponto);
+    objectArray.push_back(ptShared);
 
 }
 

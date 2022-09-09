@@ -37,6 +37,9 @@ class InputManager {
         const int& GetLastFrame() const;
         int& SetLastFrame();
 
+        const int& GetLoadMinions() const;
+        int& SetLoadMinions();
+
     private:
         InputManager() = default;
         ~InputManager() = default;
@@ -54,6 +57,8 @@ class InputManager {
         int mouseX = 0;
         int mouseY = 0;
         int lastFrame = 0;
+
+        int loadMinions = 0;
         
 };
 

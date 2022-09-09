@@ -29,8 +29,10 @@ class Alien : public Component {
         Vec2 speed;
         int hp;
 
+        int nMinions;
+
         queue<Action> taskQueue;
-        vector <unique_ptr<Component>> minionArray;
+        vector <weak_ptr<GameObject>> minionArray;
 
         static Vec2 Desloc;
         static Vec2 fimDesloc;

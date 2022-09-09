@@ -2,6 +2,7 @@
 #define GAME_H
 
 #include "../headers/GameObject.h"
+#include "../headers/State.h"
 
 class Game {
 
@@ -28,7 +29,7 @@ class Game {
         static Game * instance;
         SDL_Window* window;
         SDL_Renderer* renderer;
-        class State* state;
+        State* state;
 
         /////////////////////////////
         void CalculateDeltaTime() {

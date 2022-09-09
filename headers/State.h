@@ -19,6 +19,8 @@ class State {
         weak_ptr<GameObject> AddObject(GameObject* go);
         weak_ptr<GameObject> GetObjectPtr(GameObject* go);
 
+        
+        vector<shared_ptr<GameObject>>& GetObjArr();
 
     
     private:

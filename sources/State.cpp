@@ -25,41 +25,36 @@ void State::LoadAssets() {
     background->AddComponent(bg);
     NotCameraFollower* notCam = new NotCameraFollower(*background);
     background->AddComponent(notCam);
-    shared_ptr<GameObject> backShared(background);
-    objectArray.push_back(backShared);
-    
+    AddObject(background);
+
 
     GameObject* map_obj = new GameObject();
     TileSet* tset = new TileSet(tileSetTam.x, tileSetTam.y, "resources/images/tileset.png");
     TileMap* tmap = new TileMap(*map_obj, "resources/maps/tileMap.txt", tset);
     map_obj->AddComponent(tmap);
+    AddObject(map_obj);
     
-    shared_ptr<GameObject> mapShared(map_obj);
-    objectArray.push_back(mapShared);
 
     GameObject* alien = new GameObject();
     alien->box.x = 512;
     alien->box.y = 300;
-    Alien* ali = new Alien(*alien, 1);
+    Alien* ali = new Alien(*alien, 6);
     alien->AddComponent(ali);
-    shared_ptr<GameObject> aliShared(alien);
-    weak_ptr<GameObject> aliWeak(aliShared);
+    AddObject(alien);
 
-    GameObject* minion = new GameObject();
-    Minion* mini = new Minion(*minion, aliWeak);
-    minion->AddComponent(mini);
-    shared_ptr<GameObject> miniShared(minion);
+    // cout << "box.x: " << GetObjectPtr(alien).lock()->box.x << endl;
+    cout << "Galera adicionada..." << endl;
 
-    objectArray.push_back(aliShared);
-    objectArray.push_back(miniShared);
+    
 
-    GameObject* ponto = new GameObject();
-    Sprite* pt = new Sprite(*ponto, "resources/images/minion_pt.png");
-    ponto->AddComponent(pt);
-    ponto->box.x = 502;
-    ponto->box.y = 290;
-    shared_ptr<GameObject> ptShared(ponto);
-    objectArray.push_back(ptShared);
+    
+    // GameObject* ponto = new GameObject();
+    // Sprite* pt = new Sprite(*ponto, "resources/images/minion_pt.png");
+    // ponto->AddComponent(pt);
+    // ponto->box.x = 512 - 10;
+    // ponto->box.y = 300 - 10;
+    // shared_ptr<GameObject> ptShared(ponto);
+    // objectArray.push_back(ptShared);
 
 }
 
@@ -133,44 +128,14 @@ void State::Render() {
 
 
 weak_ptr<GameObject> State::AddObject(GameObject* go) {
-    int mouseX, mouseY;
-    GameObject* gob = new GameObject();
-    Sprite* penguin = new Sprite(*gob, "resources/images/penguinface.png");
-    
-    Sound* boom = new Sound(*gob, "resources/sounds/boom.wav");
-    // Face* logik = new Face(*gob);
-    NotCameraFollower* notCam = new NotCameraFollower(*gob);
+   
+    shared_ptr<GameObject> goShared(go);
 
-     if (mouseX < 0 || mouseX + gob->box.w > Camera::tela.x || mouseY < 0 || mouseY + gob->box.h > Camera::tela.y) {
-        if (mouseX < 0) {
-            mouseX = 0; 
-        }
-        if (mouseX + gob->box.w > Camera::tela.x) {
-            mouseX = Camera::tela.x - gob->box.w;
-        }
-        if (mouseY < 0) {
-            mouseY = 0;
-        }
-        if (mouseY + gob->box.h > Camera::tela.y) {
-            mouseY = Camera::tela.y - gob->box.h;
-        }
-        // cout << "Saiu fora" << " objPos.x: " << mouseX << " objPos.y: " << mouseY << endl << endl;
-    }
-
-    gob->box.x = mouseX;
-    gob->box.y = mouseY;
-    gob->AddComponent(penguin);
-    gob->AddComponent(boom);
-    // gob->AddComponent(logik);
-    gob->AddComponent(notCam);
-
-    shared_ptr<GameObject> gobShared(gob);
-
-    objectArray.push_back(gobShared);
+    objectArray.push_back(goShared);
 
     if (started) {
-        gobShared->Start();
-        weak_ptr<GameObject> gobWeak(gobShared);
+        goShared->Start();
+        weak_ptr<GameObject> gobWeak(goShared);
         return gobWeak;
     }
 
@@ -179,6 +144,7 @@ weak_ptr<GameObject> State::AddObject(GameObject* go) {
 }
 
 weak_ptr<GameObject> State::GetObjectPtr(GameObject* go) {
+    // cout << "get weak " << go->box.x << " " << objectArray.empty() << endl;
     for(int i=0; i<objectArray.size(); i++) {
         if (objectArray[i].get() == go) {
             weak_ptr<GameObject> weakPtrReturn(objectArray[i]);
@@ -187,4 +153,9 @@ weak_ptr<GameObject> State::GetObjectPtr(GameObject* go) {
     }
     weak_ptr<GameObject> weakPtrReturn;
     return weakPtrReturn;
+}
+
+
+vector<shared_ptr<GameObject>>& State::GetObjArr() {
+    return objectArray;
 }

@@ -249,3 +249,11 @@ const int& InputManager::GetLastFrame() const {
 int& InputManager::SetLastFrame() {
     return lastFrame;
 }
+
+const int& InputManager::GetLoadMinions() const {
+    return loadMinions;
+}
+
+int& InputManager::SetLoadMinions() {
+    return loadMinions;
+}

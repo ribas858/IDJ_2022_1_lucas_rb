@@ -2,21 +2,30 @@
 #include "../headers/Sprite.h"
 #include "../headers/InputManager.h"
 #include "../headers/Camera.h"
+#include "../headers/Minion.h"
+#include "../headers/Game.h"
 
 Vec2 Alien::inicialPos(0,0);
 Vec2 Alien::Desloc(0,0);
 Vec2 Alien::fimDesloc(0,0);
 int Alien::flag = 0;
 
-Alien::Alien(GameObject & associated, int nMinions) : Component(associated) {
+// State& state = Game::GetInstance().GetState();
+
+Alien::Alien(GameObject & associated, int nMinions) : Component(associated), nMinions(nMinions) {
+
     Sprite* alienSprite = new Sprite(associated, "resources/images/alien.png");
     associated.AddComponent(alienSprite);
     associated.box.x = associated.box.x - (associated.box.w / 2);
     associated.box.y =  associated.box.y - (associated.box.h / 2);
 
-    cout << "alien x: " << associated.box.x << " alien y: " << associated.box.y << endl;
+    
+
+    // cout << "alien x: " << associated.box.x << " alien y: " << associated.box.y << endl;
+    
     speed.x = 0;
     speed.y = 0;
+    
 }
 
 Alien::~Alien() {
@@ -28,6 +37,21 @@ Alien::~Alien() {
 
 void Alien::Start() {
     cout << "start alien" << endl;
+
+    for (int i = 1; i <= nMinions; i++) {
+        GameObject* minion = new GameObject();
+        if (i == 1) {
+            Minion* mini = new Minion(*minion, Game::GetInstance().GetState().GetObjectPtr(&associated), 7, true, i, nMinions);
+            minion->AddComponent(mini);
+        } else {
+            Minion* mini = new Minion(*minion, Game::GetInstance().GetState().GetObjectPtr(&associated), 7, false, i, nMinions);
+            minion->AddComponent(mini);
+        }
+        
+        minionArray.push_back(Game::GetInstance().GetState().AddObject(minion));
+        
+    }
+
 }
 
 void Alien::Update(float dt) {
@@ -36,12 +60,12 @@ void Alien::Update(float dt) {
         taskQueue.emplace(Action::ActionType::SHOOT, (float)InputManager::GetInstance().GetMouseX(), (float)InputManager::GetInstance().GetMouseY());
     }
     if (InputManager::GetInstance().MousePress(RIGHT_MOUSE_BUTTON)) {
-        cout << "MOVE:" << endl;
+        cout << "MOVE ===================================================" << endl;
         taskQueue.emplace(Action::ActionType::MOVE, (float)InputManager::GetInstance().GetMouseX(), (float)InputManager::GetInstance().GetMouseY());
     }
     // cout << "Tamanho fila de acoes: " << taskQueue.size() << endl;
     if (!taskQueue.empty()) {
-        if (taskQueue.front().type == Action::ActionType::MOVE) {
+        if (taskQueue.front().type == Action::ActionType::MOVE && InputManager::GetInstance().GetLoadMinions() == minionArray.size()) {
             // cout << "MOVE:" << endl;
             
             if (flag == 0) {
@@ -126,5 +150,10 @@ void Alien::Render() {
 }
 
 bool Alien::Is(string type) {
-    return false; // compile test
+    string alien = "Alien";
+    if (type == alien){
+        return true;
+    } else {
+        return false;
+    }
 }

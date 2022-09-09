@@ -13,6 +13,7 @@ class Vec2 {
 
         Vec2 Rotate(float ang);
         Vec2 Soma(Vec2 v);
+        float ProdEscalar(Vec2 v);
 
     private:
 };

@@ -1,5 +1,4 @@
 #include "../headers/Game.h"
-#include "../headers/State.h"
 
 #include "../headers/TileSet.h"
 #include "../headers/Resources.h"

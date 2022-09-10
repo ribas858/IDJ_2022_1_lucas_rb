@@ -1,5 +1,5 @@
-all: 	main.o Game.o Component.o State.o Sprite.o Music.o GameObject.o Rect.o Vec2.o Sound.o TileSet.o TileMap.o Resources.o InputManager.o Camera.o NotCameraFollower.o Alien.o Minion.o
-	g++ -o main main.o Game.o Component.o State.o Sprite.o Music.o GameObject.o Rect.o Vec2.o Sound.o TileSet.o TileMap.o Resources.o InputManager.o Camera.o NotCameraFollower.o Alien.o Minion.o -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
+all: 	main.o Game.o Component.o State.o Sprite.o Music.o GameObject.o Rect.o Vec2.o Sound.o TileSet.o TileMap.o Resources.o InputManager.o Camera.o NotCameraFollower.o Alien.o Minion.o Bullet.o
+	g++ -o main main.o Game.o Component.o State.o Sprite.o Music.o GameObject.o Rect.o Vec2.o Sound.o TileSet.o TileMap.o Resources.o InputManager.o Camera.o NotCameraFollower.o Alien.o Minion.o Bullet.o -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
 	rm -rf *.o
 
 main.o: main.cpp 
@@ -58,6 +58,9 @@ Alien.o: sources/Alien.cpp
 
 Minion.o: sources/Minion.cpp
 	g++ -c sources/Minion.cpp
+
+Bullet.o: sources/Bullet.cpp
+	g++ -c sources/Bullet.cpp
 
 run:
 	./main

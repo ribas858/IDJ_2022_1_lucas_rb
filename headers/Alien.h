@@ -34,7 +34,7 @@ class Alien : public Component {
         queue<Action> taskQueue;
         vector <weak_ptr<GameObject>> minionArray;
 
-        static Vec2 Desloc;
+        static Vec2 desloc;
         static Vec2 fimDesloc;
         static int flag;
         static Vec2 inicialPos;

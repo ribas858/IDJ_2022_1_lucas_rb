@@ -1,6 +1,8 @@
 #include "../headers/Minion.h"
 #include "../headers/Sprite.h"
 #include "../headers/InputManager.h"
+#include "../headers/Bullet.h"
+#include "../headers/Game.h"
 
 const float PI = 3.14159;
 
@@ -26,6 +28,9 @@ Minion::Minion(GameObject& associated, weak_ptr<GameObject> alienCenter, float a
     xy.y = 0;
     diametro = 100;
     pixelsAjust = 10;
+
+    posShoot.x = 0;
+    posShoot.y = 0;
 
     if (liberado) {
         lastMiniLiberado = id;
@@ -77,7 +82,7 @@ void Minion::Update(float dt) {
             
         } else {
 
-            if (xyLinha.x < 55) {
+            if (xyLinha.x < 60) {
                 if (liberado && lastMiniLiberado == id) {
                     nextMiniLiberado = 1;
                     
@@ -114,8 +119,8 @@ void Minion::Update(float dt) {
             arc = 2;
         }
 
-        cout << "Id: " << id << " | x: " << associated.box.x << " y: " << associated.box.y << endl << endl;
-        cout << "Minions Liberados: " << InputManager::GetInstance().GetLoadMinions() << endl;
+        // cout << "Id: " << id << " | x: " << associated.box.x << " y: " << associated.box.y << endl << endl;
+        // cout << "Minions Liberados: " << InputManager::GetInstance().GetLoadMinions() << endl;
         
         if (InputManager::GetInstance().GetLoadMinions() == numMinions) {
             flag = 1;
@@ -132,9 +137,45 @@ void Minion::Render() {
 }
 
 bool Minion::Is(string type) {
-    return false; // id compile
+    string minion = "Minion";
+    if (type == minion){
+        return true;
+    } else {
+        return false;
+    }
 }
 
 void Minion::Shoot(Vec2 target) {
+    Vec2 desloc;
+    int damage = 10;
+    float maxDistance = 600;
+    float angle, speed;
     
+    if (InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON)) {
+        posShoot.x = associated.box.x;
+        posShoot.y = associated.box.y;
+        cout << "boom posShoot x: " << posShoot.x << " posShoot y: " << posShoot.y << endl;
+    }
+
+    cout << "Alvo: x:" << target.x << " | y: " << target.y << endl;
+    cout << "Fonte: x:" << posShoot.x << " | y: " << posShoot.y << endl;
+
+    
+    desloc.x = target.x - posShoot.x;
+    desloc.y = target.y - posShoot.y;
+
+    float deslocEscalar = sqrt(pow(desloc.x, 2) + pow(desloc.y, 2));
+
+    speed = maxDistance / 0.5;
+
+    angle = atan2(desloc.y, desloc.x);
+    
+    GameObject* bullet = new GameObject();
+    cout << "posShoot x: " << posShoot.x << " posShoot y: " << posShoot.y << endl;
+    bullet->box.x = posShoot.x;
+    bullet->box.y = posShoot.y;
+    Bullet* bul = new Bullet(*bullet, angle, speed, damage, maxDistance, "resources/images/minionbullet1.png");
+    bullet->AddComponent(bul);
+    
+    Game::GetInstance().GetState().AddObject(bullet);
 }

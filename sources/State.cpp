@@ -23,8 +23,8 @@ void State::LoadAssets() {
     GameObject* background = new GameObject();
     bg = new Sprite(*background, "resources/images/ocean.jpg");
     background->AddComponent(bg);
-    NotCameraFollower* notCam = new NotCameraFollower(*background);
-    background->AddComponent(notCam);
+    // NotCameraFollower* notCam = new NotCameraFollower(*background);
+    // background->AddComponent(notCam);
     AddObject(background);
 
 
@@ -134,12 +134,12 @@ weak_ptr<GameObject> State::AddObject(GameObject* go) {
     objectArray.push_back(goShared);
 
     if (started) {
+        // cout << "State ja foi carregado" << endl;
         goShared->Start();
         weak_ptr<GameObject> gobWeak(goShared);
         return gobWeak;
     }
-
-    weak_ptr<GameObject> gobWeak;
+    weak_ptr<GameObject> gobWeak(goShared);
     return gobWeak;
 }
 

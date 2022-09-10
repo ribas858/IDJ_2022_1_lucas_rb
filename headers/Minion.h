@@ -17,30 +17,24 @@ class Minion : public Component {
 
     private:
         weak_ptr<GameObject> alienCenter;
-        float arc;
-
         Vec2 origin;
-        float diametro;
-        float pixelsAjust;
-
-        static int lastMiniLiberado;
-
-        static int nextMiniLiberado;
-        
-        static int resetPos;
-
-        static int flag;
-
-        int id;
-
-        bool liberado;
-
-        int numMinions;
-
         Vec2 xyLinha;
         Vec2 xy;
 
+        Vec2 posShoot;
 
+        float arc;
+        float diametro;
+        float pixelsAjust;
+
+        int numMinions;
+        bool liberado;
+        int id;
+
+        static int lastMiniLiberado;
+        static int nextMiniLiberado;
+        static int resetPos;
+        static int flag;
 };
 
 

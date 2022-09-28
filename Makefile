@@ -1,7 +1,7 @@
-all: 	main.o Game.o Component.o State.o Sprite.o Music.o GameObject.o Rect.o Vec2.o Sound.o TileSet.o TileMap.o Resources.o InputManager.o Camera.o NotCameraFollower.o Alien.o Minion.o Bullet.o
-	g++ -o main main.o Game.o Component.o State.o Sprite.o Music.o GameObject.o Rect.o Vec2.o Sound.o TileSet.o TileMap.o Resources.o InputManager.o Camera.o NotCameraFollower.o Alien.o Minion.o Bullet.o -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
+all: 	main.o Game.o Component.o State.o Sprite.o Music.o GameObject.o Rect.o Vec2.o Sound.o TileSet.o TileMap.o Resources.o InputManager.o Camera.o CameraFollower.o Alien.o Minion.o Bullet.o
+	g++ -o main main.o Game.o Component.o State.o Sprite.o Music.o GameObject.o Rect.o Vec2.o Sound.o TileSet.o TileMap.o Resources.o InputManager.o Camera.o CameraFollower.o Alien.o Minion.o Bullet.o -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
 	rm -rf *.o
-
+	
 main.o: main.cpp 
 	g++ -c main.cpp
 
@@ -50,8 +50,8 @@ InputManager.o: sources/InputManager.cpp
 Camera.o: sources/Camera.cpp
 	g++ -c sources/Camera.cpp
 
-NotCameraFollower.o: sources/NotCameraFollower.cpp
-	g++ -c sources/NotCameraFollower.cpp
+CameraFollower.o: sources/CameraFollower.cpp
+	g++ -c sources/CameraFollower.cpp
 
 Alien.o: sources/Alien.cpp
 	g++ -c sources/Alien.cpp

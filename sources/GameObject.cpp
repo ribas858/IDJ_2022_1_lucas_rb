@@ -6,10 +6,10 @@ void GameObject::Start()  {
         // cout << "i: " << i << endl;
     }
     started = true;
-    cout << "start gameObject" << endl << endl;
+    // cout << "start gameObject" << endl << endl;
 }
 
-GameObject::GameObject() : started(false), isDead(false) {
+GameObject::GameObject() : started(false), isDead(false), angleDeg(0) {
     box.w = 0;
     box.h = 0;
     box.x = 0;

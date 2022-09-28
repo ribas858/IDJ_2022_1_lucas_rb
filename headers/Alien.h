@@ -15,6 +15,9 @@ class Alien : public Component {
         void Render();
         bool Is(string type);
 
+        Vec2 GetSpeed();
+        Vec2 GetDesloc();
+
     private:
         class Action {
             public:
@@ -28,8 +31,8 @@ class Alien : public Component {
 
         Vec2 speed;
         int hp;
-
         int nMinions;
+        Vec2 camPos;
 
         queue<Action> taskQueue;
         vector <weak_ptr<GameObject>> minionArray;
@@ -38,6 +41,7 @@ class Alien : public Component {
         static Vec2 fimDesloc;
         static int flag;
         static Vec2 inicialPos;
+
 
 
 };

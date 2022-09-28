@@ -2,6 +2,7 @@
 #define SPRITE_H
 
 #include "../headers/Component.h"
+#include "../headers/Vec2.h"
 
 
 class Sprite : public Component {
@@ -22,18 +23,22 @@ class Sprite : public Component {
         void Update(float dt) override;
         bool Is(string type) override;
 
-        void Render(float x, float y);
+        void Render(float x, float y, float angle=0);
 
         void Start() override;
 
         SDL_Rect return_clipRect();
         SDL_Texture* return_texture();
 
+        void SetScale(float scaleX, float scaleY);
+        Vec2 GetScale();
+
     private:
         SDL_Texture* texture;
         int width;
         int height;
         SDL_Rect clipRect;  
+        Vec2 scale;
 };
 
 #endif

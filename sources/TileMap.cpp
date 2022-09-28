@@ -1,5 +1,6 @@
 #include "../headers/TileMap.h"
 #include "../headers/Camera.h"
+#include "../headers/InputManager.h"
 
 void TileMap::Start() {
     cout << "start tileMap" << endl;
@@ -88,6 +89,12 @@ void TileMap::Render() {
     for(int i = 0; i < GetDepth(); i++) {
         layer = vetorLayerSpeed[i].first;
         speed = vetorLayerSpeed[i].second;
+        // if (InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON)) {
+        //     if(associated.box.Contem( InputManager::GetInstance().GetMouseX(), InputManager::GetInstance().GetMouseY() )) {
+        //         cout << "mapa" << endl;
+        //     }
+        // }
+        //cout << "Camera::pos.x: " << Camera::pos.x << " Camera::pos.y: " << Camera::pos.y << endl;
         RenderLayer(layer, speed, Camera::pos.x, Camera::pos.y);
     }
 }
@@ -107,7 +114,7 @@ void TileMap::RenderLayer(int layer, float speed, float cameraX, float cameraY) 
             
             for(int col = 0; col < GetWidth(); col++) {
                 // cout << "lin: " << lin << " col: " << col << " index loop: " << index << " tile matrix 0: " << tileMatrix[index] << endl;
-                tileSet->RenderTile(tileMatrix[index], ( (cameraX * speed) + col) * tileSet->GetTileWidth(), ( (cameraY * speed)+ lin) * tileSet->GetTileWidth());
+                tileSet->RenderTile(tileMatrix[index],( (col * tileSet->GetTileWidth()) - (cameraX * speed) ),(  (lin * tileSet->GetTileWidth()) - (cameraY * speed) ) );
                 
                 index++;
                 
@@ -115,8 +122,10 @@ void TileMap::RenderLayer(int layer, float speed, float cameraX, float cameraY) 
             }
         }
     }
-    associated.box.x = (cameraX) * tileSet->GetTileWidth();
-    associated.box.y = (cameraY) * tileSet->GetTileWidth();
+    // associated.box.x = (cameraX) * tileSet->GetTileWidth();
+    // associated.box.y = (cameraY) * tileSet->GetTileWidth();
+    // cout << "layer x: " << associated.box.x << " y: " << associated.box.y << endl;
+    
 }
 
 int TileMap::GetWidth() {

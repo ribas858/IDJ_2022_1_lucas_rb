@@ -8,7 +8,7 @@
 
 #include "../headers/InputManager.h"
 #include "../headers/Camera.h"
-#include "../headers/NotCameraFollower.h"
+#include "../headers/CameraFollower.h"
 #include "../headers/Alien.h"
 #include "../headers/Minion.h"
 
@@ -23,8 +23,8 @@ void State::LoadAssets() {
     GameObject* background = new GameObject();
     bg = new Sprite(*background, "resources/images/ocean.jpg");
     background->AddComponent(bg);
-    // NotCameraFollower* notCam = new NotCameraFollower(*background);
-    // background->AddComponent(notCam);
+    CameraFollower* Cam = new CameraFollower(*background);
+    background->AddComponent(Cam);
     AddObject(background);
 
 
@@ -38,12 +38,13 @@ void State::LoadAssets() {
     GameObject* alien = new GameObject();
     alien->box.x = 512;
     alien->box.y = 300;
-    Alien* ali = new Alien(*alien, 6);
+    Alien* ali = new Alien(*alien, 5);
     alien->AddComponent(ali);
+    Camera::Follow(alien);
     AddObject(alien);
 
-    // cout << "box.x: " << GetObjectPtr(alien).lock()->box.x << endl;
-    cout << "Galera adicionada..." << endl;
+    // cout << "box.x: " << GetObjectPtr(alien).lock()->box.x << " box.y: " << GetObjectPtr(alien).lock()->box.y << endl;
+    // cout << "Galera adicionada..." << endl;
 
     
 
@@ -65,7 +66,7 @@ void State::Start() {
     }
     started = true;
     // music.Play();
-    cout << "Start meu consagrado" << endl;
+    cout << "Tudo iniciado.." << endl;
 }
 
 State::State() : started(false) {
@@ -97,7 +98,42 @@ void State::Update(float dt) {
         // AddObject((int)objPos.x, (int)objPos.y);
     }
     
-    // InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON);
+    if (InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON)) {
+        cout << "\nmouse X: " << InputManager::GetInstance().GetMouseX() << " | mouse Y: " << InputManager::GetInstance().GetMouseY() << endl;
+        // cout << "cam X: " << Camera::pos.x * 64 << " | cam Y: " << Camera::pos.y * 64 << endl;
+        
+        // bool negCamx, negCamy;
+
+        // float aux, aux2;
+        // if (Camera::pos.x < 0) {
+        //     negCamx = true;
+        //     aux = (Camera::pos.x * -64) + InputManager::GetInstance().GetMouseX();
+        // } else {
+        //     aux = (Camera::pos.x * 64) - InputManager::GetInstance().GetMouseX();
+        //     if (aux < 0) {
+        //         aux *= -1;
+        //     }
+        //     negCamx = false;
+        // }
+        // if (Camera::pos.y < 0) {
+        //     negCamy = true;
+        //     aux2 = (Camera::pos.y * -64) + InputManager::GetInstance().GetMouseY();    
+        // } else {
+        //     negCamy = false;
+        //     aux2 = (Camera::pos.y * 64) - InputManager::GetInstance().GetMouseY();
+        //     if (aux2 < 0) {
+        //         aux2 *= -1;
+        //     }
+        // }
+        
+        // cout << "pos tileMap X: " << aux << " | pos tileMap Y: " << aux2 << endl;
+        // Camera::pos.x = 512.0/64.0 - aux/64.0;
+        // Camera::pos.y = (300.0/64.0 - aux2/64.0);
+        
+        // cout << "1: pos x: " << Camera::pos.x * 64.0 << " pos y: " << Camera::pos.y * 64.0 << endl;
+    
+    }
+
     // InputManager::GetInstance().MouseRelease(LEFT_MOUSE_BUTTON);
     // cout << objectArray.size() << endl;
 
@@ -105,6 +141,8 @@ void State::Update(float dt) {
     // InputManager::GetInstance().IsKeyDown(SDLK_c);
     // InputManager::GetInstance().IsMouseDown(LEFT_MOUSE_BUTTON);
     
+    Camera::Update(dt);
+
     for(int i=0; i<objectArray.size(); i++) {
         objectArray[i]->Update(dt);
     }
@@ -116,7 +154,6 @@ void State::Update(float dt) {
         }
     }
 
-    Camera::Update(dt);
 }
 
 void State::Render() {

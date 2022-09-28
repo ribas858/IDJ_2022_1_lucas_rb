@@ -8,7 +8,7 @@
 class Minion : public Component {
     
     public:
-        Minion(GameObject& associated, weak_ptr<GameObject> alienCenter, float arcOffsetDeg, bool lib, int id, int nMini);
+        Minion(GameObject& associated, weak_ptr<GameObject> alienCenter, float arcOffsetDeg, bool lib, int id, int nMini, Vec2 scale);
         
         void Update(float dt);
         void Render();
@@ -21,11 +21,11 @@ class Minion : public Component {
         Vec2 xyLinha;
         Vec2 xy;
 
-        Vec2 posShoot;
+        Vec2 sourceShoot;
 
         float arc;
         float diametro;
-        float pixelsAjust;
+        float releaseLimit;
 
         int numMinions;
         bool liberado;
@@ -34,7 +34,9 @@ class Minion : public Component {
         static int lastMiniLiberado;
         static int nextMiniLiberado;
         static int resetPos;
-        static int flag;
+        static int allFree;
+
+        double ang;
 };
 
 

@@ -3,10 +3,10 @@
 
 #include "../headers/GameObject.h"
 
-class NotCameraFollower : public Component {
+class CameraFollower : public Component {
 
     public:
-        NotCameraFollower(GameObject& go);
+        CameraFollower(GameObject& associated);
 
         void Update(float dt) override;
         void Render() override;

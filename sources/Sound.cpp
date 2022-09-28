@@ -2,7 +2,7 @@
 #include "../headers/Resources.h"
 
 void Sound::Start() {
-    cout << "start sound" << endl;
+    // cout << "start sound" << endl;
 }
 
 Sound::Sound(GameObject& associated) : Component(associated) {

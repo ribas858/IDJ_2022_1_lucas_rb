@@ -18,5 +18,6 @@ using namespace std;
 #include <sstream>
 #include<tuple>
 #include <queue>
+#include <unistd.h>
 
 #endif

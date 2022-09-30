@@ -3,6 +3,8 @@
 #include "../headers/InputManager.h"
 #include "../headers/Bullet.h"
 #include "../headers/Game.h"
+#include "../headers/Sound.h"
+
 
 const float PI = 3.14159;
 
@@ -11,12 +13,18 @@ int Minion::lastMiniLiberado = 0;
 int Minion::resetPos = 0;
 
 int Minion::allFree = 0;
+
+float Minion::limitePisca = 0;
+float Minion::somaScale = 0;
  
 Minion::Minion(GameObject& associated, weak_ptr<GameObject> alienCenter, float arcOffsetDeg, bool lib, int id, int nMini, Vec2 scale) : id(id), liberado(lib), arc(arcOffsetDeg), alienCenter(alienCenter), Component(associated) {
     numMinions = nMini;
+    originalScale = scale;
+    
     Sprite* minionSprite = new Sprite(associated, "resources/images/minion.png");
     minionSprite->SetScale(scale.x, scale.y);
     associated.AddComponent(minionSprite);
+    
 
     associated.box.x = 0;
     associated.box.y = 0;
@@ -37,12 +45,43 @@ Minion::Minion(GameObject& associated, weak_ptr<GameObject> alienCenter, float a
     if (liberado) {
         lastMiniLiberado = id;
         InputManager::GetInstance().SetLoadMinions() = 1;
+        Component* cp = alienCenter.lock()->GetComponent("Sound");
+        if (cp) {
+            Sound* som = (Sound*)cp;
+            som->Play();
+        }
     }
 }
         
 void Minion::Update(float dt) {
+    
 
     if(auto ali = alienCenter.lock()) {
+
+        Sprite* s = (Sprite*) associated.GetComponent("Sprite");
+        if(!liberado) {
+            float intervalo = 0.01;
+            if (limitePisca < 20 * dt) {
+                somaScale += intervalo;
+                s->SetScaleRender(originalScale.x - intervalo, originalScale.y - intervalo);
+            } else {
+                if (limitePisca > 40 * dt) {
+                    limitePisca = 0;
+                    somaScale = 0;
+                }
+                //cout << "somaScale: " << somaScale << " ori x: " << originalScale.x - somaScale << endl;
+                
+                s->SetScaleRender(originalScale.x - somaScale + intervalo, originalScale.y - somaScale + intervalo);
+                somaScale -= intervalo;
+            }
+            limitePisca += dt;
+            cout << "limitePisca: " << limitePisca << endl;
+        } else {
+            s->SetScaleRender(originalScale.x, originalScale.y);
+        }
+
+        
+
         
         //cout << "arc: " << arc << endl;
 
@@ -68,15 +107,18 @@ void Minion::Update(float dt) {
         if (xyLinha.x == 0 && xyLinha.y == 0) {
             // cout << "x linha e y linha zerados" << endl;
             if (liberado) {
+                // associated.box.x = (512.0 + (alienCenter.lock()->box.w / 2)) - associated.box.w/2;
+                // associated.box.y = (300.0 + (alienCenter.lock()->box.h / 2)) - associated.box.h/2;
                 associated.box.x = diametro;
                 associated.box.y = 0;
             } else {
-                
                 float x = (alienCenter.lock()->box.x + (alienCenter.lock()->box.w / 2));
                 float y = (alienCenter.lock()->box.y + (alienCenter.lock()->box.h / 2));
                 
-                associated.box.x = x - (associated.box.w / 2) + diametro;
-                associated.box.y = y - associated.box.h / 2;
+                
+                associated.box.x = x - associated.box.w/2 + diametro;
+                associated.box.y = y - associated.box.h/2;
+                //cout << "mini x: " << associated.box.x << "mini y: " << associated.box.y << endl;
             }
             // origin.x = 0; 
             // origin.y = 0;
@@ -91,6 +133,12 @@ void Minion::Update(float dt) {
             }
 
             if(!liberado && nextMiniLiberado == 1) {
+                cout << "liberando.." << endl;
+                Component* cp = alienCenter.lock()->GetComponent("Sound");
+                if (cp) {
+                    Sound* som = (Sound*)cp;
+                    som->Play();
+                }
                 lastMiniLiberado = id;
                 liberado = true;
                 resetPos = 1;
@@ -120,7 +168,7 @@ void Minion::Update(float dt) {
             ang += - 2;
         } else {
             if (liberado) {
-                ang += - 6;
+                ang += - arc;
             }
         }
         associated.angleDeg = ang;
@@ -160,8 +208,8 @@ void Minion::Shoot(Vec2 target) {
     float angle, speed;
     
     if (InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON)) {
-        sourceShoot.x = associated.box.x;
-        sourceShoot.y = associated.box.y;
+        sourceShoot.x = associated.box.x + associated.box.w/2.0;
+        sourceShoot.y = associated.box.y + associated.box.h/2.0;
         // cout << "boom sourceShoot x: " << sourceShoot.x << " sourceShoot y: " << sourceShoot.y << endl;
     }
 
@@ -186,6 +234,8 @@ void Minion::Shoot(Vec2 target) {
     bullet->angleDeg = (angle * 180) / PI;
     Bullet* bul = new Bullet(*bullet, angle, speed, damage, maxDistance, "resources/images/minionbullet1.png");
     bullet->AddComponent(bul);
-    
+    Sound* som = new Sound(*bullet, "resources/sounds/tiro.wav");
+    som->Play();
     Game::GetInstance().GetState().AddObject(bullet);
+    
 }

@@ -5,6 +5,7 @@
 #include "../headers/Minion.h"
 #include "../headers/Game.h"
 #include "../headers/State.h"
+#include "../headers/Sound.h"
 
 Vec2 Alien::inicialPos(0,0);
 Vec2 Alien::desloc(0,0);
@@ -18,10 +19,13 @@ Alien::Alien(GameObject & associated, int nMinions) : Component(associated), nMi
     Sprite* alienSprite = new Sprite(associated, "resources/images/alien.png");
     // alienSprite->SetScale(2,2);
     associated.AddComponent(alienSprite);
+    Sound* som = new Sound(associated, "resources/sounds/mini.wav");
+    associated.AddComponent(som);
+
     associated.box.x = associated.box.x - (associated.box.w / 2);
     associated.box.y =  associated.box.y - (associated.box.h / 2);
-    // camPos.x = (associated.box.x - (associated.box.w / 2)) / 64;
-    // camPos.y = (associated.box.h - (associated.box.h / 2)) / 64;
+
+
     cout << "alien w: " << associated.box.w << " alien h: " << associated.box.h << endl;
     cout << "alien x: " << associated.box.x << " alien y: " << associated.box.y << endl;
     speed.x = 0;
@@ -48,10 +52,10 @@ void Alien::Start() {
         Vec2 s(scale,scale);
         
         if (i == 1) {
-            Minion* mini = new Minion(*minion, Game::GetInstance().GetState().GetObjectPtr(&associated), 6, true, i, nMinions, s);
+            Minion* mini = new Minion(*minion, Game::GetInstance().GetState().GetObjectPtr(&associated), 4, true, i, nMinions, s);
             minion->AddComponent(mini);
         } else {
-            Minion* mini = new Minion(*minion, Game::GetInstance().GetState().GetObjectPtr(&associated), 6, false, i, nMinions, s);
+            Minion* mini = new Minion(*minion, Game::GetInstance().GetState().GetObjectPtr(&associated), 4, false, i, nMinions, s);
             minion->AddComponent(mini);
         }
 

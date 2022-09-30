@@ -62,59 +62,13 @@ void Sprite::SetClip(int x, int y, int w, int h) {
 }
 
 void Sprite::Render() {
-    Render(associated.box.x - Camera::pos.x, associated.box.y - Camera::pos.y, associated.angleDeg);
-    return;
-    //Render();
-    // if (associated.GetComponent("NotCameraFollower")) {
-    //     // if (InputManager::GetInstance().IsKeyDown(LEFT_ARROW_KEY)) {
-    //     if (Camera::flag.x == 1) {
-    //         associated.box.x += Camera::speed.x * Camera::tileSetTam.x;
-    //     }
-    //     if (Camera::flag.x == -1) {
-    //         associated.box.x -= Camera::speed.x * Camera::tileSetTam.x;
-    //     }
-    //     if (Camera::flag.y == 1) {
-    //         associated.box.y += Camera::speed.y * Camera::tileSetTam.y;
-    //     }
-    //     if (Camera::flag.y == -1) {
-    //         associated.box.y -= Camera::speed.y * Camera::tileSetTam.y;
-    //     }
-    // }
-    
-    SDL_Rect dstrect;
-    // dstrect.w = clipRect.w * scale.x;
-    // dstrect.h = clipRect.h * scale.y;
-    // dstrect.x = associated.box.x;
-    // dstrect.y = associated.box.y;
-    // cout << "Render Sprite..." << endl;
-
-    dstrect.w = clipRect.w * scale.x;
-    dstrect.h = clipRect.h * scale.y;
-    dstrect.x = associated.box.x - Camera::pos.x;
-    dstrect.y = associated.box.y - Camera::pos.y;
-    // if (Camera::pos.x < 0) {
-    //     //cout << "cam negativa X" << endl;
-    //     dstrect.x = associated.box.x + (Camera::pos.x * -1);
-    // } else {
-    //     dstrect.x = (associated.box.x - Camera::pos.x);
-    // }
-    // if (Camera::pos.y < 0) {
-    //     //cout << "cam negativa Y" << endl;
-    //     dstrect.y = associated.box.y + (Camera::pos.y * -1);
-    // } else {
-    //     dstrect.y = (associated.box.y - Camera::pos.y);
-    // }
-    
-    
-    
-    
-    //SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstrect);
-    SDL_RenderCopyEx(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstrect, associated.angleDeg, nullptr, SDL_FLIP_NONE);
+    Render(associated.box.x - Camera::pos.x, associated.box.y - Camera::pos.y, associated.angleDeg);  
 }
+
 void Sprite::Render(float x, float y, float angle) {
     SDL_Rect dstrect;
-    dstrect.w = clipRect.w;
-    dstrect.h = clipRect.h;
+    dstrect.w = clipRect.w * scale.x;
+    dstrect.h = clipRect.h * scale.y;
     dstrect.x = x;
     dstrect.y = y;
     
@@ -170,6 +124,15 @@ void Sprite::SetScale(float scaleX, float scaleY) {
     associated.box.h *= scale.y;
     width = associated.box.w;
     height = associated.box.h;
+}
+
+void Sprite::SetScaleRender(float scaleX, float scaleY) {
+    if (scaleX != 0) {
+        scale.x = scaleX;
+    }
+    if (scaleY != 0) {
+        scale.y = scaleY;
+    }
 }
 
 Vec2 Sprite::GetScale() {

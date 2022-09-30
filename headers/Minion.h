@@ -37,6 +37,9 @@ class Minion : public Component {
         static int allFree;
 
         double ang;
+        Vec2 originalScale;
+        static float limitePisca;
+        static float somaScale;
 };
 
 

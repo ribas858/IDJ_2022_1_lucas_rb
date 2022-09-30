@@ -65,7 +65,7 @@ void State::Start() {
         objectArray[i]->Start();
     }
     started = true;
-    // music.Play();
+    music.Play();
     cout << "Tudo iniciado.." << endl;
 }
 

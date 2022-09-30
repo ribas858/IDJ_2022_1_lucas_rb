@@ -15,19 +15,13 @@ int Alien::flag = 0;
 // State& state = Game::GetInstance().GetState();
 
 Alien::Alien(GameObject & associated, int nMinions) : Component(associated), nMinions(nMinions) {
-
     Sprite* alienSprite = new Sprite(associated, "resources/images/alien.png");
-    // alienSprite->SetScale(2,2);
     associated.AddComponent(alienSprite);
     Sound* som = new Sound(associated, "resources/sounds/mini.wav");
     associated.AddComponent(som);
 
     associated.box.x = associated.box.x - (associated.box.w / 2);
     associated.box.y =  associated.box.y - (associated.box.h / 2);
-
-
-    cout << "alien w: " << associated.box.w << " alien h: " << associated.box.h << endl;
-    cout << "alien x: " << associated.box.x << " alien y: " << associated.box.y << endl;
     speed.x = 0;
     speed.y = 0;
 }
@@ -40,13 +34,11 @@ Alien::~Alien() {
 }
 
 void Alien::Start() {
-    // cout << "start alien" << endl;
 
     for (int i = 1; i <= nMinions; i++) {
         GameObject* minion = new GameObject();
         const float MIN_RAND = 1.0, MAX_RAND = 1.5;
         const float range = MAX_RAND - MIN_RAND;
-        // cout << range * ((((float) rand()) / (float) RAND_MAX)) + MIN_RAND << endl;
 
         float scale = range * ((((float) rand()) / (float) RAND_MAX)) + MIN_RAND;
         Vec2 s(scale,scale);
@@ -58,16 +50,12 @@ void Alien::Start() {
             Minion* mini = new Minion(*minion, Game::GetInstance().GetState().GetObjectPtr(&associated), 4, false, i, nMinions, s);
             minion->AddComponent(mini);
         }
-
         minionArray.push_back(Game::GetInstance().GetState().AddObject(minion));
-        
     }
 
 }
 
 void Alien::Update(float dt) {
-
-    //cout << "alien x: " << associated.box.x << " alien y: " << associated.box.y << endl;
 
     associated.angleDeg++;
     if (associated.angleDeg == 360) {
@@ -81,13 +69,9 @@ void Alien::Update(float dt) {
     if (InputManager::GetInstance().MousePress(RIGHT_MOUSE_BUTTON)) {
         cout << "\nMOVE ===================================================" << endl;
         taskQueue.emplace(Action::ActionType::MOVE, (float)InputManager::GetInstance().GetMouseX() + Camera::pos.x, (float)InputManager::GetInstance().GetMouseY() + Camera::pos.y);
-        //taskQueue.emplace(Action::ActionType::MOVE, 700.0, 400.0);
     }
-    // cout << "Tamanho fila de acoes: " << taskQueue.size() << endl;
     if (!taskQueue.empty()) {
         if (taskQueue.front().type == Action::ActionType::MOVE && InputManager::GetInstance().GetLoadMinions() == minionArray.size()) {
-            // cout << "MOVE:" << endl;
-            
             if (flag == 0) {
                 inicialPos.x = associated.box.x;
                 inicialPos.y = associated.box.y;
@@ -98,18 +82,10 @@ void Alien::Update(float dt) {
             speed.x = desloc.x / (1/dt);
             speed.y = desloc.y / (1/dt);
             
-            cout << "alvo x: " << taskQueue.front().pos.x << " alvo y: " << taskQueue.front().pos.y << " pos atual x: " << associated.box.x << " pos atual y: " << associated.box.y << endl;
-            cout << "des X: " << desloc.x << " | des Y: " << desloc.y << endl;
-            cout << "Speed X: " << speed.x << " | Speed Y: " << speed.y << endl;
-            
-            
-
             if (desloc.x < 0) {
-                
                 if (fimDesloc.x == 0) {
                     associated.box.x += speed.x;
                     if (associated.box.x  + associated.box.w/2 < taskQueue.front().pos.x) {
-                        // cout << "x neg -: +1" << endl;
                         fimDesloc.x++;
                     }
                 }
@@ -117,7 +93,6 @@ void Alien::Update(float dt) {
                 if (fimDesloc.x == 0) {
                     associated.box.x += speed.x;
                     if (associated.box.x  + associated.box.w/2 > taskQueue.front().pos.x) {
-                        // cout << "x posit : +1" << endl;
                         fimDesloc.x++;
                     } 
                 }
@@ -126,7 +101,6 @@ void Alien::Update(float dt) {
                 if (fimDesloc.y == 0) {
                     associated.box.y += speed.y;
                     if (associated.box.y  + associated.box.h/2 < taskQueue.front().pos.y) {
-                        // cout << "y neg -: +1" << endl;
                         fimDesloc.y++;
                     }
                 }
@@ -134,13 +108,10 @@ void Alien::Update(float dt) {
                 if (fimDesloc.y == 0) {
                     associated.box.y += speed.y;
                     if (associated.box.y  + associated.box.h/2 > taskQueue.front().pos.y) {
-                        // cout << "y posit : +1" << endl;
                         fimDesloc.y++;
                     }
                 }
             }
-            //cout << "x: " << associated.box.x << " y: " << associated.box.y << endl;
-            //printf("limite X: %.6f | limite Y: %.6f\n", taskQueue.front().pos.x, taskQueue.front().pos.y);
             
             if (fimDesloc.x == 1 && fimDesloc.y == 1) {
                 cout << "\nFim Desloc. X: " << fimDesloc.x << " | Fim Desloc. y: " << fimDesloc.y << endl;
@@ -156,9 +127,6 @@ void Alien::Update(float dt) {
                 speed.y = 0;
                 cout << "Tamanho fila de acoes: " << taskQueue.size() << endl << endl;
             }
-            // associated.box.x = taskQueue.front().pos.x;
-            // associated.box.y = taskQueue.front().pos.y;
-            // // 
         }
         else if (taskQueue.front().type == Action::ActionType::SHOOT) {
             int id = 0;
@@ -176,17 +144,12 @@ void Alien::Update(float dt) {
             }
             cout << "Minion Mais Perto: " << id << " Distancia: " << min << endl;
 
-
-
             if(auto mini = minionArray[id].lock()) {
                 Minion* minion = (Minion*) mini->GetComponent("Minion");
-                
                 if(minion) {
                     minion->Shoot(taskQueue.front().pos);
-                    
                 }
             }
-            
             taskQueue.pop();
         }
 

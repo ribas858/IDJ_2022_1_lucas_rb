@@ -25,7 +25,6 @@ Minion::Minion(GameObject& associated, weak_ptr<GameObject> alienCenter, float a
     minionSprite->SetScale(scale.x, scale.y);
     associated.AddComponent(minionSprite);
     
-
     associated.box.x = 0;
     associated.box.y = 0;
     origin.x = 0; 
@@ -69,46 +68,30 @@ void Minion::Update(float dt) {
                     limitePisca = 0;
                     somaScale = 0;
                 }
-                //cout << "somaScale: " << somaScale << " ori x: " << originalScale.x - somaScale << endl;
                 
                 s->SetScaleRender(originalScale.x - somaScale + intervalo, originalScale.y - somaScale + intervalo);
                 somaScale -= intervalo;
             }
             limitePisca += dt;
-            cout << "limitePisca: " << limitePisca << endl;
         } else {
             s->SetScaleRender(originalScale.x, originalScale.y);
         }
 
-        
-
-        
-        //cout << "arc: " << arc << endl;
 
         if (liberado && lastMiniLiberado == id && resetPos == 1) {
-            
             resetPos = 0;
             associated.box.x = diametro;
             associated.box.y = 0;
             origin.x = 0; 
             origin.y = 0;
         }
-        
-        // cout << "Liberadodo: " << liberado << " ANTESSSS | x: " << associated.box.x << " y: " << associated.box.y << endl;
 
         xy.x = associated.box.x - origin.x;
         xy.y = associated.box.y - origin.y;
         xyLinha = xy.Rotate(arc);
 
-        // xyLinha.x =  (associated.box.x - origin.x) * cos(arc * PI/180 ) + (associated.box.y -origin.y) * sin(arc * PI/180);
-        // xyLinha.y =  ((-1) * (associated.box.x - origin.x) ) * sin(arc * PI/180) + (associated.box.y - origin.y) * cos(arc * PI/180);
-        // cout << "xyLinha.x: " << xyLinha.x << " yl: " << xyLinha.y << endl;
-
         if (xyLinha.x == 0 && xyLinha.y == 0) {
-            // cout << "x linha e y linha zerados" << endl;
             if (liberado) {
-                // associated.box.x = (512.0 + (alienCenter.lock()->box.w / 2)) - associated.box.w/2;
-                // associated.box.y = (300.0 + (alienCenter.lock()->box.h / 2)) - associated.box.h/2;
                 associated.box.x = diametro;
                 associated.box.y = 0;
             } else {
@@ -118,17 +101,12 @@ void Minion::Update(float dt) {
                 
                 associated.box.x = x - associated.box.w/2 + diametro;
                 associated.box.y = y - associated.box.h/2;
-                //cout << "mini x: " << associated.box.x << "mini y: " << associated.box.y << endl;
             }
-            // origin.x = 0; 
-            // origin.y = 0;
             
         } else {
-
             if (xyLinha.x < releaseLimit) {
                 if (liberado && lastMiniLiberado == id) {
                     nextMiniLiberado = 1;
-                    
                 }
             }
 
@@ -150,7 +128,6 @@ void Minion::Update(float dt) {
                 
                 float x = (alienCenter.lock()->box.x + (alienCenter.lock()->box.w / 2));
                 float y = (alienCenter.lock()->box.y + (alienCenter.lock()->box.h / 2));
-                // cout << "alienC x: " << x << " alienC y: " << y << endl;
                 origin.x = x - associated.box.w / 2;
                 origin.y = y - associated.box.h / 2;
             
@@ -172,18 +149,12 @@ void Minion::Update(float dt) {
             }
         }
         associated.angleDeg = ang;
-
-        // cout << " ang: " << ang << endl;
-
-        // cout << "Id: " << id << " | x: " << associated.box.x << " y: " << associated.box.y << endl << endl;
-        // cout << "Minions Liberados: " << InputManager::GetInstance().GetLoadMinions() << endl;
         
         if (InputManager::GetInstance().GetLoadMinions() == numMinions) {
             allFree = 1;
         }
         
     } else {
-        // cout << "Alien morreu.." << endl;
         associated.RequestDelete();
     }
 }
@@ -210,7 +181,6 @@ void Minion::Shoot(Vec2 target) {
     if (InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON)) {
         sourceShoot.x = associated.box.x + associated.box.w/2.0;
         sourceShoot.y = associated.box.y + associated.box.h/2.0;
-        // cout << "boom sourceShoot x: " << sourceShoot.x << " sourceShoot y: " << sourceShoot.y << endl;
     }
 
     cout << "Alvo: x:" << target.x << " | y: " << target.y << endl;
@@ -225,8 +195,6 @@ void Minion::Shoot(Vec2 target) {
     speed = maxDistance / 0.5;
 
     angle = atan2(desloc.y, desloc.x);
-    // cout << "Deslocamento: x:" << desloc.x << " | y: " << desloc.y << endl;
-    // cout << "angle: " << (angle * 180) / PI << endl;
     
     GameObject* bullet = new GameObject();
     bullet->box.x = sourceShoot.x;
@@ -235,7 +203,7 @@ void Minion::Shoot(Vec2 target) {
     Bullet* bul = new Bullet(*bullet, angle, speed, damage, maxDistance, "resources/images/minionbullet1.png");
     bullet->AddComponent(bul);
     Sound* som = new Sound(*bullet, "resources/sounds/tiro.wav");
+    bullet->AddComponent(som);
     som->Play();
     Game::GetInstance().GetState().AddObject(bullet);
-    
 }

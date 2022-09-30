@@ -20,8 +20,6 @@ void Bullet::Update(float dt) {
 
     distanceLeft -= DS;
 
-    // cout << "distance left: " << distanceLeft << endl;
-
     if (distanceLeft <= 0) {
         associated.RequestDelete();
     }

@@ -28,7 +28,6 @@ class Alien : public Component {
                 ActionType type;
                 Vec2 pos;
         };
-
         Vec2 speed;
         int hp;
         int nMinions;
@@ -41,9 +40,6 @@ class Alien : public Component {
         static Vec2 fimDesloc;
         static int flag;
         static Vec2 inicialPos;
-
-
-
 };
 
 #endif

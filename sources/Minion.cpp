@@ -75,8 +75,10 @@ void Minion::Update(float dt) {
                 somaScale -= intervalo;
             }
             limitePisca += dt;
-            cout << "limitePisca: " << limitePisca << endl;
-        } else {
+            //cout << "limitePisca: " << limitePisca << endl;
+        } 
+        else if (allFree == 0) {
+            //cout << "set original" << endl;
             s->SetScaleRender(originalScale.x, originalScale.y);
         }
 

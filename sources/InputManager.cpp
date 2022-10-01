@@ -11,23 +11,6 @@ void InputManager::Update() {
     SDL_GetMouseState(&mouseX, &mouseY);
     quitRequested = false;
 
-    // if (Camera::flag.x == 1) {
-    //     Camera::mouseAcc.x -= Camera::speed.x * Camera::tileSetTam.x;
-    // }
-    // if (Camera::flag.x == -1) {
-    //     Camera::mouseAcc.x += Camera::speed.x * Camera::tileSetTam.x;
-    // }
-    // if (Camera::flag.y == 1) {
-    //     Camera::mouseAcc.y -= Camera::speed.y * Camera::tileSetTam.y;
-    // }
-    // if (Camera::flag.y == -1) {
-    //     Camera::mouseAcc.y += Camera::speed.y * Camera::tileSetTam.y;
-    // }
-    // // mouseX += Camera::mouseAcc.x;
-    // // mouseY += Camera::mouseAcc.y;
-    // // cout << "Mouse X update: " << mouseX;
-    // // cout << " Mouse Y update: " << mouseY << endl << endl;
-
     SDL_Event inputEvent;
     while (SDL_PollEvent(&inputEvent)) {
         // if (inputEvent.key.repeat) {

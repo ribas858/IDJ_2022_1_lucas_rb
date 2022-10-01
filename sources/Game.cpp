@@ -99,13 +99,8 @@ void Game::Run(string title, int width, int height) {
     Init_Sdl_Image();
     Init_Sdl_Audio();
     Cria_Window(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, 0);
+
     state = new State();
-    Camera::tela.x = width;
-    Camera::tela.y = height;
-
-    // TileSet* t = new TileSet(40, 40, "images/tileset.png");
-    // t->RenderTile(20, 800, 430);
-
 
     state->Start();
 

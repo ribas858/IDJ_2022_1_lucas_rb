@@ -23,7 +23,6 @@ class GameObject {
 
         bool started;
         double angleDeg;
-        bool cam;
 
     private:
         vector <unique_ptr<Component>> components;

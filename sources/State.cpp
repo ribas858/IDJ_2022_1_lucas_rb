@@ -16,7 +16,6 @@
 
 void State::LoadAssets() {
     Vec2 tileSetTam(64,64);
-    Camera::tileSetTam = tileSetTam;
 
     music = Music("resources/music/stageState.ogg");
 
@@ -42,9 +41,6 @@ void State::LoadAssets() {
     alien->AddComponent(ali);
     Camera::Follow(alien);
     AddObject(alien);
-
-    // cout << "box.x: " << GetObjectPtr(alien).lock()->box.x << " box.y: " << GetObjectPtr(alien).lock()->box.y << endl;
-    // cout << "Galera adicionada..." << endl;
 
     
 

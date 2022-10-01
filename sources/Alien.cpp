@@ -98,11 +98,6 @@ void Alien::Update(float dt) {
             speed.x = desloc.x / (1/dt);
             speed.y = desloc.y / (1/dt);
             
-            cout << "alvo x: " << taskQueue.front().pos.x << " alvo y: " << taskQueue.front().pos.y << " pos atual x: " << associated.box.x << " pos atual y: " << associated.box.y << endl;
-            cout << "des X: " << desloc.x << " | des Y: " << desloc.y << endl;
-            cout << "Speed X: " << speed.x << " | Speed Y: " << speed.y << endl;
-            
-            
 
             if (desloc.x < 0) {
                 
@@ -175,8 +170,6 @@ void Alien::Update(float dt) {
                 }
             }
             cout << "Minion Mais Perto: " << id << " Distancia: " << min << endl;
-
-
 
             if(auto mini = minionArray[id].lock()) {
                 Minion* minion = (Minion*) mini->GetComponent("Minion");

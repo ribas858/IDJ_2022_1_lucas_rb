@@ -50,6 +50,7 @@ void Alien::Start() {
 
         float scale = range * ((((float) rand()) / (float) RAND_MAX)) + MIN_RAND;
         Vec2 s(scale,scale);
+        //Vec2 s(1,1);
         
         if (i == 1) {
             Minion* mini = new Minion(*minion, Game::GetInstance().GetState().GetObjectPtr(&associated), 4, true, i, nMinions, s);

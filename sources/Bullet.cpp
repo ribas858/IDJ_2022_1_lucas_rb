@@ -2,7 +2,7 @@
 #include "../headers/Sprite.h"
 
 Bullet::Bullet(GameObject& associated, float angle, float speed, int damage, float maxDistance, string sprite) : Component(associated), distanceLeft(maxDistance), damage(damage) {
-    Sprite* bulletSprite = new Sprite(associated, sprite);
+    Sprite* bulletSprite = new Sprite(associated, sprite, 3, 0.07);
     associated.AddComponent(bulletSprite);
     Bullet::speed.x = cos(angle) * speed;
     Bullet::speed.y = sin(angle) * speed;

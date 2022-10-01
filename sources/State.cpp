@@ -42,7 +42,11 @@ void State::LoadAssets() {
     Camera::Follow(alien);
     AddObject(alien);
 
-    
+    // GameObject* sonic = new GameObject();
+    // Sprite* snc = new Sprite(*sonic, "resources/images/sonic.png", 6, 0.08);
+    // sonic->AddComponent(snc);
+    // AddObject(sonic);
+
 
     
     // GameObject* ponto = new GameObject();
@@ -61,7 +65,7 @@ void State::Start() {
         objectArray[i]->Start();
     }
     started = true;
-    music.Play();
+    //music.Play();
     cout << "Tudo iniciado.." << endl;
 }
 

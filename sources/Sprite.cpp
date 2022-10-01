@@ -14,10 +14,16 @@ void Sprite::Start() {
 Sprite::Sprite(GameObject& associated) : Component(associated) {
     scale.x = 1;
     scale.y = 1;
+    currentFrame = 0;
+    timeElapsed = 0;
     texture = nullptr;
 }
 
-Sprite::Sprite(GameObject& associated, string file) : Sprite(associated) {
+Sprite::Sprite(GameObject& associated, string file, int frameCount, float frameTime) : Sprite(associated) {
+    Sprite::frameCount = frameCount;
+    Sprite::frameTime = frameTime;
+    // cout << "frameCout: " << Sprite::frameCount << endl;
+    // cout << "frameTime: " << Sprite::frameTime << endl;
     Open(file);
 }
 
@@ -45,7 +51,7 @@ void Sprite::Open(string file) {
 
     if(texture) {
         SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
-        SetClip(0, 0, width, height);
+        SetClip(0, 0, (width/frameCount), height);
     }
 }
 
@@ -77,7 +83,8 @@ void Sprite::Render(float x, float y, float angle) {
 
 
 int Sprite::GetWidth() {
-    return width;
+    // cout << "widt div: " << width / frameCount << endl;
+    return (width / frameCount);
 }
 int Sprite::GetHeight() {
     return height;
@@ -92,6 +99,18 @@ bool Sprite::IsOpen() {
 }
 
 void Sprite::Update(float dt) {
+
+    timeElapsed += dt;
+    if (frameCount > 1) {
+        if(timeElapsed > frameTime) {
+            timeElapsed = 0;
+            if (currentFrame == frameCount) {
+                currentFrame = 0;
+            }
+            SetFrame(currentFrame);
+            currentFrame++;
+        }
+    }
 
 }
 
@@ -137,4 +156,21 @@ void Sprite::SetScaleRender(float scaleX, float scaleY) {
 
 Vec2 Sprite::GetScale() {
     return scale;
+}
+
+void Sprite::SetFrame(int frame) {
+    currentFrame = frame;
+    clipRect.x = GetWidth() * currentFrame;
+    // 101, 202, 303, 404, 505
+    // cout <<"widthFrame: " << widthFrame << endl;
+    // cout << "clipRect X: " << clipRect.x << endl;
+    // cout << "current Frame: " << currentFrame << " frame count:" << frameCount << endl << endl;
+}
+
+void Sprite::SetFrameCount(int frameCount) {
+    Sprite::frameCount = frameCount;
+}
+
+void Sprite::SetFrameTime(float frameTime) {
+    Sprite::frameTime = frameTime;
 }

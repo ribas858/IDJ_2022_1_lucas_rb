@@ -209,11 +209,13 @@ void Minion::Shoot(Vec2 target) {
     float maxDistance = 600;
     float angle, speed;
     
-    if (InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON)) {
-        sourceShoot.x = associated.box.x + associated.box.w/2.0;
-        sourceShoot.y = associated.box.y + associated.box.h/2.0;
-        // cout << "boom sourceShoot x: " << sourceShoot.x << " sourceShoot y: " << sourceShoot.y << endl;
-    }
+    // if (InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON)) {
+    //     sourceShoot.x = associated.box.x + associated.box.w/2.0;
+    //     sourceShoot.y = associated.box.y + associated.box.h/2.0;
+    //     // cout << "boom sourceShoot x: " << sourceShoot.x << " sourceShoot y: " << sourceShoot.y << endl;
+    // }
+    sourceShoot.x = associated.box.x + associated.box.w/2.0;
+    sourceShoot.y = associated.box.y + associated.box.h/2.0;
 
     cout << "Alvo: x:" << target.x << " | y: " << target.y << endl;
     cout << "Fonte: x:" << sourceShoot.x << " | y: " << sourceShoot.y << endl;
@@ -234,7 +236,7 @@ void Minion::Shoot(Vec2 target) {
     bullet->box.x = sourceShoot.x;
     bullet->box.y = sourceShoot.y;
     bullet->angleDeg = (angle * 180) / PI;
-    Bullet* bul = new Bullet(*bullet, angle, speed, damage, maxDistance, "resources/images/minionbullet1.png");
+    Bullet* bul = new Bullet(*bullet, angle, speed, damage, maxDistance, "resources/images/minionbullet2.png");
     bullet->AddComponent(bul);
     Sound* som = new Sound(*bullet, "resources/sounds/tiro.wav");
     som->Play();

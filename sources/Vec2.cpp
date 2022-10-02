@@ -1,7 +1,5 @@
 #include "../headers/Vec2.h"
 
-const float PI = 3.14159;
-
 Vec2::Vec2() {
     
 }

@@ -26,13 +26,13 @@ void Camera::Update(float dt) {
 
     if (focus) {
 
-        if (focusAux.x != focus->box.x || focusAux.y != focus->box.y ) {
-            pos.x = focus->box.x - 512.0 + focus->box.w/2;
-            pos.y = focus->box.y - 300.0 + focus->box.h/2;
+        // if (focusAux.x != focus->box.x || focusAux.y != focus->box.y ) {
+        pos.x = focus->box.x - 512.0 + focus->box.w/2;
+        pos.y = focus->box.y - 300.0 + focus->box.h/2;
 
-            focusAux.x = focus->box.x;
-            focusAux.y = focus->box.y;
-        }
+            // focusAux.x = focus->box.x;
+            // focusAux.y = focus->box.y;
+        //}
         
     }
     else if (!focus) {

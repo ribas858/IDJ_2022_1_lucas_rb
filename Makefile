@@ -1,5 +1,5 @@
-all: 	main.o Game.o Component.o State.o Sprite.o Music.o GameObject.o Rect.o Vec2.o Sound.o TileSet.o TileMap.o Resources.o InputManager.o Camera.o CameraFollower.o Alien.o Minion.o Bullet.o
-	g++ -o main main.o Game.o Component.o State.o Sprite.o Music.o GameObject.o Rect.o Vec2.o Sound.o TileSet.o TileMap.o Resources.o InputManager.o Camera.o CameraFollower.o Alien.o Minion.o Bullet.o -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
+all: 	main.o Game.o Component.o State.o Sprite.o Music.o GameObject.o Rect.o Vec2.o Sound.o TileSet.o TileMap.o Resources.o InputManager.o Camera.o CameraFollower.o Alien.o Minion.o Bullet.o PenguinBody.o PenguinCannon.o
+	g++ -o main main.o Game.o Component.o State.o Sprite.o Music.o GameObject.o Rect.o Vec2.o Sound.o TileSet.o TileMap.o Resources.o InputManager.o Camera.o CameraFollower.o Alien.o Minion.o Bullet.o PenguinBody.o PenguinCannon.o -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
 	#rm -rf *.o
 	
 main.o: main.cpp 
@@ -61,6 +61,12 @@ Minion.o: sources/Minion.cpp
 
 Bullet.o: sources/Bullet.cpp
 	g++ -c sources/Bullet.cpp
+
+PenguinBody.o: sources/PenguinBody.cpp
+	g++ -c sources/PenguinBody.cpp
+
+PenguinCannon.o: sources/PenguinCannon.cpp
+	g++ -c sources/PenguinCannon.cpp
 
 run:
 	./main

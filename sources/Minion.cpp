@@ -6,8 +6,6 @@
 #include "../headers/Sound.h"
 
 
-const float PI = 3.14159;
-
 int Minion::nextMiniLiberado = 0;
 int Minion::lastMiniLiberado = 0;
 int Minion::resetPos = 0;

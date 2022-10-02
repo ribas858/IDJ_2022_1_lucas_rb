@@ -11,6 +11,7 @@
 #include "../headers/CameraFollower.h"
 #include "../headers/Alien.h"
 #include "../headers/Minion.h"
+#include "../headers/PenguinBody.h"
 
 
 
@@ -34,13 +35,24 @@ void State::LoadAssets() {
     AddObject(map_obj);
     
 
-    GameObject* alien = new GameObject();
-    alien->box.x = 512;
-    alien->box.y = 300;
-    Alien* ali = new Alien(*alien, 5);
-    alien->AddComponent(ali);
-    Camera::Follow(alien);
-    AddObject(alien);
+    // GameObject* alien = new GameObject();
+    // alien->box.x = 512;
+    // alien->box.y = 300;
+    // Alien* ali = new Alien(*alien, 5);
+    // alien->AddComponent(ali);
+    // Camera::Follow(alien);
+    // AddObject(alien);
+
+    GameObject* penguin = new GameObject();
+    penguin->box.x = 704.0;
+    penguin->box.y = 640.0;
+    PenguinBody* pbody = new PenguinBody(*penguin);
+    penguin->AddComponent(pbody);
+    Camera::Follow(penguin);
+    AddObject(penguin);
+    cout << "criou pinguin" << endl;
+
+
 
     // GameObject* sonic = new GameObject();
     // Sprite* snc = new Sprite(*sonic, "resources/images/sonic.png", 6, 0.08);
@@ -89,57 +101,11 @@ void State::Update(float dt) {
         quitRequested = true;
     }
 
-    if (InputManager::GetInstance().KeyPress(SDLK_SPACE)) {
-        float PI = 3.14159;
-        Vec2 objPos = Vec2(200, 0).Rotate( -PI + PI*(rand() % 1001)/500.0 ).Soma(Vec2
-            ( InputManager::GetInstance().GetMouseX() , InputManager::GetInstance().GetMouseY() ));
-
-        // cout << "objPos.x: " << objPos.x << " objPos.y: " << objPos.y << endl;
-        // AddObject((int)objPos.x, (int)objPos.y);
-    }
+  
     
     if (InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON)) {
         cout << "\nmouse X: " << InputManager::GetInstance().GetMouseX() << " | mouse Y: " << InputManager::GetInstance().GetMouseY() << endl;
-        // cout << "cam X: " << Camera::pos.x * 64 << " | cam Y: " << Camera::pos.y * 64 << endl;
-        
-        // bool negCamx, negCamy;
-
-        // float aux, aux2;
-        // if (Camera::pos.x < 0) {
-        //     negCamx = true;
-        //     aux = (Camera::pos.x * -64) + InputManager::GetInstance().GetMouseX();
-        // } else {
-        //     aux = (Camera::pos.x * 64) - InputManager::GetInstance().GetMouseX();
-        //     if (aux < 0) {
-        //         aux *= -1;
-        //     }
-        //     negCamx = false;
-        // }
-        // if (Camera::pos.y < 0) {
-        //     negCamy = true;
-        //     aux2 = (Camera::pos.y * -64) + InputManager::GetInstance().GetMouseY();    
-        // } else {
-        //     negCamy = false;
-        //     aux2 = (Camera::pos.y * 64) - InputManager::GetInstance().GetMouseY();
-        //     if (aux2 < 0) {
-        //         aux2 *= -1;
-        //     }
-        // }
-        
-        // cout << "pos tileMap X: " << aux << " | pos tileMap Y: " << aux2 << endl;
-        // Camera::pos.x = 512.0/64.0 - aux/64.0;
-        // Camera::pos.y = (300.0/64.0 - aux2/64.0);
-        
-        // cout << "1: pos x: " << Camera::pos.x * 64.0 << " pos y: " << Camera::pos.y * 64.0 << endl;
-    
     }
-
-    // InputManager::GetInstance().MouseRelease(LEFT_MOUSE_BUTTON);
-    // cout << objectArray.size() << endl;
-
-    
-    // InputManager::GetInstance().IsKeyDown(SDLK_c);
-    // InputManager::GetInstance().IsMouseDown(LEFT_MOUSE_BUTTON);
     
     Camera::Update(dt);
 

@@ -20,4 +20,6 @@ using namespace std;
 #include <queue>
 #include <unistd.h>
 
+const float PI = 3.14159;
+
 #endif

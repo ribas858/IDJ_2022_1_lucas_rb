@@ -108,16 +108,16 @@ void Game::Run(string title, int width, int height) {
         CalculateDeltaTime();
         InputManager::GetInstance().Update();
         state->Update(GetDeltaTime());
-        //SDL_RenderClear(renderer);
+        SDL_RenderClear(renderer);
         state->Render();
         SDL_RenderPresent(renderer);
         SDL_Delay(33);
 
         InputManager::GetInstance().SetUpdateCounter()++;
 
-        if (InputManager::GetInstance().IsKeyDown(SDLK_d)) {
-            cout << "dt: " << GetDeltaTime() << " segs" << endl;
-        }      
+        // if (InputManager::GetInstance().IsKeyDown(SDLK_d)) {
+        //     cout << "dt: " << GetDeltaTime() << " segs" << endl;
+        // }      
     }
 
     Resources::ClearImages();

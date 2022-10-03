@@ -9,6 +9,7 @@ class Rect {
         float x, y, w, h;
 
         bool Contem(float mouseX, float mouseY);
+        class Vec2 GetCenter();
 
     private:
 

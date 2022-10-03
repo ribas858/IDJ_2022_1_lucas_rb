@@ -1,4 +1,5 @@
 #include "../headers/GameObject.h"
+#include "../headers/Vec2.h"
 
 bool Rect::Contem(float mouseX, float mouseY) {
     float px, py;
@@ -21,4 +22,9 @@ bool Rect::Contem(float mouseX, float mouseY) {
         }
     }
     return false;
+}
+
+Vec2 Rect::GetCenter() {
+    Vec2 center(x + w/2.0, y + h/2.0);
+    return center;
 }

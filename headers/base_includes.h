@@ -19,6 +19,8 @@ using namespace std;
 #include<tuple>
 #include <queue>
 #include <unistd.h>
+#include <algorithm>
+#include <complex>
 
 const float PI = 3.14159;
 

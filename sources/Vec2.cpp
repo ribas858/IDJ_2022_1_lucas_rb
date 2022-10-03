@@ -28,3 +28,15 @@ Vec2 Vec2::Soma(Vec2 v) {
 float Vec2::ProdEscalar(Vec2 v) {
     return ( (v.x * x) + (v.y * y) );
 }
+
+Vec2 Vec2::operator+(const Vec2& rhs) const {
+   return Vec2(x + rhs.x, y + rhs.y);
+}
+
+Vec2 Vec2::operator-(const Vec2& rhs) const {
+   return Vec2(x - rhs.x, y - rhs.y);
+}
+
+Vec2 Vec2::operator*(const float rhs) const {
+   return Vec2(x * rhs, y * rhs);
+}

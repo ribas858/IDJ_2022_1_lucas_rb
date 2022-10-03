@@ -15,6 +15,10 @@ class Vec2 {
         Vec2 Soma(Vec2 v);
         float ProdEscalar(Vec2 v);
 
+        Vec2 operator+(const Vec2& rhs) const;
+        Vec2 operator-(const Vec2& rhs) const;
+        Vec2 operator*(const float rhs) const;
+
     private:
 };
 

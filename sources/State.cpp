@@ -101,11 +101,6 @@ void State::Update(float dt) {
         quitRequested = true;
     }
 
-  
-    
-    if (InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON)) {
-        cout << "\nmouse X: " << InputManager::GetInstance().GetMouseX() << " | mouse Y: " << InputManager::GetInstance().GetMouseY() << endl;
-    }
     
     Camera::Update(dt);
 

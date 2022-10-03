@@ -13,7 +13,7 @@ PenguinBody::PenguinBody(GameObject& associated) : Component(associated) {
     linearSpeed = 2;
     angle = 0;
     hp = 50;
-    Sprite* body = new Sprite(associated, "resources/images/penguin_pt.png");
+    Sprite* body = new Sprite(associated, "resources/images/penguin.png");
     associated.AddComponent(body);
     player = this;
     aceleracao = 15;
@@ -125,5 +125,10 @@ void PenguinBody::Render() {
 }
 
 bool PenguinBody::Is(string type) {
-    return false;
+    string pb = "PenguinBody";
+    if (type == pb){
+        return true;
+    } else {
+        return false;
+    }
 }

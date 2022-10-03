@@ -108,7 +108,7 @@ void Game::Run(string title, int width, int height) {
         CalculateDeltaTime();
         InputManager::GetInstance().Update();
         state->Update(GetDeltaTime());
-        SDL_RenderClear(renderer);
+        //SDL_RenderClear(renderer);
         state->Render();
         SDL_RenderPresent(renderer);
         SDL_Delay(33);

@@ -18,6 +18,14 @@ class PenguinCannon : public Component {
         weak_ptr<GameObject> pbody;
         float angle;
 
+        float maxDistance;
+        int damage;
+
+        Vec2 origin;
+        Vec2 xylinha;
+
+        int flag = 0;
+
 };
 
 

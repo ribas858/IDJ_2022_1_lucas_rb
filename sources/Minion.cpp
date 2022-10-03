@@ -19,7 +19,7 @@ Minion::Minion(GameObject& associated, weak_ptr<GameObject> alienCenter, float a
     numMinions = nMini;
     originalScale = scale;
     
-    Sprite* minionSprite = new Sprite(associated, "resources/images/minion.png");
+    Sprite* minionSprite = new Sprite(associated, "resources/images/minion_pt.png");
     minionSprite->SetScale(scale.x, scale.y);
     associated.AddComponent(minionSprite);
     

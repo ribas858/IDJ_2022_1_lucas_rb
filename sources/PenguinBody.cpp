@@ -3,7 +3,9 @@
 #include "../headers/Sprite.h"
 #include "../headers/Game.h"
 #include "../headers/InputManager.h"
-
+#include "../headers/Collider.h"
+#include "../headers/Camera.h"
+#include "../headers/Bullet.h"
 
 PenguinBody* PenguinBody::player = nullptr;
 
@@ -15,6 +17,8 @@ PenguinBody::PenguinBody(GameObject& associated) : Component(associated) {
     hp = 50;
     Sprite* body = new Sprite(associated, "resources/images/penguin.png");
     associated.AddComponent(body);
+    Collider* cold = new Collider(associated);
+    associated.AddComponent(cold);
     player = this;
     aceleracao = 15;
     speedAcc = 0;
@@ -114,7 +118,9 @@ void PenguinBody::Update(float dt) {
     associated.box.x += speed.x * dt;
     associated.box.y += speed.y * dt;
 
+    //cout << "hp Pinguin: " << hp << endl;
     if (hp <= 0) {
+        Camera::Unfollow();
         associated.RequestDelete();
     }
 
@@ -126,9 +132,25 @@ void PenguinBody::Render() {
 
 bool PenguinBody::Is(string type) {
     string pb = "PenguinBody";
-    if (type == pb){
+    if (type == pb || Being::Is(type) ){
         return true;
     } else {
         return false;
+    }
+}
+
+void PenguinBody::NotifyCollision(GameObject& other) {
+    if (!other.GetComponent("Being")) {
+        Component* cp = other.GetComponent("Bullet");
+        if (cp) {
+            Bullet* bl = (Bullet*) cp;
+            if (!bl->targetsPlayer) {
+                //cout << "Bateu no PenguinBody: W: " << other.box.w << endl;
+                hp -= 10;
+                other.RequestDelete();
+                //cout << "hp Pinguin: " << hp << endl;
+            }
+        }
+        
     }
 }

@@ -12,6 +12,8 @@
 #include "../headers/Alien.h"
 #include "../headers/Minion.h"
 #include "../headers/PenguinBody.h"
+#include "../headers/Collider.h"
+#include "Collision.cpp"
 
 
 
@@ -35,17 +37,17 @@ void State::LoadAssets() {
     AddObject(map_obj);
     
 
-    // GameObject* alien = new GameObject();
-    // alien->box.x = 512;
-    // alien->box.y = 300;
-    // Alien* ali = new Alien(*alien, 5);
-    // alien->AddComponent(ali);
-    // Camera::Follow(alien);
-    // AddObject(alien);
+    GameObject* alien = new GameObject();
+    alien->box.x = 512;
+    alien->box.y = 300;
+    Alien* ali = new Alien(*alien, 5);
+    alien->AddComponent(ali);
+    //Camera::Follow(alien);
+    AddObject(alien);
 
     GameObject* penguin = new GameObject();
-    penguin->box.x = 704.0;
-    penguin->box.y = 640.0;
+    penguin->box.x = 704;
+    penguin->box.y = 640;
     PenguinBody* pbody = new PenguinBody(*penguin);
     penguin->AddComponent(pbody);
     Camera::Follow(penguin);
@@ -114,6 +116,30 @@ void State::Update(float dt) {
             // cout << "limpa no objectArray" << endl << endl;
         }
     }
+
+    for(int i=0; i<objectArray.size(); i++) {
+        Component* cp0 = objectArray[i]->GetComponent("Collider");
+        if (cp0) {
+            Collider* cold0 = (Collider*)cp0;
+
+            for(int j = i+1; j<objectArray.size(); j++) {
+                Component* cp1 = objectArray[j]->GetComponent("Collider");
+                if (cp1) {
+                    Collider* cold1 = (Collider*)cp1;
+
+                    if ( Collision::IsColliding(cold0->box, cold1->box, objectArray[i]->angleDeg, objectArray[j]->angleDeg) ) {
+                        //cout << "colidiu meu mano" << endl;
+                        //cout << "obj i: " << objectArray[i]->box.w << " obj j: " << objectArray[j]->box.w << endl;
+                        objectArray[i]->NotifyCollision(*objectArray[j]);
+                        objectArray[j]->NotifyCollision(*objectArray[i]);
+                    }
+                }
+            }
+        }
+        
+    }
+    
+    //cout << endl;
 
 }
 

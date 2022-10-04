@@ -69,7 +69,7 @@ PenguinCannon.o: sources/PenguinCannon.cpp
 	g++ -c sources/PenguinCannon.cpp
 
 Collider.o: sources/Collider.cpp
-	g++ -c sources/Collider.cpp
+	g++ -D DEBUG -c sources/Collider.cpp
 
 Collision.o: sources/Collision.cpp
 	g++ -c sources/Collision.cpp

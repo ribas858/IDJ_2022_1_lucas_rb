@@ -5,7 +5,7 @@
 #include "../headers/Vec2.h"
 
 
-class Minion : public Component {
+class Minion : public Component, public Being {
     
     public:
         Minion(GameObject& associated, weak_ptr<GameObject> alienCenter, float arcOffsetDeg, bool lib, int id, int nMini, Vec2 scale);
@@ -14,6 +14,8 @@ class Minion : public Component {
         void Render();
         bool Is(string type);
         void Shoot(Vec2 target);
+
+        void NotifyCollision(GameObject& other) override;
 
     private:
         weak_ptr<GameObject> alienCenter;

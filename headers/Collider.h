@@ -20,6 +20,8 @@ class Collider : public Component {
         Vec2 scale;
         Vec2 offset;
 
+        bool ativar = false;
+
 };
 
 

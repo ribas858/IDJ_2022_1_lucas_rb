@@ -4,12 +4,15 @@
 #include "../headers/Camera.h"
 #include "../headers/Bullet.h"
 #include "../headers/Game.h"
+#include "../headers/Collider.h"
 
 PenguinCannon::PenguinCannon(GameObject& associated, weak_ptr<GameObject> penguinBody) : Component(associated) {
     angle = 0;
     pbody = penguinBody;
     Sprite* cannon = new Sprite(associated, "resources/images/cubngun.png");
     associated.AddComponent(cannon);
+    Collider* cold = new Collider(associated);
+    associated.AddComponent(cold);
     maxDistance = 600;
     damage = 15;
 }
@@ -45,7 +48,7 @@ void PenguinCannon::Render() {
 
 bool PenguinCannon::Is(string type) {
     string pg = "PenguinCannon";
-    if (type == pg){
+    if (type == pg || Being::Is(type)){
         return true;
     } else {
         return false;
@@ -58,7 +61,7 @@ void PenguinCannon::Shoot() {
     
     
     bullet->angleDeg = (angle * 180) / PI;
-    Bullet* bul = new Bullet(*bullet, angle, speed, damage, maxDistance, "resources/images/penguinbullet.png");
+    Bullet* bul = new Bullet(*bullet, angle, speed, damage, maxDistance, true, 4, "resources/images/penguinbullet.png");
 
     bullet->box.x = (pbody.lock()->box.x + pbody.lock()->box.w/2) - bullet->box.w/2 + cos(angle) * associated.box.w/2.0;
     bullet->box.y = (pbody.lock()->box.y + pbody.lock()->box.h/2) - bullet->box.h/2 + sin(angle) * associated.box.w/2.0;
@@ -69,4 +72,17 @@ void PenguinCannon::Shoot() {
     // Sound* som = new Sound(*bullet, "resources/sounds/tiro.wav");
     // som->Play();
     Game::GetInstance().GetState().AddObject(bullet);
+}
+
+void PenguinCannon::NotifyCollision(GameObject& other) {
+    if (!other.GetComponent("Being")) {
+        Component* cp = other.GetComponent("Bullet");
+        if (cp) {
+            Bullet* bl = (Bullet*) cp;
+            if (!bl->targetsPlayer) {
+                //cout << "Bateu no PenguinCannon: W: " << other.box.w << endl;
+            }
+        }
+        
+    }
 }

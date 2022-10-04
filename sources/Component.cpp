@@ -24,3 +24,7 @@ void Component::Render() {
 bool Component::Is(string type) {
     return false;
 }
+
+void Component::NotifyCollision(GameObject& other) {
+
+}

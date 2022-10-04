@@ -6,6 +6,8 @@
 #include "../headers/Game.h"
 #include "../headers/State.h"
 #include "../headers/Sound.h"
+#include "../headers/Collider.h"
+#include "../headers/Bullet.h"
 
 Vec2 Alien::inicialPos(0,0);
 Vec2 Alien::desloc(0,0);
@@ -21,6 +23,9 @@ Alien::Alien(GameObject & associated, int nMinions) : Component(associated), nMi
     associated.AddComponent(alienSprite);
     Sound* som = new Sound(associated, "resources/sounds/mini.wav");
     associated.AddComponent(som);
+    Collider* cold = new Collider(associated);
+    associated.AddComponent(cold);
+    hp = 100;
 
     associated.box.x = associated.box.x - (associated.box.w / 2);
     associated.box.y =  associated.box.y - (associated.box.h / 2);
@@ -157,39 +162,41 @@ void Alien::Update(float dt) {
             // // 
         }
         else if (taskQueue.front().type == Action::ActionType::SHOOT) {
-            int id = 0;
+            if (!minionArray.empty()) {
+                int id = 0;
 
-            float deslocEscalar = 0;
-            float min = 99999999;
-            for (int i=0; i<minionArray.size(); i++) {
-                float x = taskQueue.front().pos.x - minionArray[i].lock()->box.x;
-                float y = taskQueue.front().pos.y - minionArray[i].lock()->box.y;
-                deslocEscalar = sqrt(pow(x, 2) + pow(y, 2));
-                if (deslocEscalar < min) {
-                    min = deslocEscalar;
-                    id = i;
+                float deslocEscalar = 0;
+                float min = 99999999;
+                for (int i=0; i<minionArray.size(); i++) {
+                    float x = taskQueue.front().pos.x - minionArray[i].lock()->box.x;
+                    float y = taskQueue.front().pos.y - minionArray[i].lock()->box.y;
+                    deslocEscalar = sqrt(pow(x, 2) + pow(y, 2));
+                    if (deslocEscalar < min) {
+                        min = deslocEscalar;
+                        id = i;
+                    }
                 }
-            }
-            cout << "Minion Mais Perto: " << id << " Distancia: " << min << endl;
-
-            if(auto mini = minionArray[id].lock()) {
-                Minion* minion = (Minion*) mini->GetComponent("Minion");
+                cout << "Minion Mais Perto: " << id << " Distancia: " << min << endl;
                 
-                if(minion) {
-                    minion->Shoot(taskQueue.front().pos);
+                if(auto mini = minionArray[id].lock()) {
+                    //cout << "minon shoot" << endl;
+                    Minion* minion = (Minion*) mini->GetComponent("Minion");
                     
+                    if(minion) {
+                        
+                        minion->Shoot(taskQueue.front().pos);
+                        
+                    }
                 }
             }
             
             taskQueue.pop();
         }
-
-        if (hp <= 0) {
-            associated.RequestDelete();
-        }
-        
     }
-    
+    //cout << "hp Alien: " << hp << endl;
+    if (hp <= 0) {
+        associated.RequestDelete();
+    }
 }
 
 void Alien::Render() {
@@ -198,7 +205,7 @@ void Alien::Render() {
 
 bool Alien::Is(string type) {
     string alien = "Alien";
-    if (type == alien){
+    if (type == alien || Being::Is(type) ){
         return true;
     } else {
         return false;
@@ -211,4 +218,20 @@ Vec2 Alien::GetSpeed() {
 
 Vec2 Alien::GetDesloc() {
     return desloc;
+}
+
+void Alien::NotifyCollision(GameObject& other) {
+    if (!other.GetComponent("Being")) {
+        Component* cp = other.GetComponent("Bullet");
+        if (cp) {
+            Bullet* bl = (Bullet*) cp;
+            if (bl->targetsPlayer) {
+                //cout << "Bateu no Alien: W: " << other.box.w << endl;
+                hp -= 10;
+                other.RequestDelete();
+                //cout << "hp Alien: " << hp << endl;
+            }
+        }
+        
+    }
 }

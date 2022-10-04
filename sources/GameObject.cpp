@@ -64,3 +64,9 @@ Component* GameObject::GetComponent(string type) {
     }
     return nullptr;
 }
+
+void GameObject::NotifyCollision(GameObject& other) {
+    for (vector<unique_ptr<Component>>::iterator cp = components.begin(); cp != components.end(); cp++) {
+        (*cp)->NotifyCollision(other);
+    }
+}

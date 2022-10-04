@@ -2,6 +2,7 @@
 #define COMPONENT_H
 
 #include "../headers/base_includes.h"
+#include "../headers/Being.h"
 
 
 class Component {
@@ -14,6 +15,8 @@ class Component {
         virtual bool Is(string type) = 0;
 
         virtual void Start();
+
+        virtual void NotifyCollision(GameObject& other);
         
     protected:
         class GameObject& associated;

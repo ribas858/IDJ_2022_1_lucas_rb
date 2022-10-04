@@ -4,7 +4,7 @@
 #include "../headers/GameObject.h"
 #include "../headers/Vec2.h"
 
-class PenguinCannon : public Component {
+class PenguinCannon : public Component, public Being {
     public:
         PenguinCannon(GameObject& associated, weak_ptr<GameObject> penguinBody);
 
@@ -13,6 +13,7 @@ class PenguinCannon : public Component {
         bool Is(string type);
 
         void Shoot();
+        void NotifyCollision(GameObject& other) override;
 
     private:
         weak_ptr<GameObject> pbody;

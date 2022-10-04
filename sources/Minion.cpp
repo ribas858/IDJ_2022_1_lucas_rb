@@ -4,6 +4,8 @@
 #include "../headers/Bullet.h"
 #include "../headers/Game.h"
 #include "../headers/Sound.h"
+#include "../headers/Collider.h"
+#include "../headers/Camera.h"
 
 
 int Minion::nextMiniLiberado = 0;
@@ -19,9 +21,11 @@ Minion::Minion(GameObject& associated, weak_ptr<GameObject> alienCenter, float a
     numMinions = nMini;
     originalScale = scale;
     
-    Sprite* minionSprite = new Sprite(associated, "resources/images/minion_pt.png");
+    Sprite* minionSprite = new Sprite(associated, "resources/images/minion.png");
     minionSprite->SetScale(scale.x, scale.y);
     associated.AddComponent(minionSprite);
+    Collider* cold = new Collider(associated);
+    associated.AddComponent(cold);
     
 
     associated.box.x = 0;
@@ -135,6 +139,7 @@ void Minion::Update(float dt) {
             if(!liberado && nextMiniLiberado == 1) {
                 cout << "liberando.." << endl;
                 Component* cp = alienCenter.lock()->GetComponent("Sound");
+                
                 if (cp) {
                     Sound* som = (Sound*)cp;
                     som->Play();
@@ -147,18 +152,27 @@ void Minion::Update(float dt) {
             } 
             
             if (liberado) {
-                
+                // cout << "antes -> mini x: " << associated.box.x << " mini y: " << associated.box.y << endl;
                 float x = (alienCenter.lock()->box.x + (alienCenter.lock()->box.w / 2));
                 float y = (alienCenter.lock()->box.y + (alienCenter.lock()->box.h / 2));
-                // cout << "alienC x: " << x << " alienC y: " << y << endl;
+                //cout << "alienC x: " << x << " alienC y: " << y << endl;
                 origin.x = x - associated.box.w / 2;
                 origin.y = y - associated.box.h / 2;
             
-                associated.box.x = xyLinha.x;
-                associated.box.y = xyLinha.y;
+                bool initPos = false;
+                if (xyLinha.x > diametro && allFree == 0) { 
+                    initPos = true;
+                }
 
-                associated.box.x += origin.x;
-                associated.box.y += origin.y;
+                if(!initPos) {
+                    associated.box.x = xyLinha.x;
+                    associated.box.y = xyLinha.y;
+                    // cout << "mini x: " << associated.box.x << " mini y: " << associated.box.y << endl;
+                    associated.box.x += origin.x;
+                    associated.box.y += origin.y;
+                }
+                
+                
             }
             
         }
@@ -194,7 +208,7 @@ void Minion::Render() {
 
 bool Minion::Is(string type) {
     string minion = "Minion";
-    if (type == minion){
+    if (type == minion || Being::Is(type) ){
         return true;
     } else {
         return false;
@@ -234,10 +248,23 @@ void Minion::Shoot(Vec2 target) {
     bullet->box.x = sourceShoot.x;
     bullet->box.y = sourceShoot.y;
     bullet->angleDeg = (angle * 180) / PI;
-    Bullet* bul = new Bullet(*bullet, angle, speed, damage, maxDistance, "resources/images/minionbullet2.png");
+    Bullet* bul = new Bullet(*bullet, angle, speed, damage, maxDistance, false, 3, "resources/images/minionbullet2.png");
     bullet->AddComponent(bul);
     Sound* som = new Sound(*bullet, "resources/sounds/tiro.wav");
     som->Play();
     Game::GetInstance().GetState().AddObject(bullet);
     
+}
+
+void Minion::NotifyCollision(GameObject& other) {
+    if (!other.GetComponent("Being")) {
+        Component* cp = other.GetComponent("Bullet");
+        if (cp) {
+            Bullet* bl = (Bullet*) cp;
+            if (bl->targetsPlayer) {
+                //cout << "Bateu no Minion: W: " << other.box.w << endl;
+            }
+        }
+        
+    }
 }

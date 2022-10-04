@@ -4,7 +4,7 @@
 #include "../headers/GameObject.h"
 #include "../headers/Vec2.h"
 
-class Alien : public Component {
+class Alien : public Component, public Being {
     
     public:
         Alien(GameObject & associated, int nMinions);
@@ -17,6 +17,9 @@ class Alien : public Component {
 
         Vec2 GetSpeed();
         Vec2 GetDesloc();
+
+        void NotifyCollision(GameObject& other) override;
+        
 
     private:
         class Action {

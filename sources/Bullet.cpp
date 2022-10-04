@@ -1,9 +1,14 @@
 #include "../headers/Bullet.h"
 #include "../headers/Sprite.h"
+#include "../headers/Collider.h"
 
-Bullet::Bullet(GameObject& associated, float angle, float speed, int damage, float maxDistance, string sprite) : Component(associated), distanceLeft(maxDistance), damage(damage) {
-    Sprite* bulletSprite = new Sprite(associated, sprite, 4, 0.07);
+Bullet::Bullet(GameObject& associated, float angle, float speed, int damage, float maxDistance, bool target, int frameCount, string sprite) : Component(associated),
+        distanceLeft(maxDistance), damage(damage), targetsPlayer(target) {
+    
+    Sprite* bulletSprite = new Sprite(associated, sprite, frameCount, 0.07);
     associated.AddComponent(bulletSprite);
+    Collider* cold = new Collider(associated);
+    associated.AddComponent(cold);
     Bullet::speed.x = cos(angle) * speed;
     Bullet::speed.y = sin(angle) * speed;
 }
@@ -43,4 +48,10 @@ bool Bullet::Is(string type) {
 
 int Bullet::GetDamage() {
     return damage;
+}
+
+void Bullet::NotifyCollision(GameObject& other) {
+    // if (other.GetComponent("Being")) {
+    //     associated.RequestDelete();
+    // }
 }

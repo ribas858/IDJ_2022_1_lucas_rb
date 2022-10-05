@@ -67,16 +67,17 @@ Minion::Minion(GameObject& associated, weak_ptr<GameObject> alienCenter, float a
         
 void Minion::Update(float dt) {
 
-    Component* cp = alienCenter.lock()->GetComponent("Alien");
-    if (cp) {
-        Alien* al = (Alien*)cp;
-        cout << "a mini id: " << id << " alien id: " << al->id << " loadMinons: " << InputManager::GetInstance().GetLoadMinions()->at(idAlien) << endl;
-        idAlien = al->id - 1;
-         
-    }
+    
     
 
     if(auto ali = alienCenter.lock()) {
+        Component* cp = alienCenter.lock()->GetComponent("Alien");
+        if (cp) {
+            Alien* al = (Alien*)cp;
+            cout << "a mini id: " << id << " alien id: " << al->id << " loadMinons: " << InputManager::GetInstance().GetLoadMinions()->at(idAlien) << endl;
+            idAlien = al->id - 1;
+            
+        }
         
         Sprite* s = (Sprite*) associated.GetComponent("Sprite");
         if(!liberado) {
@@ -210,12 +211,13 @@ void Minion::Update(float dt) {
 
         
     } else {
-        GameObject* expl = new GameObject();
-        Sprite* ex = new Sprite(*expl, "resources/images/miniondeath.png", 4, 0.08, 0.32);
-        expl->AddComponent(ex);
-        expl->box.x = associated.box.GetCenter().x - ex->GetWidth()/2;
-        expl->box.y = associated.box.GetCenter().y - ex->GetHeight()/2;
-        Game::GetInstance().GetState().AddObject(expl);
+        cout << "Morte do minion" << endl;
+        // GameObject* expl = new GameObject();
+        // Sprite* ex = new Sprite(*expl, "resources/images/miniondeath.png", 4, 0.08, 0.32);
+        // expl->AddComponent(ex);
+        // expl->box.x = associated.box.GetCenter().x - ex->GetWidth()/2;
+        // expl->box.y = associated.box.GetCenter().y - ex->GetHeight()/2;
+        // Game::GetInstance().GetState().AddObject(expl);
         associated.RequestDelete();
     }
 }

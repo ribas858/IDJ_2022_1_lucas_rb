@@ -101,7 +101,7 @@ void PenguinCannon::Shoot() {
     
     
     bullet->angleDeg = (angle * 180) / PI;
-    Bullet* bul = new Bullet(*bullet, angle, speed, damage, maxDistance, false, 4, "resources/images/penguinbullet.png");
+    Bullet* bul = new Bullet(*bullet, angle, speed, damage, maxDistance, true, 4, "resources/images/penguinbullet.png");
 
     bullet->box.x = (pbody.lock()->box.x + pbody.lock()->box.w/2) - bullet->box.w/2 + cos(angle) * associated.box.w/2.0;
     bullet->box.y = (pbody.lock()->box.y + pbody.lock()->box.h/2) - bullet->box.h/2 + sin(angle) * associated.box.w/2.0;

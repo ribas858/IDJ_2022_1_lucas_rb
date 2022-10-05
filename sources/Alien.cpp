@@ -16,12 +16,9 @@ Vec2 Alien::fimDesloc(0,0);
 int Alien::flag = 0;
 int Alien::alienCount = 0;
 
-// State& state = Game::GetInstance().GetState();
-
 Alien::Alien(GameObject & associated, int nMinions) : Component(associated), nMinions(nMinions) {
 
     Sprite* alienSprite = new Sprite(associated, "resources/images/alien.png");
-    // alienSprite->SetScale(2,2);
     associated.AddComponent(alienSprite);
     Sound* som = new Sound(associated, "resources/sounds/mini.wav");
     associated.AddComponent(som);
@@ -31,7 +28,6 @@ Alien::Alien(GameObject & associated, int nMinions) : Component(associated), nMi
 
     associated.box.x = associated.box.x - (associated.box.w / 2);
     associated.box.y =  associated.box.y - (associated.box.h / 2);
-
 
     cout << "alien w: " << associated.box.w << " alien h: " << associated.box.h << endl;
     cout << "alien x: " << associated.box.x << " alien y: " << associated.box.y << endl;
@@ -51,12 +47,6 @@ Alien::~Alien() {
 }
 
 void Alien::Start() {
-    cout << "start alien" << " alien id: " << id << " alienCount: " << alienCount << endl;
-    // GameObject* minion = new GameObject();
-    // Vec2 s(1,1);
-    // Minion* mini = new Minion(*minion, Game::GetInstance().GetState().GetObjectPtr(&associated), 4, true, 1, nMinions, s);
-    // minion->AddComponent(mini);
-    // minionArray.push_back(Game::GetInstance().GetState().AddObject(minion));
 
     for (int i = 1; i <= nMinions; i++) {
         GameObject* minion = new GameObject();
@@ -85,7 +75,6 @@ void Alien::Start() {
 
 void Alien::Update(float dt) {
 
-    //cout << "alien x: " << associated.box.x << " alien y: " << associated.box.y << " alienCount: " << alienCount << endl;
     associated.angleDeg++;
     if (associated.angleDeg == 360) {
         associated.angleDeg = 0;
@@ -122,7 +111,6 @@ void Alien::Update(float dt) {
                 if (fimDesloc.x == 0) {
                     associated.box.x += speed.x;
                     if (associated.box.GetCenter().x < destination.x) {
-                        // cout << "x neg -: +1" << endl;
                         fimDesloc.x++;
                     }
                 }
@@ -130,7 +118,6 @@ void Alien::Update(float dt) {
                 if (fimDesloc.x == 0) {
                     associated.box.x += speed.x;
                     if (associated.box.GetCenter().x > destination.x) {
-                        // cout << "x posit : +1" << endl;
                         fimDesloc.x++;
                     }
                 }
@@ -139,7 +126,6 @@ void Alien::Update(float dt) {
                 if (fimDesloc.y == 0) {
                     associated.box.y += speed.y;
                     if (associated.box.GetCenter().y < destination.y) {
-                        // cout << "y neg -: +1" << endl;
                         fimDesloc.y++;
                     }
                 }
@@ -147,7 +133,6 @@ void Alien::Update(float dt) {
                 if (fimDesloc.y == 0) {
                     associated.box.y += speed.y;
                     if (associated.box.GetCenter().y > destination.y) {
-                        // cout << "y posit : +1" << endl;
                         fimDesloc.y++;
                     }
                 }
@@ -226,10 +211,8 @@ void Alien::NotifyCollision(GameObject& other) {
         if (cp) {
             Bullet* bl = (Bullet*) cp;
             if (bl->targetsPlayer) {
-                //cout << "Bateu no Alien: W: " << other.box.w << endl;
                 hp -= 10;
                 other.RequestDelete();
-                //cout << "hp Alien: " << hp << endl;
             }
         }
         
@@ -251,11 +234,10 @@ void Alien::NewShoot(Vec2 destination) {
                 id = i;
             }
         }
-        cout << "Minion Mais Perto: " << id << " Distancia: " << min << endl;
+        cout << "Minion Mais Perto: " << id << " Distancia: " << min << endl << endl;
         
         if (min < 400) {
             if(auto mini = minionArray[id].lock()) {
-                //cout << "minon shoot" << endl;
                 Minion* minion = (Minion*) mini->GetComponent("Minion");
                 
                 if(minion) {

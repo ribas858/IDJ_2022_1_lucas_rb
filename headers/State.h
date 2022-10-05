@@ -13,7 +13,6 @@ class State {
         void LoadAssets();
         void Update(float dt);
         void Render();
-        // void AddObject(int mouseX, int mouseY);
 
         void Start();
         weak_ptr<GameObject> AddObject(GameObject* go);

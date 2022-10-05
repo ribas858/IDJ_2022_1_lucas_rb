@@ -15,7 +15,7 @@ PenguinBody::PenguinBody(GameObject& associated) : Component(associated) {
     speed.y = 0;
     linearSpeed = 2;
     angle = 0;
-    hp = 5000;
+    hp = 300;
     Sprite* body = new Sprite(associated, "resources/images/penguin.png");
     associated.AddComponent(body);
     Collider* cold = new Collider(associated);
@@ -114,12 +114,9 @@ void PenguinBody::Update(float dt) {
     }
     ///////////////////////////////////////////////////////////////////// DESACELERA
 
-    
-    //cout << "speed X: " << speed.x << " speed Y: " << speed.y << " angle: " << angle << endl;
     associated.box.x += speed.x * dt;
     associated.box.y += speed.y * dt;
 
-    //cout << "hp Pinguin: " << hp << endl;
     if (hp <= 0) {
         Camera::Unfollow();
         GameObject* expl = new GameObject();

@@ -3,10 +3,8 @@
 void GameObject::Start()  {
     for (int i = 0; i < components.size(); i++) {
         components[i]->Start();
-        // cout << "i: " << i << endl;
     }
     started = true;
-    // cout << "start gameObject" << endl << endl;
 }
 
 GameObject::GameObject() : started(false), isDead(false), angleDeg(0) {

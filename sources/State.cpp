@@ -45,13 +45,13 @@ void State::LoadAssets() {
     //Camera::Follow(alien);
     AddObject(alien);
 
-    // GameObject* a2 = new GameObject();
-    // a2->box.x = 200;
-    // a2->box.y = 300;
-    // Alien* al2 = new Alien(*a2, 5);
-    // a2->AddComponent(al2);
-    // //Camera::Follow(alien2);
-    // AddObject(a2);
+    GameObject* a2 = new GameObject();
+    a2->box.x = 200;
+    a2->box.y = 300;
+    Alien* al2 = new Alien(*a2, 5);
+    a2->AddComponent(al2);
+    //Camera::Follow(alien2);
+    AddObject(a2);
 
     GameObject* penguin = new GameObject();
     penguin->box.x = 704;
@@ -74,17 +74,6 @@ void State::LoadAssets() {
     // //sonic->box.x = -100;
     // //Camera::Follow(sonic);
     // AddObject(sonic);
-
-
-    
-    // GameObject* ponto = new GameObject();
-    // Sprite* pt = new Sprite(*ponto, "resources/images/minion_pt.png");
-    // ponto->AddComponent(pt);
-    // ponto->box.x = 512 - 10;
-    // ponto->box.y = 300 - 10;
-    // shared_ptr<GameObject> ptShared(ponto);
-    // objectArray.push_back(ptShared);
-
 }
 
 void State::Start() {
@@ -93,7 +82,7 @@ void State::Start() {
         objectArray[i]->Start();
     }
     started = true;
-    //music.Play();
+    music.Play();
     cout << "Tudo iniciado.." << endl;
 }
 
@@ -127,7 +116,6 @@ void State::Update(float dt) {
     for(int i=0; i<objectArray.size(); i++) {
         if(objectArray[i]->IsDead()) {
             objectArray.erase(objectArray.begin() + i);
-            // cout << "limpa no objectArray" << endl << endl;
         }
     }
 
@@ -172,7 +160,6 @@ weak_ptr<GameObject> State::AddObject(GameObject* go) {
     objectArray.push_back(goShared);
 
     if (started) {
-        // cout << "State ja foi carregado" << endl;
         goShared->Start();
         weak_ptr<GameObject> gobWeak(goShared);
         return gobWeak;
@@ -182,7 +169,6 @@ weak_ptr<GameObject> State::AddObject(GameObject* go) {
 }
 
 weak_ptr<GameObject> State::GetObjectPtr(GameObject* go) {
-    // cout << "get weak " << go->box.x << " " << objectArray.empty() << endl;
     for(int i=0; i<objectArray.size(); i++) {
         if (objectArray[i].get() == go) {
             weak_ptr<GameObject> weakPtrReturn(objectArray[i]);

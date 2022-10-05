@@ -22,8 +22,6 @@ void Collider::Update(float dt) {
 
     box.x = box.x + cos((associated.angleDeg * PI) / 180.0)  * offset.x;
     box.y = box.y + sin((associated.angleDeg * PI) / 180.0)  * offset.x;
-    // cout << "ass x: " << associated.box.x << " ass y: " << associated.box.y << " " << cos((associated.angleDeg * PI) / 180.0) << endl;
-    // cout << "cold x: " << box.x << " cold y: " << box.y << endl;
 }
 
 void Collider::Render() {

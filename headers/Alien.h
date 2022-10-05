@@ -25,16 +25,6 @@ class Alien : public Component, public Being {
         int id;
 
     private:
-        // class Action {
-        //     public:
-        //         enum class ActionType { MOVE, SHOOT };
-                
-        //         Action(ActionType type, float x, float y) : type(type), pos(x,y) { }
-
-        //         ActionType type;
-        //         Vec2 pos;
-        // };
-        // queue<Action> taskQueue;
 
         Vec2 speed;
         int hp;
@@ -55,9 +45,6 @@ class Alien : public Component, public Being {
 
         int counTiros = 0;
         Timer tiros;
-
-
-
 };
 
 #endif

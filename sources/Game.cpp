@@ -113,11 +113,7 @@ void Game::Run(string title, int width, int height) {
         SDL_RenderPresent(renderer);
         SDL_Delay(33);
 
-        InputManager::GetInstance().SetUpdateCounter()++;
-
-        // if (InputManager::GetInstance().IsKeyDown(SDLK_d)) {
-        //     cout << "dt: " << GetDeltaTime() << " segs" << endl;
-        // }      
+        InputManager::GetInstance().SetUpdateCounter()++;    
     }
 
     Resources::ClearImages();

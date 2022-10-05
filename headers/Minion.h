@@ -33,15 +33,18 @@ class Minion : public Component, public Being {
         bool liberado;
         int id;
 
-        static int lastMiniLiberado;
-        static int nextMiniLiberado;
-        static int resetPos;
-        static int allFree;
+        static vector<int> lastMiniLiberado;
+        static vector<int> nextMiniLiberado;
+        static vector<int> resetPos;
+        static vector<int> allFree;
 
         double ang;
         Vec2 originalScale;
-        static float limitePisca;
-        static float somaScale;
+        static vector<float> limitePisca;
+        static vector<float> somaScale;
+
+        Timer lib;
+        int idAlien = 0;
 };
 
 

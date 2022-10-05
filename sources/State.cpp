@@ -141,7 +141,7 @@ void State::Update(float dt) {
                 if (cp1) {
                     Collider* cold1 = (Collider*)cp1;
 
-                    if ( Collision::IsColliding(cold0->box, cold1->box, objectArray[i]->angleDeg, objectArray[j]->angleDeg) ) {
+                    if ( Collision::IsColliding(cold0->box, cold1->box, (objectArray[i]->angleDeg* PI) / 180, objectArray[j]->angleDeg * PI / 180) ) {
                         //cout << "colidiu meu mano" << endl;
                         //cout << "obj i: " << objectArray[i]->box.w << " obj j: " << objectArray[j]->box.w << endl;
                         objectArray[i]->NotifyCollision(*objectArray[j]);

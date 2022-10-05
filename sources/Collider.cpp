@@ -17,11 +17,11 @@ void Collider::Update(float dt) {
     box.w *= scale.x;
     box.h *= scale.y;
 
-    box.x += offset.Rotate(associated.angleDeg).x;
-    box.y += offset.Rotate(associated.angleDeg).y;
+    // box.x += offset.Rotate(associated.angleDeg).x;
+    // box.y += offset.Rotate(associated.angleDeg).y;
 
-    // box.x = box.x + cos((associated.angleDeg * PI) / 180.0)  * offset.x;
-    // box.y = box.y + sin((associated.angleDeg * PI) / 180.0)  * offset.x;
+    box.x = box.x + cos((associated.angleDeg * PI) / 180.0)  * offset.x;
+    box.y = box.y + sin((associated.angleDeg * PI) / 180.0)  * offset.x;
     // cout << "ass x: " << associated.box.x << " ass y: " << associated.box.y << " " << cos((associated.angleDeg * PI) / 180.0) << endl;
     // cout << "cold x: " << box.x << " cold y: " << box.y << endl;
 }
@@ -39,20 +39,20 @@ void Collider::Render() {
             Vec2 center( box.GetCenter() );
             SDL_Point points[5];
 
-            Vec2 point = (Vec2(box.x, box.y) - center).Rotate( associated.angleDeg/(180/PI) )
+            Vec2 point = (Vec2(box.x, box.y) - center).Rotate( -associated.angleDeg)
                             + center - Camera::pos;
             points[0] = {(int)point.x, (int)point.y};
             points[4] = {(int)point.x, (int)point.y};
             
-            point = (Vec2(box.x + box.w, box.y) - center).Rotate( associated.angleDeg/(180/PI) )
+            point = (Vec2(box.x + box.w, box.y) - center).Rotate(- associated.angleDeg)
                             + center - Camera::pos;
             points[1] = {(int)point.x, (int)point.y};
             
-            point = (Vec2(box.x + box.w, box.y + box.h) - center).Rotate( associated.angleDeg/(180/PI) )
+            point = (Vec2(box.x + box.w, box.y + box.h) - center).Rotate(- associated.angleDeg)
                             + center - Camera::pos;
             points[2] = {(int)point.x, (int)point.y};
             
-            point = (Vec2(box.x, box.y + box.h) - center).Rotate( associated.angleDeg/(180/PI) )
+            point = (Vec2(box.x, box.y + box.h) - center).Rotate( -associated.angleDeg)
                             + center - Camera::pos;
             points[3] = {(int)point.x, (int)point.y};
 

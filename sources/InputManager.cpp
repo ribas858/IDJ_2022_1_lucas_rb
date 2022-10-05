@@ -233,10 +233,12 @@ int& InputManager::SetLastFrame() {
     return lastFrame;
 }
 
-const int& InputManager::GetLoadMinions() const {
-    return loadMinions;
+vector<int>* InputManager::GetLoadMinions() {
+    return &loadMinions;
 }
 
-int& InputManager::SetLoadMinions() {
-    return loadMinions;
+void InputManager::SetLoadMinions(int id) {
+    if (!loadMinions.empty()) {
+        loadMinions.at(id)++;
+    }
 }

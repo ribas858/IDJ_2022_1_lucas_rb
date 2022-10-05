@@ -37,8 +37,8 @@ class InputManager {
         const int& GetLastFrame() const;
         int& SetLastFrame();
 
-        const int& GetLoadMinions() const;
-        int& SetLoadMinions();
+        vector<int>* GetLoadMinions();
+        void SetLoadMinions(int id);
 
     private:
         InputManager() = default;
@@ -58,7 +58,7 @@ class InputManager {
         int mouseY = 0;
         int lastFrame = 0;
 
-        int loadMinions = 0;
+        vector<int> loadMinions;
         
 };
 

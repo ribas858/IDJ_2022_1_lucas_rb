@@ -6,16 +6,17 @@
 #include "../headers/Sound.h"
 #include "../headers/Collider.h"
 #include "../headers/Camera.h"
+#include "../headers/Alien.h"
 
 
-int Minion::nextMiniLiberado = 0;
-int Minion::lastMiniLiberado = 0;
-int Minion::resetPos = 0;
+vector<int> Minion::nextMiniLiberado = {};
+vector<int> Minion::lastMiniLiberado = {};
+vector<int> Minion::resetPos = {};
 
-int Minion::allFree = 0;
+vector<int> Minion::allFree = {};
 
-float Minion::limitePisca = 0;
-float Minion::somaScale = 0;
+vector<float> Minion::limitePisca = {};
+vector<float> Minion::somaScale = {};
  
 Minion::Minion(GameObject& associated, weak_ptr<GameObject> alienCenter, float arcOffsetDeg, bool lib, int id, int nMini, Vec2 scale) : id(id), liberado(lib), arc(arcOffsetDeg), alienCenter(alienCenter), Component(associated) {
     numMinions = nMini;
@@ -30,7 +31,7 @@ Minion::Minion(GameObject& associated, weak_ptr<GameObject> alienCenter, float a
 
     associated.box.x = 0;
     associated.box.y = 0;
-    origin.x = 0; 
+    origin.x = 0;
     origin.y = 0;
 
     xyLinha.x = 0;
@@ -44,16 +45,18 @@ Minion::Minion(GameObject& associated, weak_ptr<GameObject> alienCenter, float a
     sourceShoot.y = 0;
     ang = 90;
 
+    
+
     if (liberado) {
-        lastMiniLiberado = id;
+        InputManager::GetInstance().GetLoadMinions()->push_back(1);
+        lastMiniLiberado.push_back(id);
+        nextMiniLiberado.push_back(0);
+        resetPos.push_back(0);
+        allFree.push_back(0);
 
-        nextMiniLiberado = 0;
-        resetPos = 0;
-        allFree = 0;
-        limitePisca = 0;
-        somaScale = 0;
+        limitePisca.push_back(0);
+        somaScale.push_back(0);
 
-        InputManager::GetInstance().SetLoadMinions() = 1;
         Component* cp = alienCenter.lock()->GetComponent("Sound");
         if (cp) {
             Sound* som = (Sound*)cp;
@@ -63,6 +66,14 @@ Minion::Minion(GameObject& associated, weak_ptr<GameObject> alienCenter, float a
 }
         
 void Minion::Update(float dt) {
+
+    Component* cp = alienCenter.lock()->GetComponent("Alien");
+    if (cp) {
+        Alien* al = (Alien*)cp;
+        cout << "a mini id: " << id << " alien id: " << al->id << " loadMinons: " << InputManager::GetInstance().GetLoadMinions()->at(idAlien) << endl;
+        idAlien = al->id - 1;
+         
+    }
     
 
     if(auto ali = alienCenter.lock()) {
@@ -70,23 +81,23 @@ void Minion::Update(float dt) {
         Sprite* s = (Sprite*) associated.GetComponent("Sprite");
         if(!liberado) {
             float intervalo = 0.01;
-            if (limitePisca < 20 * dt) {
-                somaScale += intervalo;
+            if (limitePisca.at(idAlien) < 20 * dt) {
+                somaScale.at(idAlien) += intervalo;
                 s->SetScaleRender(originalScale.x - intervalo, originalScale.y - intervalo);
             } else {
-                if (limitePisca > 40 * dt) {
-                    limitePisca = 0;
-                    somaScale = 0;
+                if (limitePisca.at(idAlien) > 40 * dt) {
+                    limitePisca.at(idAlien) = 0;
+                    somaScale.at(idAlien) = 0;
                 }
                 //cout << "somaScale: " << somaScale << " ori x: " << originalScale.x - somaScale << endl;
                 
-                s->SetScaleRender(originalScale.x - somaScale + intervalo, originalScale.y - somaScale + intervalo);
-                somaScale -= intervalo;
+                s->SetScaleRender(originalScale.x - somaScale.at(idAlien) + intervalo, originalScale.y - somaScale.at(idAlien) + intervalo);
+                somaScale.at(idAlien) -= intervalo;
             }
-            limitePisca += dt;
+            limitePisca.at(idAlien) += dt;
             //cout << "limitePisca: " << limitePisca << endl;
         } 
-        else if (allFree == 0) {
+        else if (allFree.at(idAlien) == 0) {
             //cout << "set original" << endl;
             s->SetScaleRender(originalScale.x, originalScale.y);
         }
@@ -95,25 +106,20 @@ void Minion::Update(float dt) {
 
         
         //cout << "arc: " << arc << endl;
-
-        if (liberado && lastMiniLiberado == id && resetPos == 1) {
+        
+        if (liberado && lastMiniLiberado.at(idAlien) == id && resetPos.at(idAlien) == 1) {
             
-            resetPos = 0;
+            resetPos.at(idAlien) = 0;
             associated.box.x = diametro;
             associated.box.y = 0;
             origin.x = 0; 
             origin.y = 0;
         }
-        
-        // cout << "Liberadodo: " << liberado << " ANTESSSS | x: " << associated.box.x << " y: " << associated.box.y << endl;
+        // // cout << "Liberadodo: " << liberado << " ANTESSSS | x: " << associated.box.x << " y: " << associated.box.y << endl;
 
         xy.x = associated.box.x - origin.x;
         xy.y = associated.box.y - origin.y;
         xyLinha = xy.Rotate(arc);
-
-        // xyLinha.x =  (associated.box.x - origin.x) * cos(arc * PI/180 ) + (associated.box.y -origin.y) * sin(arc * PI/180);
-        // xyLinha.y =  ((-1) * (associated.box.x - origin.x) ) * sin(arc * PI/180) + (associated.box.y - origin.y) * cos(arc * PI/180);
-        // cout << "xyLinha.x: " << xyLinha.x << " yl: " << xyLinha.y << endl;
 
         if (xyLinha.x == 0 && xyLinha.y == 0) {
             // cout << "x linha e y linha zerados" << endl;
@@ -125,38 +131,35 @@ void Minion::Update(float dt) {
             } else {
                 float x = (alienCenter.lock()->box.x + (alienCenter.lock()->box.w / 2));
                 float y = (alienCenter.lock()->box.y + (alienCenter.lock()->box.h / 2));
-                
-                
                 associated.box.x = x - associated.box.w/2 + diametro;
                 associated.box.y = y - associated.box.h/2;
-                //cout << "mini x: " << associated.box.x << "mini y: " << associated.box.y << endl;
             }
-            // origin.x = 0; 
-            // origin.y = 0;
-            
+        
         } else {
-
+            
             if (xyLinha.x < releaseLimit) {
-                if (liberado && lastMiniLiberado == id) {
-                    nextMiniLiberado = 1;
-                    
+                if (liberado && lastMiniLiberado.at(idAlien) == id) {
+                    nextMiniLiberado.at(idAlien) = 1;
                 }
             }
 
-            if(!liberado && nextMiniLiberado == 1) {
+            
+            if(!liberado && nextMiniLiberado.at(idAlien) == 1) {
                 cout << "liberando.." << endl;
                 Component* cp = alienCenter.lock()->GetComponent("Sound");
-                
                 if (cp) {
                     Sound* som = (Sound*)cp;
                     som->Play();
                 }
-                lastMiniLiberado = id;
+                lastMiniLiberado.at(idAlien) = id;
                 liberado = true;
-                resetPos = 1;
-                nextMiniLiberado = 0;
-                InputManager::GetInstance().SetLoadMinions()++;
-            } 
+                resetPos.at(idAlien) = 1;
+                nextMiniLiberado.at(idAlien) = 0;
+                InputManager::GetInstance().SetLoadMinions(idAlien);
+
+                cout << "mini id: " << id << " alien id: " << idAlien+1 <<  " loadMini:" << InputManager::GetInstance().GetLoadMinions()->at(idAlien) << endl;
+            }
+            
             
             if (liberado) {
                 // cout << "antes -> mini x: " << associated.box.x << " mini y: " << associated.box.y << endl;
@@ -167,7 +170,7 @@ void Minion::Update(float dt) {
                 origin.y = y - associated.box.h / 2;
             
                 bool initPos = false;
-                if (xyLinha.x > diametro && allFree == 0) { 
+                if (xyLinha.x > diametro && allFree.at(idAlien) == 0) { 
                     initPos = true;
                 }
 
@@ -183,8 +186,9 @@ void Minion::Update(float dt) {
             }
             
         }
-
-        if (allFree == 1) {
+        //cout << "size lastMiniLiberado: " << lastMiniLiberado.size() << " nextMiniLiberado: " << nextMiniLiberado.size() << " resetPos: " << resetPos.size() << " allFree: " << allFree.size() << endl << endl;
+        if (allFree.at(idAlien) == 1) {
+            cout << "mini id: " << id << " alien id: " << idAlien+1 <<  " loadMini:" << InputManager::GetInstance().GetLoadMinions()->at(idAlien) << endl;
             arc = 2;
             ang += - 2;
         } else {
@@ -194,14 +198,16 @@ void Minion::Update(float dt) {
         }
         associated.angleDeg = ang;
 
-        // cout << " ang: " << ang << endl;
+        // // cout << " ang: " << ang << endl;
 
-        // cout << "Id: " << id << " | x: " << associated.box.x << " y: " << associated.box.y << endl << endl;
-        // cout << "Minions Liberados: " << InputManager::GetInstance().GetLoadMinions() << endl;
+        // // cout << "Id: " << id << " | x: " << associated.box.x << " y: " << associated.box.y << endl << endl;
+        // // cout << "Minions Liberados: " << InputManager::GetInstance().GetLoadMinions() << endl;
         
-        if (InputManager::GetInstance().GetLoadMinions() == numMinions) {
-            allFree = 1;
+        if (InputManager::GetInstance().GetLoadMinions()->at(idAlien) == numMinions) {
+            allFree.at(idAlien) = 1;
         }
+
+
         
     } else {
         GameObject* expl = new GameObject();

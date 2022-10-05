@@ -3,6 +3,7 @@
 
 #include "../headers/GameObject.h"
 #include "../headers/Vec2.h"
+#include "../headers/Sprite.h"
 
 class PenguinCannon : public Component, public Being {
     public:
@@ -30,6 +31,9 @@ class PenguinCannon : public Component, public Being {
         bool recarrega = false;
         bool cooldown = false;
         class Sound* recarga;
+
+        Timer arranque;
+        Sprite* sp = nullptr;
 
 };
 

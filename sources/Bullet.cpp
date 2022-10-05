@@ -6,6 +6,7 @@ Bullet::Bullet(GameObject& associated, float angle, float speed, int damage, flo
         distanceLeft(maxDistance), damage(damage), targetsPlayer(target) {
     
     Sprite* bulletSprite = new Sprite(associated, sprite, frameCount, 0.07);
+    
     associated.AddComponent(bulletSprite);
     Collider* cold = new Collider(associated);
     associated.AddComponent(cold);

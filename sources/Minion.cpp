@@ -46,6 +46,13 @@ Minion::Minion(GameObject& associated, weak_ptr<GameObject> alienCenter, float a
 
     if (liberado) {
         lastMiniLiberado = id;
+
+        nextMiniLiberado = 0;
+        resetPos = 0;
+        allFree = 0;
+        limitePisca = 0;
+        somaScale = 0;
+
         InputManager::GetInstance().SetLoadMinions() = 1;
         Component* cp = alienCenter.lock()->GetComponent("Sound");
         if (cp) {
@@ -59,7 +66,7 @@ void Minion::Update(float dt) {
     
 
     if(auto ali = alienCenter.lock()) {
-
+        
         Sprite* s = (Sprite*) associated.GetComponent("Sprite");
         if(!liberado) {
             float intervalo = 0.01;

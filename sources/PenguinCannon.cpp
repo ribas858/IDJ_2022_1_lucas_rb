@@ -1,5 +1,4 @@
 #include "../headers/PenguinCannon.h"
-#include "../headers/Sprite.h"
 #include "../headers/InputManager.h"
 #include "../headers/Camera.h"
 #include "../headers/Bullet.h"
@@ -10,7 +9,8 @@
 PenguinCannon::PenguinCannon(GameObject& associated, weak_ptr<GameObject> penguinBody) : Component(associated) {
     angle = 0;
     pbody = penguinBody;
-    Sprite* cannon = new Sprite(associated, "resources/images/cubngun.png");
+    Sprite* cannon = new Sprite(associated, "resources/images/cubngun_tranco_animation.png", 4, 0.03);
+    cannon->selectOneFrame = true;
     associated.AddComponent(cannon);
     Collider* cold = new Collider(associated);
     associated.AddComponent(cold);
@@ -34,13 +34,28 @@ void PenguinCannon::Update(float dt) {
         
         associated.angleDeg = (angle * 180) / PI;
 
+        
         if (InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON)) {
             cout << "Atira.." << endl;
             if (municao > 0) {
+                Component* cp = associated.GetComponent("Sprite");
+                if (cp) {
+                    sp = (Sprite*) cp;
+                    sp->selectOneFrame = false;
+                }
                 Shoot();
                 municao--;
                 recarrega = false;
                 cooldown = false;
+            }
+        }
+        if(sp) {
+            //cout << "sp" << endl;
+            arranque.Update(dt);
+            if (arranque.Get() > 0.4) {
+                sp->selectOneFrame = true;
+                arranque.Restart();
+                sp = nullptr;
             }
         }
 

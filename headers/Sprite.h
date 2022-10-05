@@ -40,6 +40,9 @@ class Sprite : public Component {
         void SetFrameCount(int frameCount);
         void SetFrameTime(float frameTime);
 
+        bool selectOneFrame = false;
+        int oneFrame = 0;
+
     private:
         SDL_Texture* texture;
         int width;
@@ -56,6 +59,8 @@ class Sprite : public Component {
         /////////////////////
         Timer selfDestructCount;
         float secondsToSelfDestruct;
+
+        
 
 };
 

@@ -5,7 +5,6 @@
 #include "../headers/Resources.h"
 #include "../headers/InputManager.h"
 #include "../headers/Camera.h"
-//Resources* recurso = new Resources();
 
 void Sprite::Start() {
     // cout << "start sprite" << endl;
@@ -104,7 +103,7 @@ bool Sprite::IsOpen() {
 void Sprite::Update(float dt) {
 
     timeElapsed += dt;
-    if (frameCount > 1) {
+    if (frameCount > 1 && !selectOneFrame) {
         if(timeElapsed > frameTime) {
             timeElapsed = 0;
             if (currentFrame == frameCount) {
@@ -113,6 +112,9 @@ void Sprite::Update(float dt) {
             SetFrame(currentFrame);
             currentFrame++;
         }
+    }
+    if (selectOneFrame) {
+        SetFrame(oneFrame);
     }
 
     if (secondsToSelfDestruct > 0) {

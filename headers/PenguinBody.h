@@ -16,6 +16,7 @@ class PenguinBody : public Component, public Being {
 
         static PenguinBody* player;
         void NotifyCollision(GameObject& other) override;
+        Rect GetBoxPenguin();
 
     private:
         weak_ptr<GameObject> pcannon;

@@ -20,30 +20,41 @@ class Alien : public Component, public Being {
 
         void NotifyCollision(GameObject& other) override;
         
+        static int alienCount;
+        void NewShoot(Vec2 destination);
+        int id;
 
     private:
-        class Action {
-            public:
-                enum class ActionType { MOVE, SHOOT };
+        // class Action {
+        //     public:
+        //         enum class ActionType { MOVE, SHOOT };
                 
-                Action(ActionType type, float x, float y) : type(type), pos(x,y) { }
+        //         Action(ActionType type, float x, float y) : type(type), pos(x,y) { }
 
-                ActionType type;
-                Vec2 pos;
-        };
+        //         ActionType type;
+        //         Vec2 pos;
+        // };
+        // queue<Action> taskQueue;
 
         Vec2 speed;
         int hp;
         int nMinions;
-        Vec2 camPos;
 
-        queue<Action> taskQueue;
         vector <weak_ptr<GameObject>> minionArray;
-
         static Vec2 desloc;
         static Vec2 fimDesloc;
         static int flag;
         static Vec2 inicialPos;
+
+        /////////////////////////////////
+        
+        enum class AlienState { MOVING, RESTING };
+        AlienState state;
+        Timer restTimer;
+        Vec2 destination;
+
+        int counTiros = 0;
+        Timer tiros;
 
 
 

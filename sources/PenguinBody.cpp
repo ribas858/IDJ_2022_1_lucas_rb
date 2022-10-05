@@ -15,7 +15,7 @@ PenguinBody::PenguinBody(GameObject& associated) : Component(associated) {
     speed.y = 0;
     linearSpeed = 2;
     angle = 0;
-    hp = 50;
+    hp = 5000;
     Sprite* body = new Sprite(associated, "resources/images/penguin.png");
     associated.AddComponent(body);
     Collider* cold = new Collider(associated);
@@ -163,4 +163,8 @@ void PenguinBody::NotifyCollision(GameObject& other) {
         }
         
     }
+}
+
+Rect PenguinBody::GetBoxPenguin() {
+    return associated.box;
 }

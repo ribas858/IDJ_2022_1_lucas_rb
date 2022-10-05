@@ -45,6 +45,14 @@ void State::LoadAssets() {
     //Camera::Follow(alien);
     AddObject(alien);
 
+    // GameObject* a2 = new GameObject();
+    // a2->box.x = 200;
+    // a2->box.y = 300;
+    // Alien* al2 = new Alien(*a2, 5);
+    // a2->AddComponent(al2);
+    // //Camera::Follow(alien2);
+    // AddObject(a2);
+
     GameObject* penguin = new GameObject();
     penguin->box.x = 704;
     penguin->box.y = 640;

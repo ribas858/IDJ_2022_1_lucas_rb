@@ -19,9 +19,12 @@ Sprite::Sprite(GameObject& associated) : Component(associated) {
     texture = nullptr;
 }
 
-Sprite::Sprite(GameObject& associated, string file, int frameCount, float frameTime) : Sprite(associated) {
+Sprite::Sprite(GameObject& associated, string file, int frameCount,
+            float frameTime, float secondsToSelfDestruct) : Sprite(associated) {
+
     Sprite::frameCount = frameCount;
     Sprite::frameTime = frameTime;
+    Sprite::secondsToSelfDestruct = secondsToSelfDestruct;
     // cout << "frameCout: " << Sprite::frameCount << endl;
     // cout << "frameTime: " << Sprite::frameTime << endl;
     Open(file);
@@ -84,10 +87,10 @@ void Sprite::Render(float x, float y, float angle) {
 
 int Sprite::GetWidth() {
     // cout << "widt div: " << width / frameCount << endl;
-    return (width / frameCount);
+    return (width  * scale.x) / frameCount;
 }
 int Sprite::GetHeight() {
-    return height;
+    return height * scale.y;
 }
 
 bool Sprite::IsOpen() {
@@ -112,6 +115,13 @@ void Sprite::Update(float dt) {
         }
     }
 
+    if (secondsToSelfDestruct > 0) {
+        selfDestructCount.Update(dt);
+        if (selfDestructCount.Get() > secondsToSelfDestruct) {
+            associated.RequestDelete();
+        }
+    }
+    
 }
 
 bool Sprite::Is(string type) {
@@ -138,11 +148,10 @@ void Sprite::SetScale(float scaleX, float scaleY) {
     }
     if (scaleY != 0) {
         scale.y = scaleY;
+    
     }
     associated.box.w *= scale.x;
     associated.box.h *= scale.y;
-    width = associated.box.w;
-    height = associated.box.h;
 }
 
 void Sprite::SetScaleRender(float scaleX, float scaleY) {
@@ -160,10 +169,10 @@ Vec2 Sprite::GetScale() {
 
 void Sprite::SetFrame(int frame) {
     currentFrame = frame;
-    clipRect.x = GetWidth() * currentFrame;
+    clipRect.x = (GetWidth() / scale.x) * currentFrame;
     // 101, 202, 303, 404, 505
-    // cout <<"widthFrame: " << widthFrame << endl;
-    // cout << "clipRect X: " << clipRect.x << endl;
+    //clipRect.x = 101 * currentFrame;
+    // cout << "clipRect X: " << clipRect.x << " width: " << GetWidth() << " h: " << GetHeight() << endl;
     // cout << "current Frame: " << currentFrame << " frame count:" << frameCount << endl << endl;
 }
 

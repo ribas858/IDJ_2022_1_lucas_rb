@@ -9,7 +9,8 @@ class Sprite : public Component {
     public:
         Sprite(class GameObject& associated);
         
-        Sprite(class GameObject& associated, string file, int frameCount = 1, float frameTime = 1);
+        Sprite(class GameObject& associated, string file, int frameCount = 1,
+            float frameTime = 1, float secondsToSelfDestruct = 0);
         
         ~Sprite() override;
         
@@ -51,6 +52,11 @@ class Sprite : public Component {
         int currentFrame;
         float timeElapsed;
         float frameTime;
+
+        /////////////////////
+        Timer selfDestructCount;
+        float secondsToSelfDestruct;
+
 };
 
 #endif

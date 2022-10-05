@@ -197,7 +197,12 @@ void Minion::Update(float dt) {
         }
         
     } else {
-        // cout << "Alien morreu.." << endl;
+        GameObject* expl = new GameObject();
+        Sprite* ex = new Sprite(*expl, "resources/images/miniondeath.png", 4, 0.08, 0.32);
+        expl->AddComponent(ex);
+        expl->box.x = associated.box.GetCenter().x - ex->GetWidth()/2;
+        expl->box.y = associated.box.GetCenter().y - ex->GetHeight()/2;
+        Game::GetInstance().GetState().AddObject(expl);
         associated.RequestDelete();
     }
 }
@@ -252,6 +257,7 @@ void Minion::Shoot(Vec2 target) {
     bullet->AddComponent(bul);
     Sound* som = new Sound(*bullet, "resources/sounds/tiro.wav");
     som->Play();
+    bullet->AddComponent(som);
     Game::GetInstance().GetState().AddObject(bullet);
     
 }

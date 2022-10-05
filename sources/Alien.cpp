@@ -195,6 +195,15 @@ void Alien::Update(float dt) {
     }
     //cout << "hp Alien: " << hp << endl;
     if (hp <= 0) {
+        GameObject* expl = new GameObject();
+        Sprite* ex = new Sprite(*expl, "resources/images/aliendeath_fire2.png", 8, 0.08, 0.8);
+        expl->AddComponent(ex);
+        Sound* som = new Sound(*expl, "resources/sounds/boom.wav");
+        som->Play();
+        expl->box.x = associated.box.GetCenter().x - ex->GetWidth()/2;
+        expl->box.y = associated.box.GetCenter().y - ex->GetHeight()/2;
+        expl->AddComponent(som);
+        Game::GetInstance().GetState().AddObject(expl);
         associated.RequestDelete();
     }
 }

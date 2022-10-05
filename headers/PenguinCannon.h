@@ -24,8 +24,12 @@ class PenguinCannon : public Component, public Being {
 
         Vec2 origin;
         Vec2 xylinha;
+        Timer time;
 
-        int flag = 0;
+        int municao = 10;
+        bool recarrega = false;
+        bool cooldown = false;
+        class Sound* recarga;
 
 };
 

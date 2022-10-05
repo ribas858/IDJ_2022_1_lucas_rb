@@ -8,6 +8,7 @@ using namespace std;
 #define INCLUDE_SDL_IMAGE
 #define INCLUDE_SDL_MIXER
 #include "../headers/SDL_include.h"
+#include "../headers/Timer.h"
 
 #include <vector>
 #include <cmath>

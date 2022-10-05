@@ -5,6 +5,7 @@
 #include "../headers/Bullet.h"
 #include "../headers/Game.h"
 #include "../headers/Collider.h"
+#include "../headers/Sound.h"
 
 PenguinCannon::PenguinCannon(GameObject& associated, weak_ptr<GameObject> penguinBody) : Component(associated) {
     angle = 0;
@@ -15,11 +16,13 @@ PenguinCannon::PenguinCannon(GameObject& associated, weak_ptr<GameObject> pengui
     associated.AddComponent(cold);
     maxDistance = 600;
     damage = 15;
+    recarga = new Sound(associated, "resources/sounds/recarrega.wav");
 }
 
 void PenguinCannon::Update(float dt) {
     Vec2 xy(0,0);
-
+    time.Update(dt);
+    
     if(pbody.lock()) {
 
         associated.box.x = (pbody.lock()->box.x + pbody.lock()->box.w/2) - associated.box.w/2;
@@ -33,9 +36,31 @@ void PenguinCannon::Update(float dt) {
 
         if (InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON)) {
             cout << "Atira.." << endl;
-            Shoot();
+            if (municao > 0) {
+                Shoot();
+                municao--;
+                recarrega = false;
+                cooldown = false;
+            }
         }
 
+    // cout << time.Get() << " municao: " << municao << endl;
+    if (municao == 0) {
+        //cout << "recarga" << endl;
+        recarrega = true;
+    }
+    if (recarrega && !cooldown) {
+        time.Restart();
+        cooldown = true;
+        recarga->Play();
+    }
+    if (recarrega) {
+        if (time.Get() > 1.5) {
+            municao = 10;
+            recarrega = false;
+        }
+    }
+    
     } else {
         cout << "Pinguin Body morreu..." << endl;
         associated.RequestDelete();
@@ -71,6 +96,9 @@ void PenguinCannon::Shoot() {
     
     // Sound* som = new Sound(*bullet, "resources/sounds/tiro.wav");
     // som->Play();
+    Sound* som = new Sound(*bullet, "resources/sounds/canhao.wav");
+    som->Play();
+    bullet->AddComponent(som);
     Game::GetInstance().GetState().AddObject(bullet);
 }
 

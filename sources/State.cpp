@@ -57,8 +57,14 @@ void State::LoadAssets() {
 
 
     // GameObject* sonic = new GameObject();
-    // Sprite* snc = new Sprite(*sonic, "resources/images/sonic.png", 6, 0.08);
+    // Sprite* snc = new Sprite(*sonic, "resources/images/sonic.png", 6, 0.05);
+    // cout << " width antes: " << snc->GetWidth() << " " << snc->GetHeight() << endl;
+    // snc->SetScale(5, 5);
     // sonic->AddComponent(snc);
+    // Collider* cold = new Collider(*sonic);
+    // sonic->AddComponent(cold);
+    // //sonic->box.x = -100;
+    // //Camera::Follow(sonic);
     // AddObject(sonic);
 
 

@@ -6,6 +6,7 @@
 #include "../headers/Collider.h"
 #include "../headers/Camera.h"
 #include "../headers/Bullet.h"
+#include "../headers/Sound.h"
 
 PenguinBody* PenguinBody::player = nullptr;
 
@@ -121,6 +122,15 @@ void PenguinBody::Update(float dt) {
     //cout << "hp Pinguin: " << hp << endl;
     if (hp <= 0) {
         Camera::Unfollow();
+        GameObject* expl = new GameObject();
+        Sprite* ex = new Sprite(*expl, "resources/images/penguindeath.png", 5, 0.08, 0.4);
+        expl->AddComponent(ex);
+        Sound* som = new Sound(*expl, "resources/sounds/boom_pg.wav");
+        som->Play();
+        expl->AddComponent(som);
+        expl->box.x = associated.box.GetCenter().x - ex->GetWidth()/2;
+        expl->box.y = associated.box.GetCenter().y - ex->GetHeight()/2;
+        Game::GetInstance().GetState().AddObject(expl);
         associated.RequestDelete();
     }
 

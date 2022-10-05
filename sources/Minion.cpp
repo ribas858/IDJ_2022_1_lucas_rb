@@ -70,7 +70,6 @@ void Minion::Update(float dt) {
         Component* cp = alienCenter.lock()->GetComponent("Alien");
         if (cp) {
             Alien* al = (Alien*)cp;
-            cout << "a mini id: " << id << " alien id: " << al->id << " loadMinons: " << InputManager::GetInstance().GetLoadMinions()->at(idAlien) << endl;
             idAlien = al->id - 1;
             
         }

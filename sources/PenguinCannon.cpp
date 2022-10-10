@@ -114,7 +114,7 @@ void PenguinCannon::Shoot() {
     Sound* som = new Sound(*bullet, "resources/sounds/canhao.wav");
     som->Play();
     bullet->AddComponent(som);
-    Game::GetInstance().GetState().AddObject(bullet);
+    Game::GetInstance().GetCurrentState().AddObject(bullet);
 }
 
 void PenguinCannon::NotifyCollision(GameObject& other) {

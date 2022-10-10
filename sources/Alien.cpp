@@ -16,7 +16,6 @@ Vec2 Alien::fimDesloc(0,0);
 int Alien::flag = 0;
 int Alien::alienCount = 0;
 
-// State& state = Game::GetInstance().GetState();
 
 Alien::Alien(GameObject & associated, int nMinions) : Component(associated), nMinions(nMinions) {
 
@@ -52,11 +51,6 @@ Alien::~Alien() {
 
 void Alien::Start() {
     cout << "start alien" << " alien id: " << id << " alienCount: " << alienCount << endl;
-    // GameObject* minion = new GameObject();
-    // Vec2 s(1,1);
-    // Minion* mini = new Minion(*minion, Game::GetInstance().GetState().GetObjectPtr(&associated), 4, true, 1, nMinions, s);
-    // minion->AddComponent(mini);
-    // minionArray.push_back(Game::GetInstance().GetState().AddObject(minion));
 
     for (int i = 1; i <= nMinions; i++) {
         GameObject* minion = new GameObject();
@@ -69,14 +63,14 @@ void Alien::Start() {
         //Vec2 s(1,1);
         
         if (i == 1) {
-            Minion* mini = new Minion(*minion, Game::GetInstance().GetState().GetObjectPtr(&associated), 4, true, i, nMinions, s);
+            Minion* mini = new Minion(*minion, Game::GetInstance().GetCurrentState().GetObjectPtr(&associated), 4, true, i, nMinions, s);
             minion->AddComponent(mini);
         } else {
-            Minion* mini = new Minion(*minion, Game::GetInstance().GetState().GetObjectPtr(&associated), 4, false, i, nMinions, s);
+            Minion* mini = new Minion(*minion, Game::GetInstance().GetCurrentState().GetObjectPtr(&associated), 4, false, i, nMinions, s);
             minion->AddComponent(mini);
         }
 
-        minionArray.push_back(Game::GetInstance().GetState().AddObject(minion));
+        minionArray.push_back(Game::GetInstance().GetCurrentState().AddObject(minion));
         
     }
     cout << endl;
@@ -194,7 +188,7 @@ void Alien::Update(float dt) {
         expl->box.x = associated.box.GetCenter().x - ex->GetWidth()/2;
         expl->box.y = associated.box.GetCenter().y - ex->GetHeight()/2;
         expl->AddComponent(som);
-        Game::GetInstance().GetState().AddObject(expl);
+        Game::GetInstance().GetCurrentState().AddObject(expl);
         associated.RequestDelete();
     }
 }

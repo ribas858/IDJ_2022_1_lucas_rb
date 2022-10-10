@@ -9,26 +9,30 @@ class State {
         State();
         ~State();
 
+        virtual void LoadAssets() = 0;
+        virtual void Update(float dt) = 0;
+        virtual void Render() = 0;
+
+        virtual void Start() = 0;
+        virtual void Pause() = 0;
+        virtual void Resume() = 0;
+
+        virtual weak_ptr<GameObject> AddObject(GameObject* object);
+        virtual weak_ptr<GameObject> GetObjectPtr(GameObject* object);
+
+        bool PopRequested();
         bool QuitRequested();
-        void LoadAssets();
-        void Update(float dt);
-        void Render();
-        // void AddObject(int mouseX, int mouseY);
 
-        void Start();
-        weak_ptr<GameObject> AddObject(GameObject* go);
-        weak_ptr<GameObject> GetObjectPtr(GameObject* go);
+    protected:
+        virtual void StartArray();
+        virtual void UpdateArray(float dt);
+        virtual void RenderArray();
+        void ClearObject();
 
-        
-        vector<shared_ptr<GameObject>>& GetObjArr();
-
-    
-    private:
-        class Sprite* bg;
-        Music music;
+        bool popRequested;
         bool quitRequested;
-        
         bool started;
+
         vector<shared_ptr<GameObject>> objectArray;
 };
 

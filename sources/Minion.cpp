@@ -74,7 +74,7 @@ void Minion::Update(float dt) {
         Component* cp = alienCenter.lock()->GetComponent("Alien");
         if (cp) {
             Alien* al = (Alien*)cp;
-            cout << "a mini id: " << id << " alien id: " << al->id << " loadMinons: " << InputManager::GetInstance().GetLoadMinions()->at(idAlien) << endl;
+            //cout << "a mini id: " << id << " alien id: " << al->id << " loadMinons: " << InputManager::GetInstance().GetLoadMinions()->at(idAlien) << endl;
             idAlien = al->id - 1;
             
         }
@@ -158,7 +158,7 @@ void Minion::Update(float dt) {
                 nextMiniLiberado.at(idAlien) = 0;
                 InputManager::GetInstance().SetLoadMinions(idAlien);
 
-                cout << "mini id: " << id << " alien id: " << idAlien+1 <<  " loadMini:" << InputManager::GetInstance().GetLoadMinions()->at(idAlien) << endl;
+                // cout << "mini id: " << id << " alien id: " << idAlien+1 <<  " loadMini:" << InputManager::GetInstance().GetLoadMinions()->at(idAlien) << endl;
             }
             
             
@@ -189,7 +189,7 @@ void Minion::Update(float dt) {
         }
         //cout << "size lastMiniLiberado: " << lastMiniLiberado.size() << " nextMiniLiberado: " << nextMiniLiberado.size() << " resetPos: " << resetPos.size() << " allFree: " << allFree.size() << endl << endl;
         if (allFree.at(idAlien) == 1) {
-            cout << "mini id: " << id << " alien id: " << idAlien+1 <<  " loadMini:" << InputManager::GetInstance().GetLoadMinions()->at(idAlien) << endl;
+            // cout << "mini id: " << id << " alien id: " << idAlien+1 <<  " loadMini:" << InputManager::GetInstance().GetLoadMinions()->at(idAlien) << endl;
             arc = 2;
             ang += - 2;
         } else {
@@ -217,7 +217,7 @@ void Minion::Update(float dt) {
         // expl->AddComponent(ex);
         // expl->box.x = associated.box.GetCenter().x - ex->GetWidth()/2;
         // expl->box.y = associated.box.GetCenter().y - ex->GetHeight()/2;
-        // Game::GetInstance().GetState().AddObject(expl);
+        // Game::GetInstance().GetCurrentState().AddObject(expl);
         associated.RequestDelete();
     }
 }
@@ -273,7 +273,7 @@ void Minion::Shoot(Vec2 target) {
     Sound* som = new Sound(*bullet, "resources/sounds/tiro.wav");
     som->Play();
     bullet->AddComponent(som);
-    Game::GetInstance().GetState().AddObject(bullet);
+    Game::GetInstance().GetCurrentState().AddObject(bullet);
     
 }
 

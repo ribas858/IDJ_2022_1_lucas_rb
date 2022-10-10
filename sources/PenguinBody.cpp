@@ -35,9 +35,9 @@ void PenguinBody::Start() {
     GameObject* pgc = new GameObject();
     pgc->box.x = associated.box.x;
     pgc->box.y = associated.box.y;
-    PenguinCannon* pc = new PenguinCannon(*pgc, Game::GetInstance().GetState().GetObjectPtr(&associated));
+    PenguinCannon* pc = new PenguinCannon(*pgc, Game::GetInstance().GetCurrentState().GetObjectPtr(&associated));
     pgc->AddComponent(pc);
-    pcannon = Game::GetInstance().GetState().AddObject(pgc); 
+    pcannon = Game::GetInstance().GetCurrentState().AddObject(pgc); 
 }
 
 void PenguinBody::Update(float dt) {
@@ -130,7 +130,7 @@ void PenguinBody::Update(float dt) {
         expl->AddComponent(som);
         expl->box.x = associated.box.GetCenter().x - ex->GetWidth()/2;
         expl->box.y = associated.box.GetCenter().y - ex->GetHeight()/2;
-        Game::GetInstance().GetState().AddObject(expl);
+        Game::GetInstance().GetCurrentState().AddObject(expl);
         associated.RequestDelete();
     }
 

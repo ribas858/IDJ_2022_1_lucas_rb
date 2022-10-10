@@ -14,6 +14,8 @@
 #include "../headers/PenguinBody.h"
 #include "../headers/Collider.h"
 #include "Collision.cpp"
+#include "../headers/TitleState.h"
+#include "../headers/Game.h"
 
 
 
@@ -113,9 +115,14 @@ StageState::~StageState() {
 }
 
 void StageState::Update(float dt) {
-    if(InputManager::GetInstance().QuitRequested() || InputManager::GetInstance().KeyPress(ESCAPE_KEY)) {
+    if(InputManager::GetInstance().QuitRequested()) {
         backgroundMusic.~Music(); // Descomentar
         quitRequested = true;
+    }
+    
+    if(InputManager::GetInstance().KeyPress(ESCAPE_KEY)) {
+        backgroundMusic.~Music(); // Descomentar
+        Game::GetInstance().Push(new TitleState());
     }
 
     

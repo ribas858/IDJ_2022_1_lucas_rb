@@ -1,5 +1,5 @@
-all: 	main.o Game.o Component.o State.o Sprite.o Music.o GameObject.o Rect.o Vec2.o Sound.o TileSet.o TileMap.o Resources.o InputManager.o Camera.o CameraFollower.o Alien.o Minion.o Bullet.o PenguinBody.o PenguinCannon.o Collider.o Collision.o Timer.o StageState.o
-	g++ -o main main.o Game.o Component.o State.o Sprite.o Music.o GameObject.o Rect.o Vec2.o Sound.o TileSet.o TileMap.o Resources.o InputManager.o Camera.o CameraFollower.o Alien.o Minion.o Bullet.o PenguinBody.o PenguinCannon.o Collider.o Collision.o Timer.o StageState.o -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
+all: 	main.o Game.o Component.o State.o Sprite.o Music.o GameObject.o Rect.o Vec2.o Sound.o TileSet.o TileMap.o Resources.o InputManager.o Camera.o CameraFollower.o Alien.o Minion.o Bullet.o PenguinBody.o PenguinCannon.o Collider.o Collision.o Timer.o StageState.o TitleState.o
+	g++ -o main main.o Game.o Component.o State.o Sprite.o Music.o GameObject.o Rect.o Vec2.o Sound.o TileSet.o TileMap.o Resources.o InputManager.o Camera.o CameraFollower.o Alien.o Minion.o Bullet.o PenguinBody.o PenguinCannon.o Collider.o Collision.o Timer.o StageState.o TitleState.o -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
 	# rm -rf *.o
 	
 main.o: main.cpp 
@@ -76,6 +76,9 @@ Timer.o: sources/Timer.cpp
 
 StageState.o: sources/StageState.cpp
 	g++ -c sources/StageState.cpp
+
+TitleState.o: sources/TitleState.cpp
+	g++ -c sources/TitleState.cpp
 
 run:
 	./main

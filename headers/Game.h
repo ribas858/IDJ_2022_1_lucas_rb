@@ -36,9 +36,11 @@ class Game {
         void Init_Sdl();
         void Init_Sdl_Image();
         void Init_Sdl_Audio();
+        void Init_Text();
         void Cria_Window(const char* title, int x, int y, int w, int h, Uint32 flags);
         void Destroy_Window();
         void Close_Sdl_Audio();
+        void Close_Text();
         string title;
         int width;
         int height;

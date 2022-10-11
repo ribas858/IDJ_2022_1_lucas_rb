@@ -18,6 +18,7 @@ class TitleState : public State {
 
     
     private:
+        Timer texto;
 };
 
 

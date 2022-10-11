@@ -7,6 +7,7 @@ using namespace std;
 
 #define INCLUDE_SDL_IMAGE
 #define INCLUDE_SDL_MIXER
+#define INCLUDE_SDL_TTF
 #include "../headers/SDL_include.h"
 #include "../headers/Timer.h"
 

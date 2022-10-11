@@ -35,6 +35,7 @@ Game::~Game() {
     Resources::ClearImages();
     Resources::ClearSounds();
     Resources::ClearMusics();
+    Close_Text();
     Destroy_Window();
     Close_Sdl_Audio();
     IMG_Quit();
@@ -68,6 +69,7 @@ void Game::Run() {
     Init_Sdl();
     Init_Sdl_Image();
     Init_Sdl_Audio();
+    Init_Text();
     Cria_Window(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, 0);
     
     if (storedState) {
@@ -78,6 +80,8 @@ void Game::Run() {
         stateStack.top()->Start();
         
         while (!stateStack.empty() && !stateStack.top()->QuitRequested()) {
+
+            // cout << "tamanho pilha: " << stateStack.size() << endl;
             
             if(stateStack.top()->PopRequested()) {
                 stateStack.pop();
@@ -156,6 +160,14 @@ void Game::Init_Sdl_Audio() {
     }
 }
 
+void Game::Init_Text() {
+    if (TTF_Init() != 0) {
+        SDL_Log("Impossível inicializar a biblioteca de TEXTO: %s", TTF_GetError());
+    } else {
+        cout << "SUCESSO!! TEXTO SDL" << endl;
+    }
+}
+
 //
 void Game::Cria_Window(const char* title, int x, int y, int w, int h, Uint32 flags) {
     window = SDL_CreateWindow(title, x, y, w, h, flags);
@@ -180,4 +192,8 @@ void Game::Destroy_Window() {
 void Game::Close_Sdl_Audio() {
     Mix_CloseAudio();
     Mix_Quit();
+}
+
+void Game::Close_Text() {
+    TTF_Quit();
 }

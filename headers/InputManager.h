@@ -40,6 +40,8 @@ class InputManager {
         vector<int>* GetLoadMinions();
         void SetLoadMinions(int id);
 
+        SDL_Color CreateColor(string color);
+
     private:
         InputManager() = default;
         ~InputManager() = default;

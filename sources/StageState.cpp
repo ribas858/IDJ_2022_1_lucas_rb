@@ -16,6 +16,7 @@
 #include "Collision.cpp"
 #include "../headers/TitleState.h"
 #include "../headers/Game.h"
+#include "../headers/Text.h"
 
 
 
@@ -122,7 +123,7 @@ void StageState::Update(float dt) {
     
     if(InputManager::GetInstance().KeyPress(ESCAPE_KEY)) {
         backgroundMusic.~Music(); // Descomentar
-        Game::GetInstance().Push(new TitleState());
+        popRequested = true;
     }
 
     

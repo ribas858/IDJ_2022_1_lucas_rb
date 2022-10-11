@@ -28,3 +28,8 @@ Vec2 Rect::GetCenter() {
     Vec2 center(x + w/2.0, y + h/2.0);
     return center;
 }
+
+Vec2 Rect::PosCenter() {
+    Vec2 center(x - w/2.0, y - h/2.0);
+    return center;
+}

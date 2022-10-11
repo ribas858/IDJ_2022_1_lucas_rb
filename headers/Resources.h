@@ -14,6 +14,9 @@ class Resources {
         static Mix_Chunk* GetSound(string file);
         static void ClearSounds();
 
+        static TTF_Font* GetFont(string file_size);
+        static void ClearFonts();
+
         static bool FindImage(string file);
         static void InsertImage(string file, SDL_Texture* texture);
 
@@ -23,10 +26,14 @@ class Resources {
         static bool FindMusic(string file);
         static void InsertMusic(string file, Mix_Music* music);
 
+        static bool FindFont(string file_size);
+        static void InsertFont(string file, TTF_Font* font, int ptsize);
+
     private:
         static unordered_map<string, SDL_Texture*> imageTable;
         static unordered_map<string, Mix_Music*> musicTable;
         static unordered_map<string, Mix_Chunk*> soundTable;
+        static unordered_map<string, TTF_Font*> fontTable;
 };
 
 #endif

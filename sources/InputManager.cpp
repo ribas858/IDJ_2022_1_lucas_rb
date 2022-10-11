@@ -242,3 +242,29 @@ void InputManager::SetLoadMinions(int id) {
         loadMinions.at(id)++;
     }
 }
+
+SDL_Color InputManager::CreateColor(string color) {
+    if (color.size() != 6) {
+        cout << "\nCor Invalida!! Retornando cor padrão: PRETO\n" << endl;
+        SDL_Color cor = { 0x00, 0x00, 0x00, 0xff };
+        return cor;
+    }
+    int count = 0;
+    string word = "";
+    Uint8 vet[3];
+    int j = 0;
+    for (int i=0; i<color.size(); i++) {
+        if (word.size() == 2 ) {
+            const char *hex = word.c_str();
+            vet[j] = (Uint8)strtol(hex, NULL, 16);
+            j++;
+            word.clear();
+        }
+        word += color[i];
+    }
+    const char *hex = word.c_str();
+    vet[j] = (Uint8)strtol(hex, NULL, 16);
+    SDL_Color cor = { vet[0], vet[1], vet[2], 0xff };
+    
+    return cor;
+}

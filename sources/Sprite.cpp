@@ -41,12 +41,12 @@ void Sprite::Open(string file) {
         if (!texture) {
             SDL_Log("Impossível carregar imagem: %s", SDL_GetError());
         } else {
-            cout << "Sprite carregado com sucesso!!" << endl;
+            //cout << "Sprite carregado com sucesso!!" << endl;
             Resources::InsertImage(file, texture);
         }
     } else {
-        cout << "Sprite já foi carregado..." << endl;
-        cout << "Buscando na tabela..." << endl;
+        //cout << "Sprite já foi carregado..." << endl;
+        //cout << "Buscando na tabela..." << endl;
         texture = Resources::GetImage(file);
         //Open(file);
     }

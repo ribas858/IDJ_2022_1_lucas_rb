@@ -9,12 +9,13 @@
 #include "../headers/Collider.h"
 #include "../headers/Bullet.h"
 #include "../headers/PenguinBody.h"
+#include "../headers/GameData.h"
 
 Vec2 Alien::inicialPos(0,0);
 Vec2 Alien::desloc(0,0);
 Vec2 Alien::fimDesloc(0,0);
 int Alien::flag = 0;
-int Alien::alienCount = 0;
+
 
 
 Alien::Alien(GameObject & associated, int nMinions) : Component(associated), nMinions(nMinions) {
@@ -32,12 +33,12 @@ Alien::Alien(GameObject & associated, int nMinions) : Component(associated), nMi
     associated.box.y =  associated.box.y - (associated.box.h / 2);
 
 
-    cout << "alien w: " << associated.box.w << " alien h: " << associated.box.h << endl;
-    cout << "alien x: " << associated.box.x << " alien y: " << associated.box.y << endl;
+    //cout << "alien w: " << associated.box.w << " alien h: " << associated.box.h << endl;
+    //cout << "alien x: " << associated.box.x << " alien y: " << associated.box.y << endl;
     speed.x = 0;
     speed.y = 0;
-    alienCount++;
-    id = alienCount;
+    GameData::alienCount++;
+    id = GameData::alienCount;
     state = AlienState::RESTING;
 }
 
@@ -46,12 +47,12 @@ Alien::~Alien() {
         minionArray[i].reset();
     }
     minionArray.clear();
-    alienCount--;
+    GameData::alienCount--;
 }
 
 void Alien::Start() {
-    cout << "start alien" << " alien id: " << id << " alienCount: " << alienCount << endl;
-
+    cout << "start alien" << " alien id: " << id << " alienCount: " << GameData::alienCount << endl;
+    //
     for (int i = 1; i <= nMinions; i++) {
         GameObject* minion = new GameObject();
         const float MIN_RAND = 1.0, MAX_RAND = 1.5;
@@ -260,4 +261,11 @@ void Alien::NewShoot(Vec2 destination) {
             }
         }
     }
+}
+
+void Alien::CleanGlobals() {
+    inicialPos = {0, 0};
+    desloc = {0, 0};
+    fimDesloc = {0, 0};
+    flag = 0;
 }

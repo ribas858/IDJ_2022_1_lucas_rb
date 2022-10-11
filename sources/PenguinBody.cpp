@@ -15,7 +15,7 @@ PenguinBody::PenguinBody(GameObject& associated) : Component(associated) {
     speed.y = 0;
     linearSpeed = 2;
     angle = 0;
-    hp = 5000;
+    hp = 200;
     Sprite* body = new Sprite(associated, "resources/images/penguin.png");
     associated.AddComponent(body);
     Collider* cold = new Collider(associated);

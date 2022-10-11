@@ -33,12 +33,12 @@ void Sound::Open(string file) {
         if (!chunk) {
             SDL_Log("Erro ao carregar Som: %s", Mix_GetError());
         } else {
-            cout << "Som Carregado!!" << endl << endl;
+            //cout << "Som Carregado!!" << endl << endl;
             Resources::InsertSound(file, chunk);
         }
     } else {
-        cout << "Som ja está aberto" << endl;
-        cout << "Buscando Som na tabela..." << endl << endl;
+        //cout << "Som ja está aberto" << endl;
+        //cout << "Buscando Som na tabela..." << endl << endl;
         chunk = Resources::GetSound(file);
     }
 }

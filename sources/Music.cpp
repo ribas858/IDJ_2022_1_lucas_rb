@@ -4,7 +4,7 @@
 #include "../headers/Resources.h"
 
 Music::Music() {
-    cout << "\nEntrou em MUSIC" << endl;
+    // cout << "\nEntrou em MUSIC" << endl;
     music = nullptr;
 }
 
@@ -31,12 +31,12 @@ void Music::Open(string file) {
         if (!music) {
             SDL_Log("Erro ao carregar Musica: %s", Mix_GetError());
         } else {
-            cout << "Musica Carregada!!" << endl;
+            // cout << "Musica Carregada!!" << endl;
             Resources::InsertMusic(file, music);
         }
     } else {
-        cout << "Musica ja está aberta" << endl;
-        cout << "Buscando Musica na tabela..." << endl << endl;
+        //cout << "Musica ja está aberta" << endl;
+        //cout << "Buscando Musica na tabela..." << endl << endl;
         music = Resources::GetMusic(file);
     }
     

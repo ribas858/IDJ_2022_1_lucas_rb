@@ -48,6 +48,8 @@ Minion::Minion(GameObject& associated, weak_ptr<GameObject> alienCenter, float a
     
 
     if (liberado) {
+        // cout << "\nSIZES: lastMiniLiberado: " << lastMiniLiberado.size() << " nextMiniLiberado: " << nextMiniLiberado.size() << "\n";
+        // cout << "resetPos: " << resetPos.size() << " allFree: " << allFree.size() << " GetLoadMinions: " << InputManager::GetInstance().GetLoadMinions()->size() << endl << endl;
         InputManager::GetInstance().GetLoadMinions()->push_back(1);
         lastMiniLiberado.push_back(id);
         nextMiniLiberado.push_back(0);
@@ -56,6 +58,9 @@ Minion::Minion(GameObject& associated, weak_ptr<GameObject> alienCenter, float a
 
         limitePisca.push_back(0);
         somaScale.push_back(0);
+
+        // cout << "\nSIZES dps: lastMiniLiberado: " << lastMiniLiberado.size() << " nextMiniLiberado: " << nextMiniLiberado.size() << "\n";
+        // cout << "resetPos: " << resetPos.size() << " allFree: " << allFree.size() << " GetLoadMinions: " << InputManager::GetInstance().GetLoadMinions()->size() << endl << endl;
 
         Component* cp = alienCenter.lock()->GetComponent("Sound");
         if (cp) {
@@ -288,4 +293,14 @@ void Minion::NotifyCollision(GameObject& other) {
         }
         
     }
+}
+
+void Minion::CleanGlobals() {
+    nextMiniLiberado.clear();
+    lastMiniLiberado.clear();
+    resetPos.clear();
+    allFree.clear();
+    limitePisca.clear();
+    somaScale.clear();
+    InputManager::GetInstance().GetLoadMinions()->clear();
 }

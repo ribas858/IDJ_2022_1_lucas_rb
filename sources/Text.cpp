@@ -4,8 +4,8 @@
 #include "../headers/Resources.h"
 
 Text::Text(GameObject& associated, string fontFile, int fontSize,
-    TextStyle style, string text, SDL_Color color) : Component(associated), 
-    fontFile(fontFile), fontSize(fontSize), style(style), text(text), color(color) {
+    TextStyle style, string text, SDL_Color color, float time) : Component(associated), 
+    fontFile(fontFile), fontSize(fontSize), style(style), text(text), color(color), time(time) {
     
     font = nullptr;
     texture = nullptr;
@@ -50,6 +50,8 @@ void Text::RemakeTexture() {
                 }
                 SDL_FreeSurface(surface);
                 surface = nullptr;
+            } else {
+                cout << "Fonte invalida!!" << endl;
             }
         } else {
             // cout << "Fonte ja existe na tabela!!" << endl;
@@ -83,6 +85,8 @@ void Text::RemakeTexture() {
                 
                 SDL_FreeSurface(surface);
                 surface = nullptr;
+            } else {
+                cout << "Fonte invalida!!" << endl;
             }
         }
 
@@ -121,6 +125,8 @@ void Text::RemakeTexture() {
                 
                 SDL_FreeSurface(surface);
                 surface = nullptr;
+            } else {
+                cout << "Fonte invalida!!" << endl;
             }
         } else {
             // cout << "Fonte ja existe na tabela!!" << endl;
@@ -154,6 +160,8 @@ void Text::RemakeTexture() {
                 
                 SDL_FreeSurface(surface);
                 surface = nullptr;
+            } else {
+                cout << "Fonte invalida!!" << endl;
             }
         }
 
@@ -161,11 +169,13 @@ void Text::RemakeTexture() {
 }
 
 void Text::Update(float dt) {
-
+    if (time > 0) {
+        Pisca(dt);
+    }
 }
 
 void Text::Render() {
-    
+
     if (texture && ativar) {
         
         SDL_Rect clipRect;
@@ -220,4 +230,17 @@ void Text::SetFontSize (int fontSize) {
 
 void Text::SetAtivar(bool flag) {
     ativar = flag;
+}
+
+void Text::Pisca(float dt) {
+    texto.Update(dt);
+
+    if(texto.Get() > time) {
+        SetAtivar(false);
+    } else {
+        SetAtivar(true);
+    }
+    if(texto.Get() > time*1.5) {
+        texto.Restart();
+    }
 }

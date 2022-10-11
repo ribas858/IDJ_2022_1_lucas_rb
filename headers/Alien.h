@@ -20,9 +20,9 @@ class Alien : public Component, public Being {
 
         void NotifyCollision(GameObject& other) override;
         
-        static int alienCount;
         void NewShoot(Vec2 destination);
         int id;
+        static void CleanGlobals();
 
     private:
         // class Action {

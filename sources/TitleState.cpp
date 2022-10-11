@@ -17,11 +17,19 @@ void TitleState::LoadAssets() {
 
     GameObject* texto = new GameObject();
     texto->box.x = 512;
-    texto->box.y = 400;
+    texto->box.y = 410;
     SDL_Color color = InputManager::GetInstance().CreateColor("f58b3e");
-    Text* tx = new Text(*texto, "resources/font/Call me maybe.ttf", 35, Text::TextStyle::BLENDED, "Pressione SPACE para continuar...", color);
+    Text* tx = new Text(*texto, "resources/font/Call me maybe.ttf", 35, Text::TextStyle::BLENDED, "Pressione SPACE para continuar", color, 0.8);
     texto->AddComponent(tx);
     AddObject(texto);
+
+    GameObject* spaceKey = new GameObject();
+    Sprite* sp = new Sprite(*spaceKey, "resources/images/space.png", 3, 0.15);
+    sp->SetScale(0.6, 0.6);
+    spaceKey->box.x = spaceKey->box.PosCenter().x + 512;
+    spaceKey->box.y = spaceKey->box.PosCenter().y + 500;
+    spaceKey->AddComponent(sp);
+    AddObject(spaceKey);
 
 
     
@@ -63,22 +71,22 @@ void TitleState::Update(float dt) {
     }
 
     UpdateArray(dt);
-    texto.Update(dt);
+    // texto.Update(dt);
 
-    for (int i = 0; i < objectArray.size(); i++) {
-        if (objectArray[i]->GetComponent("Text")) {
-            auto tx = (Text*)objectArray[i]->GetComponent("Text");
-            if(texto.Get() > 0.8) {
-                tx->SetAtivar(false);
-            } else {
-                tx->SetAtivar(true);
-            }
-            if(texto.Get() > 1.2) {
-                texto.Restart();
-            }
+    // for (int i = 0; i < objectArray.size(); i++) {
+    //     if (objectArray[i]->GetComponent("Text")) {
+    //         auto tx = (Text*)objectArray[i]->GetComponent("Text");
+    //         if(texto.Get() > 0.8) {
+    //             tx->SetAtivar(false);
+    //         } else {
+    //             tx->SetAtivar(true);
+    //         }
+    //         if(texto.Get() > 1.2) {
+    //             texto.Restart();
+    //         }
             
-        }
-    }
+    //     }
+    // }
 
 }
 

@@ -16,6 +16,7 @@ class Minion : public Component, public Being {
         void Shoot(Vec2 target);
 
         void NotifyCollision(GameObject& other) override;
+        static void CleanGlobals();
 
     private:
         weak_ptr<GameObject> alienCenter;

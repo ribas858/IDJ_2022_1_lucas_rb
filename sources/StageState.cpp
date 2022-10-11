@@ -17,6 +17,8 @@
 #include "../headers/TitleState.h"
 #include "../headers/Game.h"
 #include "../headers/Text.h"
+#include "../headers/GameData.h"
+#include "../headers/EndState.h"
 
 
 
@@ -55,6 +57,8 @@ void StageState::LoadAssets() {
     a2->AddComponent(al2);
     //Camera::Follow(alien2);
     AddObject(a2);
+
+    Minion::CleanGlobals();
 
     GameObject* penguin = new GameObject();
     penguin->box.x = 704;
@@ -104,7 +108,8 @@ void StageState::Pause() {
 }
 
 void StageState::Resume() {
-
+    cout << "Resume STAGE STATE" << endl;
+    Alien::CleanGlobals();
 }
 
 StageState::StageState() {
@@ -151,6 +156,16 @@ void StageState::Update(float dt) {
             }
         }
         
+    }
+    // cout << GameData::alienCount << endl;
+    if (GameData::alienCount == 0) {
+        GameData::playerVictory = true;
+        popRequested = true;
+        Game::GetInstance().Push(new EndState());
+    }
+    if (!PenguinBody::player) {
+        popRequested = true;
+        Game::GetInstance().Push(new EndState());
     }
     
     //cout << endl;

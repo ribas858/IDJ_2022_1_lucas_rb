@@ -30,6 +30,9 @@ class PenguinBody : public Component, public Being {
         float aceleracao;
         float speedAcc;
 
+        bool limiteMapa = false;
+        Vec2 posAux;
+
 };
 
 

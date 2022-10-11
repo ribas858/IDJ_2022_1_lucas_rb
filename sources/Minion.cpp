@@ -151,7 +151,7 @@ void Minion::Update(float dt) {
 
             
             if(!liberado && nextMiniLiberado.at(idAlien) == 1) {
-                cout << "liberando.." << endl;
+                //cout << "liberando.." << endl;
                 Component* cp = alienCenter.lock()->GetComponent("Sound");
                 if (cp) {
                     Sound* som = (Sound*)cp;
@@ -216,7 +216,7 @@ void Minion::Update(float dt) {
 
         
     } else {
-        cout << "Morte do minion" << endl;
+        //cout << "Morte do minion" << endl;
         // GameObject* expl = new GameObject();
         // Sprite* ex = new Sprite(*expl, "resources/images/miniondeath.png", 4, 0.08, 0.32);
         // expl->AddComponent(ex);
@@ -254,8 +254,8 @@ void Minion::Shoot(Vec2 target) {
     sourceShoot.x = associated.box.x + associated.box.w/2.0;
     sourceShoot.y = associated.box.y + associated.box.h/2.0;
 
-    cout << "Alvo: x:" << target.x << " | y: " << target.y << endl;
-    cout << "Fonte: x:" << sourceShoot.x << " | y: " << sourceShoot.y << endl;
+    //cout << "Alvo: x:" << target.x << " | y: " << target.y << endl;
+    //cout << "Fonte: x:" << sourceShoot.x << " | y: " << sourceShoot.y << endl;
 
     
     desloc.x = target.x - sourceShoot.x;

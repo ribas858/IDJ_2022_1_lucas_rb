@@ -116,8 +116,10 @@ void PenguinBody::Update(float dt) {
 
     
     //cout << "speed X: " << speed.x << " speed Y: " << speed.y << " angle: " << angle << endl;
+    
     associated.box.x += speed.x * dt;
     associated.box.y += speed.y * dt;
+    cout << "pos X: " << associated.box.x << " pos Y: " << associated.box.y << " angle: " << angle << endl;
 
     //cout << "hp Pinguin: " << hp << endl;
     if (hp <= 0) {

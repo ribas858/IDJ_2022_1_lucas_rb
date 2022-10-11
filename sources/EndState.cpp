@@ -28,9 +28,9 @@ void EndState::LoadAssets() {
         AddObject(texto);
 
         GameObject* spaceKey = new GameObject();
-        Sprite* sp = new Sprite(*spaceKey, "resources/images/space.png", 3, 0.15);
-        sp->SetScale(0.6, 0.6);
-        spaceKey->box.x = 100;
+        Sprite* sp = new Sprite(*spaceKey, "resources/images/space.png", 6, 0.07);
+        sp->SetScale(0.5, 0.5);
+        spaceKey->box.x = 114;
         spaceKey->box.y = spaceKey->box.PosCenter().y + 400;
         spaceKey->AddComponent(sp);
         AddObject(spaceKey);
@@ -45,9 +45,9 @@ void EndState::LoadAssets() {
         AddObject(texto2);
 
         GameObject* escKey = new GameObject();
-        Sprite* esc = new Sprite(*escKey, "resources/images/esc.png", 3, 0.15);
-        esc->SetScale(0.6, 0.6);
-        escKey->box.x = 924 - escKey->box.w;
+        Sprite* esc = new Sprite(*escKey, "resources/images/esc.png", 6, 0.07);
+        esc->SetScale(0.5, 0.5);
+        escKey->box.x = 910 - escKey->box.w;
         escKey->box.y = escKey->box.PosCenter().y + 400;
         escKey->AddComponent(esc);
         AddObject(escKey);
@@ -87,9 +87,9 @@ void EndState::LoadAssets() {
         AddObject(texto);
 
         GameObject* spaceKey = new GameObject();
-        Sprite* sp = new Sprite(*spaceKey, "resources/images/space.png", 3, 0.15);
-        sp->SetScale(0.6, 0.6);
-        spaceKey->box.x = 100;
+        Sprite* sp = new Sprite(*spaceKey, "resources/images/space.png", 6, 0.07);
+        sp->SetScale(0.5, 0.5);
+        spaceKey->box.x = 114;
         spaceKey->box.y = spaceKey->box.PosCenter().y + 270;
         spaceKey->AddComponent(sp);
         AddObject(spaceKey);
@@ -104,9 +104,9 @@ void EndState::LoadAssets() {
         AddObject(texto2);
 
         GameObject* escKey = new GameObject();
-        Sprite* esc = new Sprite(*escKey, "resources/images/esc.png", 3, 0.15);
-        esc->SetScale(0.6, 0.6);
-        escKey->box.x = 924 - escKey->box.w;
+        Sprite* esc = new Sprite(*escKey, "resources/images/esc.png", 6, 0.07);
+        esc->SetScale(0.5, 0.5);
+        escKey->box.x = 910 - escKey->box.w;
         escKey->box.y = escKey->box.PosCenter().y + 270;
         escKey->AddComponent(esc);
         AddObject(escKey);

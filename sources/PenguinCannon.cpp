@@ -36,7 +36,7 @@ void PenguinCannon::Update(float dt) {
 
         
         if (InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON)) {
-            cout << "Atira.." << endl;
+            //cout << "Atira.." << endl;
             if (municao > 0) {
                 Component* cp = associated.GetComponent("Sprite");
                 if (cp) {

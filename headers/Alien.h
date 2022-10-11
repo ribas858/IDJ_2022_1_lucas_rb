@@ -7,7 +7,7 @@
 class Alien : public Component, public Being {
     
     public:
-        Alien(GameObject & associated, int nMinions);
+        Alien(GameObject & associated, int nMinions, float timeOffset = 1);
         ~Alien();
 
         void Start();
@@ -55,6 +55,7 @@ class Alien : public Component, public Being {
 
         int counTiros = 0;
         Timer tiros;
+        float timeOffset;
 
 
 

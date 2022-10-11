@@ -42,21 +42,41 @@ void StageState::LoadAssets() {
     AddObject(map_obj);
     
 
-    GameObject* alien = new GameObject();
-    alien->box.x = 512;
-    alien->box.y = 300;
-    Alien* ali = new Alien(*alien, 5);
-    alien->AddComponent(ali);
-    //Camera::Follow(alien);
-    AddObject(alien);
+    for (int i=0; i<5; i++) {
+        GameObject* alien = new GameObject();
+        srand(i * (rand() % 5000000) * (rand() % 5) );
+        
+        alien->box.x = rand() % 1408;
+        alien->box.y = rand() % 1280;
 
-    GameObject* a2 = new GameObject();
-    a2->box.x = 200;
-    a2->box.y = 300;
-    Alien* al2 = new Alien(*a2, 5);
-    a2->AddComponent(al2);
-    //Camera::Follow(alien2);
-    AddObject(a2);
+        if (alien->box.x > 400 && alien->box.x < 1000) {
+            if (alien->box.x > 800 && alien->box.x < 1000) {
+                alien->box.x = 1200;
+            } else {
+                alien->box.x = 0;
+            }
+        }
+
+        const float MIN_RAND = 0.5, MAX_RAND = 4.5;
+        const float range = MAX_RAND - MIN_RAND;
+        float timeOffset = range * ((((float) rand()) / (float) RAND_MAX)) + MIN_RAND;
+
+        // cout << alien->box.x << " " << alien->box.y << " time: " << timeOffset << endl;
+        Alien* ali = new Alien(*alien, 5, timeOffset);
+        alien->AddComponent(ali);
+        //Camera::Follow(alien);
+        AddObject(alien);
+    }
+
+    
+
+    // GameObject* a2 = new GameObject();
+    // a2->box.x = 200;
+    // a2->box.y = 300;
+    // Alien* al2 = new Alien(*a2, 5);
+    // a2->AddComponent(al2);
+    // //Camera::Follow(alien2);
+    // AddObject(a2);
 
     Minion::CleanGlobals();
 
@@ -67,7 +87,7 @@ void StageState::LoadAssets() {
     penguin->AddComponent(pbody);
     Camera::Follow(penguin);
     AddObject(penguin);
-    cout << "criou pinguin" << endl;
+    cout << "criou pinguin" << endl; 
 
 
 
@@ -164,6 +184,7 @@ void StageState::Update(float dt) {
         Game::GetInstance().Push(new EndState());
     }
     if (!PenguinBody::player) {
+        GameData::playerVictory = false;
         popRequested = true;
         Game::GetInstance().Push(new EndState());
     }

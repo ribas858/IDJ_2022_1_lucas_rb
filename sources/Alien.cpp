@@ -18,7 +18,7 @@ int Alien::flag = 0;
 
 
 
-Alien::Alien(GameObject & associated, int nMinions) : Component(associated), nMinions(nMinions) {
+Alien::Alien(GameObject & associated, int nMinions, float timeOffset) : Component(associated), nMinions(nMinions), timeOffset(timeOffset) {
 
     Sprite* alienSprite = new Sprite(associated, "resources/images/alien.png");
     // alienSprite->SetScale(2,2);
@@ -94,7 +94,7 @@ void Alien::Update(float dt) {
                 tiros.Restart();
                 NewShoot(PenguinBody::player->GetBoxPenguin().GetCenter());
             }
-            if (restTimer.Get() > 5) {
+            if (restTimer.Get() > 5 * timeOffset) {
                 destination = PenguinBody::player->GetBoxPenguin().GetCenter();
                 state = AlienState::MOVING;
                 restTimer.Restart();
@@ -159,10 +159,10 @@ void Alien::Update(float dt) {
 
             if (fimDesloc.x == 1 && fimDesloc.y == 1) {
                 if (restTimer.Get() > 0.5) {
-                    cout << "\nFim Desloc. X: " << fimDesloc.x << " | Fim Desloc. y: " << fimDesloc.y << " | Tiros: " << counTiros << endl;
-                    printf("Pos X0: %.6f | Pos Y0: %.6f\n", inicialPos.x, inicialPos.y);
-                    printf("Pos X: %.6f | Pos Y: %.6f\n", destination.x, destination.y);
-                    printf("Cam X: %.6f | Cam Y: %.6f\n", Camera::pos.x, Camera::pos.y);
+                    //cout << "\nFim Desloc. X: " << fimDesloc.x << " | Fim Desloc. y: " << fimDesloc.y << " | Tiros: " << counTiros << endl;
+                    //printf("Pos X0: %.6f | Pos Y0: %.6f\n", inicialPos.x, inicialPos.y);
+                    //printf("Pos X: %.6f | Pos Y: %.6f\n", destination.x, destination.y);
+                    //printf("Cam X: %.6f | Cam Y: %.6f\n", Camera::pos.x, Camera::pos.y);
                     
                     fimDesloc.x = 0;
                     fimDesloc.y = 0;
@@ -246,7 +246,7 @@ void Alien::NewShoot(Vec2 destination) {
                 id = i;
             }
         }
-        cout << "Minion Mais Perto: " << id << " Distancia: " << min << endl;
+        //cout << "Minion Mais Perto: " << id << " Distancia: " << min << endl;
         
         if (min < 400) {
             if(auto mini = minionArray[id].lock()) {

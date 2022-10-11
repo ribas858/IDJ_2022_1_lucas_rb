@@ -18,14 +18,14 @@ void TitleState::LoadAssets() {
     GameObject* texto = new GameObject();
     texto->box.x = 512;
     texto->box.y = 410;
-    SDL_Color color = InputManager::GetInstance().CreateColor("f58b3e");
+    SDL_Color color = InputManager::GetInstance().CreateColor("ffffff");
     Text* tx = new Text(*texto, "resources/font/Call me maybe.ttf", 35, Text::TextStyle::BLENDED, "Pressione SPACE para continuar", color, 0.8);
     texto->AddComponent(tx);
     AddObject(texto);
 
     GameObject* spaceKey = new GameObject();
-    Sprite* sp = new Sprite(*spaceKey, "resources/images/space.png", 3, 0.15);
-    sp->SetScale(0.6, 0.6);
+    Sprite* sp = new Sprite(*spaceKey, "resources/images/space.png", 6, 0.07);
+    sp->SetScale(0.5, 0.5);
     spaceKey->box.x = spaceKey->box.PosCenter().x + 512;
     spaceKey->box.y = spaceKey->box.PosCenter().y + 500;
     spaceKey->AddComponent(sp);

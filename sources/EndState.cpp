@@ -63,11 +63,13 @@ void EndState::LoadAssets() {
 
         GameObject* texto4 = new GameObject();
         SDL_Color color4 = InputManager::GetInstance().CreateColor("21ff0e");
-        Text* tx4 = new Text(*texto4, "resources/font/BebasNeue.ttf", 28, Text::TextStyle::BLENDED, "45", color4, 1);
+        Text* tx4 = new Text(*texto4, "resources/font/BebasNeue.ttf", 28, Text::TextStyle::BLENDED, to_string(GameData::pontos), color4, 1);
         texto4->box.x = 512 + texto4->box.w;
         texto4->box.y = 365 - texto4->box.h/2;
         texto4->AddComponent(tx4);
         AddObject(texto4);
+
+        GameData::pontos = 0;
 
     } else {
         GameObject* end = new GameObject();
@@ -122,11 +124,13 @@ void EndState::LoadAssets() {
 
         GameObject* texto4 = new GameObject();
         SDL_Color color4 = InputManager::GetInstance().CreateColor("d00000");
-        Text* tx4 = new Text(*texto4, "resources/font/BebasNeue.ttf", 28, Text::TextStyle::BLENDED, "45", color4, 1);
+        Text* tx4 = new Text(*texto4, "resources/font/BebasNeue.ttf", 28, Text::TextStyle::BLENDED, to_string(GameData::pontos), color4, 1);
         texto4->box.x = 512 + texto4->box.w;
         texto4->box.y = 266 - texto4->box.h/2;
         texto4->AddComponent(tx4);
         AddObject(texto4);
+
+        GameData::pontos = 0;
         
     }
 

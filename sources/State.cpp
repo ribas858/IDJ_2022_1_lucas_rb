@@ -1,5 +1,6 @@
 #include "../headers/State.h"
 
+
 State::State() {
     popRequested = false;
     quitRequested = false;
@@ -83,4 +84,15 @@ void State::ClearObject() {
             // cout << "limpa no objectArray" << endl << endl;
         }
     }
+}
+
+Text* State::GetText(int id) {
+    for(int i=0; i<objectArray.size(); i++) {
+       Component* cp = objectArray[i]->GetComponent(to_string(id));
+        if (cp) {
+            Text* tx = (Text*)cp;
+            return tx;
+        }
+    }
+    return nullptr;
 }

@@ -3,10 +3,11 @@
 #include "../headers/Camera.h"
 #include "../headers/Resources.h"
 
+
 Text::Text(GameObject& associated, string fontFile, int fontSize,
-    TextStyle style, string text, SDL_Color color, float time) : Component(associated), 
-    fontFile(fontFile), fontSize(fontSize), style(style), text(text), color(color), time(time) {
-    
+    TextStyle style, string text, SDL_Color color, int id, float time) : Component(associated), 
+    fontFile(fontFile), fontSize(fontSize), style(style), text(text), color(color), id(id), time(time) {
+
     font = nullptr;
     texture = nullptr;
     RemakeTexture();
@@ -21,7 +22,7 @@ Text::~Text() {
 void Text::RemakeTexture() {
     
     if(!texture){
-        // cout << "RemakeTexture - Textura nova" << endl;
+        //cout << "RemakeTexture - Textura nova" << endl;
         if(!Resources::FindFont(fontFile + to_string(fontSize))) {
             TTF_Font* font = TTF_OpenFont (fontFile.c_str(), fontSize);
             if(font) {
@@ -91,7 +92,7 @@ void Text::RemakeTexture() {
         }
 
     } else {
-        // cout << "RemakeTexture - Textura já existe" << endl;
+        //cout << "RemakeTexture - Textura já existe" << endl;
         SDL_DestroyTexture(texture);
         texture = nullptr;
 
@@ -117,8 +118,8 @@ void Text::RemakeTexture() {
 
                     int width = 0, height = 0;
                     SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
-                    associated.box.x = associated.box.PosCenter().x;
-                    associated.box.y = associated.box.PosCenter().y;
+                    //associated.box.x = associated.box.PosCenter().x;
+                    //associated.box.y = associated.box.PosCenter().y;
                     associated.box.w = width;
                     associated.box.h = height;
                 }
@@ -129,7 +130,7 @@ void Text::RemakeTexture() {
                 cout << "Fonte invalida!!" << endl;
             }
         } else {
-            // cout << "Fonte ja existe na tabela!!" << endl;
+            //cout << "Fonte ja existe na tabela!!" << endl;
 
             font = Resources::GetFont(fontFile + to_string(fontSize));
             if(font) {
@@ -152,8 +153,8 @@ void Text::RemakeTexture() {
 
                     int width = 0, height = 0;
                     SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
-                    associated.box.x = associated.box.PosCenter().x;
-                    associated.box.y = associated.box.PosCenter().y;
+                    //associated.box.x = associated.box.PosCenter().x;
+                    //associated.box.y = associated.box.PosCenter().y;
                     associated.box.w = width;
                     associated.box.h = height;
                 }
@@ -189,6 +190,7 @@ void Text::Render() {
         dstrect.y = associated.box.y - Camera::pos.y;
         dstrect.w = associated.box.w;
         dstrect.h = associated.box.h;
+        
         SDL_RenderCopyEx(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstrect, associated.angleDeg, nullptr, SDL_FLIP_NONE);
     }
     
@@ -196,10 +198,22 @@ void Text::Render() {
 
 bool Text::Is (string type) {
     string tx = "Text";
-    if (type == tx){
-        return true;
+    int i = -1;
+    if(isAllDigit(type)) {
+        i = stoi(type);
+    }
+    if (i == -1) {
+        if (type == tx) {
+            return true;
+        } else {
+            return false;
+        }
     } else {
-        return false;
+        if (i == id) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 
@@ -243,4 +257,22 @@ void Text::Pisca(float dt) {
     if(texto.Get() > time*1.5) {
         texto.Restart();
     }
+}
+
+bool Text::isAllDigit(string dig) {
+    int flag = 0;
+    for (int i=0; i<dig.size(); i++) {
+        if (!isdigit(dig[i])) {
+            flag++;
+        }
+    }
+    if (flag > 0) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+int Text::GetId() {
+    return id;
 }

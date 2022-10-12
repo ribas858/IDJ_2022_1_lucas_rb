@@ -223,6 +223,19 @@ void Alien::NotifyCollision(GameObject& other) {
             if (bl->targetsPlayer) {
                 //cout << "Bateu no Alien: W: " << other.box.w << endl;
                 hp -= 10;
+                GameData::pontos += 5;
+
+                GameObject* expl = new GameObject();
+                Sprite* ex = new Sprite(*expl, "resources/images/penguindeath.png", 5, 0.08, 0.4);
+                ex->SetScale(0.5, 0.5);
+                expl->AddComponent(ex);
+                // Sound* som = new Sound(*expl, "resources/sounds/boom_pg.wav");
+                // som->Play();
+                // expl->AddComponent(som);
+                expl->box.x = other.box.GetCenter().x - ex->GetWidth()/2;
+                expl->box.y = other.box.GetCenter().y - ex->GetHeight()/2;
+                Game::GetInstance().GetCurrentState().AddObject(expl);
+
                 other.RequestDelete();
                 //cout << "hp Alien: " << hp << endl;
             }

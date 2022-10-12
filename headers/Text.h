@@ -8,7 +8,7 @@ class Text : public Component {
     public:
         enum class TextStyle { SOLID, SHADED, BLENDED };
 
-        Text(GameObject& associated, string fontFile, int fontSize, TextStyle style, string text, SDL_Color color, float time = 0);
+        Text(GameObject& associated, string fontFile, int fontSize, TextStyle style, string text, SDL_Color color, int id = 0, float time = 0);
         ~Text();
         void Update(float dt);
         void Render() override;
@@ -21,6 +21,10 @@ class Text : public Component {
 
         void SetAtivar(bool flag);
         void Pisca(float dt);
+
+        
+        bool isAllDigit(string dig);
+        int GetId();
 
     private:
         void RemakeTexture();
@@ -36,6 +40,7 @@ class Text : public Component {
         bool ativar = true;
         Timer texto;
         float time;
+        int id;
 
 };
 

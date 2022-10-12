@@ -3,6 +3,7 @@
 
 #include "../headers/GameObject.h"
 #include "../headers/Music.h"
+#include "../headers/Text.h"
 
 class State {
     public:
@@ -28,6 +29,8 @@ class State {
         virtual void UpdateArray(float dt);
         virtual void RenderArray();
         void ClearObject();
+        Text* GetText(int id);
+        Timer mudaState;
 
         bool popRequested;
         bool quitRequested;

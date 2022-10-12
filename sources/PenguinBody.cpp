@@ -7,6 +7,7 @@
 #include "../headers/Camera.h"
 #include "../headers/Bullet.h"
 #include "../headers/Sound.h"
+#include "../headers/CameraFollower.h"
 
 PenguinBody* PenguinBody::player = nullptr;
 
@@ -15,7 +16,7 @@ PenguinBody::PenguinBody(GameObject& associated) : Component(associated) {
     speed.y = 0;
     linearSpeed = 2;
     angle = 0;
-    hp = 200;
+    hp = 1000;
     Sprite* body = new Sprite(associated, "resources/images/penguin.png");
     associated.AddComponent(body);
     Collider* cold = new Collider(associated);
@@ -132,7 +133,7 @@ void PenguinBody::Update(float dt) {
     if(associated.box.y < -192) {
         associated.box.y = -192;
     }
-    cout << "pos X: " << associated.box.x << " pos Y: " << associated.box.y << " angle: " << angle << endl;
+    
 
     //cout << "hp Pinguin: " << hp << endl;
     if (hp <= 0) {
@@ -146,6 +147,14 @@ void PenguinBody::Update(float dt) {
         expl->box.x = associated.box.GetCenter().x - ex->GetWidth()/2;
         expl->box.y = associated.box.GetCenter().y - ex->GetHeight()/2;
         Game::GetInstance().GetCurrentState().AddObject(expl);
+
+        GameObject* perd = new GameObject();
+        Sprite* pd = new Sprite(*perd, "resources/images/perdeu.png");
+        perd->AddComponent(pd);
+        CameraFollower* Cam = new CameraFollower(*perd);
+        perd->AddComponent(Cam);
+        Game::GetInstance().GetCurrentState().AddObject(perd);
+
         associated.RequestDelete();
     }
 
@@ -172,6 +181,18 @@ void PenguinBody::NotifyCollision(GameObject& other) {
             if (!bl->targetsPlayer) {
                 //cout << "Bateu no PenguinBody: W: " << other.box.w << endl;
                 hp -= 10;
+
+                GameObject* expl = new GameObject();
+                Sprite* ex = new Sprite(*expl, "resources/images/penguindeath.png", 5, 0.08, 0.1);
+                ex->SetScale(0.2, 0.2);
+                expl->AddComponent(ex);
+                // Sound* som = new Sound(*expl, "resources/sounds/boom_pg.wav");
+                // som->Play();
+                // expl->AddComponent(som);
+                expl->box.x = other.box.GetCenter().x - ex->GetWidth()/2;
+                expl->box.y = other.box.GetCenter().y - ex->GetHeight()/2;
+                Game::GetInstance().GetCurrentState().AddObject(expl);
+
                 other.RequestDelete();
                 //cout << "hp Pinguin: " << hp << endl;
             }
@@ -182,4 +203,8 @@ void PenguinBody::NotifyCollision(GameObject& other) {
 
 Rect PenguinBody::GetBoxPenguin() {
     return associated.box;
+}
+
+int PenguinBody::GetHp() {
+    return hp;
 }

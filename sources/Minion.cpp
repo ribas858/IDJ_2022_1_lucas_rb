@@ -217,12 +217,12 @@ void Minion::Update(float dt) {
         
     } else {
         //cout << "Morte do minion" << endl;
-        // GameObject* expl = new GameObject();
-        // Sprite* ex = new Sprite(*expl, "resources/images/miniondeath.png", 4, 0.08, 0.32);
-        // expl->AddComponent(ex);
-        // expl->box.x = associated.box.GetCenter().x - ex->GetWidth()/2;
-        // expl->box.y = associated.box.GetCenter().y - ex->GetHeight()/2;
-        // Game::GetInstance().GetCurrentState().AddObject(expl);
+        GameObject* expl = new GameObject();
+        Sprite* ex = new Sprite(*expl, "resources/images/miniondeath.png", 4, 0.08, 0.32);
+        expl->AddComponent(ex);
+        expl->box.x = associated.box.GetCenter().x - ex->GetWidth()/2;
+        expl->box.y = associated.box.GetCenter().y - ex->GetHeight()/2;
+        Game::GetInstance().GetCurrentState().AddObject(expl);
         associated.RequestDelete();
     }
 }

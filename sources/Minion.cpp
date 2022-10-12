@@ -62,11 +62,11 @@ Minion::Minion(GameObject& associated, weak_ptr<GameObject> alienCenter, float a
         // cout << "\nSIZES dps: lastMiniLiberado: " << lastMiniLiberado.size() << " nextMiniLiberado: " << nextMiniLiberado.size() << "\n";
         // cout << "resetPos: " << resetPos.size() << " allFree: " << allFree.size() << " GetLoadMinions: " << InputManager::GetInstance().GetLoadMinions()->size() << endl << endl;
 
-        Component* cp = alienCenter.lock()->GetComponent("Sound");
-        if (cp) {
-            Sound* som = (Sound*)cp;
-            som->Play();
-        }
+        // Component* cp = alienCenter.lock()->GetComponent("Sound");
+        // if (cp) {
+        //     Sound* som = (Sound*)cp;
+        //     som->Play();
+        // }
     }
 }
         
@@ -152,11 +152,11 @@ void Minion::Update(float dt) {
             
             if(!liberado && nextMiniLiberado.at(idAlien) == 1) {
                 //cout << "liberando.." << endl;
-                Component* cp = alienCenter.lock()->GetComponent("Sound");
-                if (cp) {
-                    Sound* som = (Sound*)cp;
-                    som->Play();
-                }
+                // Component* cp = alienCenter.lock()->GetComponent("Sound");
+                // if (cp) {
+                //     Sound* som = (Sound*)cp;
+                //     som->Play();
+                // }
                 lastMiniLiberado.at(idAlien) = id;
                 liberado = true;
                 resetPos.at(idAlien) = 1;

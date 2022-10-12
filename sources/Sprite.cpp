@@ -7,7 +7,7 @@
 #include "../headers/Camera.h"
 
 void Sprite::Start() {
-    // cout << "start sprite" << endl;
+
 }
 
 Sprite::Sprite(GameObject& associated) : Component(associated) {
@@ -24,8 +24,6 @@ Sprite::Sprite(GameObject& associated, string file, int frameCount,
     Sprite::frameCount = frameCount;
     Sprite::frameTime = frameTime;
     Sprite::secondsToSelfDestruct = secondsToSelfDestruct;
-    // cout << "frameCout: " << Sprite::frameCount << endl;
-    // cout << "frameTime: " << Sprite::frameTime << endl;
     Open(file);
 }
 
@@ -41,14 +39,10 @@ void Sprite::Open(string file) {
         if (!texture) {
             SDL_Log("Impossível carregar imagem: %s", SDL_GetError());
         } else {
-            //cout << "Sprite carregado com sucesso!!" << endl;
             Resources::InsertImage(file, texture);
         }
     } else {
-        //cout << "Sprite já foi carregado..." << endl;
-        //cout << "Buscando na tabela..." << endl;
         texture = Resources::GetImage(file);
-        //Open(file);
     }
 
     if(texture) {
@@ -63,8 +57,6 @@ void Sprite::SetClip(int x, int y, int w, int h) {
     clipRect.h = h;
     clipRect.x = x;
     clipRect.y = y;
-    // associated.box.x = x;
-    // associated.box.y = y;
     associated.box.w = w;
     associated.box.h = h;
 }
@@ -85,7 +77,6 @@ void Sprite::Render(float x, float y, float angle) {
 
 
 int Sprite::GetWidth() {
-    // cout << "widt div: " << width / frameCount << endl;
     return (width  * scale.x) / frameCount;
 }
 int Sprite::GetHeight() {
@@ -172,10 +163,6 @@ Vec2 Sprite::GetScale() {
 void Sprite::SetFrame(int frame) {
     currentFrame = frame;
     clipRect.x = (GetWidth() / scale.x) * currentFrame;
-    // 101, 202, 303, 404, 505
-    //clipRect.x = 101 * currentFrame;
-    // cout << "clipRect X: " << clipRect.x << " width: " << GetWidth() << " h: " << GetHeight() << endl;
-    // cout << "current Frame: " << currentFrame << " frame count:" << frameCount << endl << endl;
 }
 
 void Sprite::SetFrameCount(int frameCount) {

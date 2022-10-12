@@ -22,7 +22,6 @@ Text::~Text() {
 void Text::RemakeTexture() {
     
     if(!texture){
-        //cout << "RemakeTexture - Textura nova" << endl;
         if(!Resources::FindFont(fontFile + to_string(fontSize))) {
             TTF_Font* font = TTF_OpenFont (fontFile.c_str(), fontSize);
             if(font) {
@@ -55,7 +54,6 @@ void Text::RemakeTexture() {
                 cout << "Fonte invalida!!" << endl;
             }
         } else {
-            // cout << "Fonte ja existe na tabela!!" << endl;
 
             font = Resources::GetFont(fontFile + to_string(fontSize));
             if(font) {
@@ -92,7 +90,6 @@ void Text::RemakeTexture() {
         }
 
     } else {
-        //cout << "RemakeTexture - Textura já existe" << endl;
         SDL_DestroyTexture(texture);
         texture = nullptr;
 
@@ -118,8 +115,6 @@ void Text::RemakeTexture() {
 
                     int width = 0, height = 0;
                     SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
-                    //associated.box.x = associated.box.PosCenter().x;
-                    //associated.box.y = associated.box.PosCenter().y;
                     associated.box.w = width;
                     associated.box.h = height;
                 }
@@ -130,7 +125,6 @@ void Text::RemakeTexture() {
                 cout << "Fonte invalida!!" << endl;
             }
         } else {
-            //cout << "Fonte ja existe na tabela!!" << endl;
 
             font = Resources::GetFont(fontFile + to_string(fontSize));
             if(font) {
@@ -153,8 +147,6 @@ void Text::RemakeTexture() {
 
                     int width = 0, height = 0;
                     SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
-                    //associated.box.x = associated.box.PosCenter().x;
-                    //associated.box.y = associated.box.PosCenter().y;
                     associated.box.w = width;
                     associated.box.h = height;
                 }

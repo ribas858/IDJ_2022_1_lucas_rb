@@ -5,7 +5,6 @@
 #include "../headers/State.h"
 
 class Game {
-
     public:
         Game (string title, int width, int height);
         ~Game ();
@@ -17,22 +16,18 @@ class Game {
         void Push(State* state);
         void Run();
         float GetDeltaTime();
-        ////////////////////////////
 
     private:
         void CalculateDeltaTime();
-
         float frameStart;
         float dt;
 
         static Game * instance;
-
         State* storedState;
         SDL_Window* window;
         SDL_Renderer* renderer;
         stack<unique_ptr<State>> stateStack;
 
-        /////////////////////////////
         void Init_Sdl();
         void Init_Sdl_Image();
         void Init_Sdl_Audio();
@@ -41,11 +36,10 @@ class Game {
         void Destroy_Window();
         void Close_Sdl_Audio();
         void Close_Text();
+        
         string title;
         int width;
         int height;
-
-        
 };
 
 #endif

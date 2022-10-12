@@ -13,7 +13,6 @@ class Camera {
 
         static Vec2 pos;
         static Vec2 speed;
-        static Vec2 focusAux;
 
     private:
         static GameObject* focus;

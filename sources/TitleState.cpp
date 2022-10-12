@@ -8,6 +8,7 @@
 #include "../headers/Camera.h"
 
 void TitleState::LoadAssets() {
+
     GameObject* title = new GameObject();
     Sprite* tl = new Sprite(*title, "resources/images/title.jpg");
     CameraFollower* Cam = new CameraFollower(*title);
@@ -19,7 +20,7 @@ void TitleState::LoadAssets() {
     texto->box.x = 512;
     texto->box.y = 410;
     SDL_Color color = InputManager::GetInstance().CreateColor("ffffff");
-    Text* tx = new Text(*texto, "resources/font/Call me maybe.ttf", 35, Text::TextStyle::BLENDED, "Pressione SPACE para continuar", color, 0.8);
+    Text* tx = new Text(*texto, "resources/font/Call me maybe.ttf", 35, Text::TextStyle::BLENDED, "Pressione SPACE para jogar", color, 0.8);
     texto->AddComponent(tx);
     AddObject(texto);
 
@@ -36,7 +37,7 @@ void TitleState::LoadAssets() {
 }
 
 void TitleState::Start() {
-    cout << "\nstart TITLE STATE" << endl;
+    cout << "\nSTART TitleState" << endl;
     LoadAssets();
     StartArray();
 }
@@ -47,13 +48,13 @@ void TitleState::Pause() {
 }
 
 void TitleState::Resume() {
-    cout << "resume title state" << endl;
+    cout << "RESUME TitleState" << endl;
     Camera::pos.x = 0;
     Camera::pos.y = 0;
 }
 
 TitleState::TitleState() {
-     cout << "TitleState criado!!" << endl;
+
 }
 
 TitleState::~TitleState() {
@@ -61,7 +62,6 @@ TitleState::~TitleState() {
 }
 
 void TitleState::Update(float dt) {
-    
     if(InputManager::GetInstance().QuitRequested() || InputManager::GetInstance().KeyPress(ESCAPE_KEY)) {
         quitRequested = true;
     }
@@ -71,22 +71,6 @@ void TitleState::Update(float dt) {
     }
 
     UpdateArray(dt);
-    // texto.Update(dt);
-
-    // for (int i = 0; i < objectArray.size(); i++) {
-    //     if (objectArray[i]->GetComponent("Text")) {
-    //         auto tx = (Text*)objectArray[i]->GetComponent("Text");
-    //         if(texto.Get() > 0.8) {
-    //             tx->SetAtivar(false);
-    //         } else {
-    //             tx->SetAtivar(true);
-    //         }
-    //         if(texto.Get() > 1.2) {
-    //             texto.Restart();
-    //         }
-            
-    //     }
-    // }
 
 }
 

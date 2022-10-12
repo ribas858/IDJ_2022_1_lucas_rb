@@ -30,7 +30,6 @@ weak_ptr<GameObject> State::AddObject(GameObject* go) {
     objectArray.push_back(goShared);
 
     if (started) {
-        // cout << "State ja foi carregado" << endl;
         goShared->Start();
         weak_ptr<GameObject> gobWeak(goShared);
         return gobWeak;
@@ -40,7 +39,6 @@ weak_ptr<GameObject> State::AddObject(GameObject* go) {
 }
 
 weak_ptr<GameObject> State::GetObjectPtr(GameObject* go) {
-    // cout << "get weak " << go->box.x << " " << objectArray.empty() << endl;
     for(int i=0; i<objectArray.size(); i++) {
         if (objectArray[i].get() == go) {
             weak_ptr<GameObject> weakPtrReturn(objectArray[i]);
@@ -81,7 +79,6 @@ void State::ClearObject() {
     for(int i=0; i<objectArray.size(); i++) {
         if(objectArray[i]->IsDead()) {
             objectArray.erase(objectArray.begin() + i);
-            // cout << "limpa no objectArray" << endl << endl;
         }
     }
 }

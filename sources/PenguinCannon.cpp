@@ -33,10 +33,8 @@ void PenguinCannon::Update(float dt) {
         angle = atan2(xy.y - pbody.lock()->box.GetCenter().y, xy.x - pbody.lock()->box.GetCenter().x);
         
         associated.angleDeg = (angle * 180) / PI;
-
         
         if (InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON)) {
-            //cout << "Atira.." << endl;
             if (municao > 0) {
                 Component* cp = associated.GetComponent("Sprite");
                 if (cp) {
@@ -50,7 +48,6 @@ void PenguinCannon::Update(float dt) {
             }
         }
         if(sp) {
-            //cout << "sp" << endl;
             arranque.Update(dt);
             if (arranque.Get() > 0.4) {
                 sp->selectOneFrame = true;
@@ -59,9 +56,7 @@ void PenguinCannon::Update(float dt) {
             }
         }
 
-    // cout << time.Get() << " municao: " << municao << endl;
     if (municao == 0) {
-        //cout << "recarga" << endl;
         recarrega = true;
     }
     if (recarrega && !cooldown) {
@@ -77,7 +72,6 @@ void PenguinCannon::Update(float dt) {
     }
     
     } else {
-        cout << "Pinguin Body morreu..." << endl;
         associated.RequestDelete();
     }
 }
@@ -107,10 +101,6 @@ void PenguinCannon::Shoot() {
     bullet->box.y = (pbody.lock()->box.y + pbody.lock()->box.h/2) - bullet->box.h/2 + sin(angle) * associated.box.w/2.0;
     bullet->AddComponent(bul);
     
-    // cout << "bullet X: " << bullet->box.x << " bullet Y: " << bullet->box.y << endl;
-    
-    // Sound* som = new Sound(*bullet, "resources/sounds/tiro.wav");
-    // som->Play();
     Sound* som = new Sound(*bullet, "resources/sounds/canhao.wav");
     som->Play();
     bullet->AddComponent(som);

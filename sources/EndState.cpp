@@ -11,6 +11,11 @@
 void EndState::LoadAssets() {
 
     if (GameData::playerVictory) {
+
+
+        win = Music("resources/music/endStateWin.ogg");
+   
+
         GameObject* end = new GameObject();
         Sprite* ed = new Sprite(*end, "resources/images/win.jpg");
         CameraFollower* Cam = new CameraFollower(*end);
@@ -72,6 +77,8 @@ void EndState::LoadAssets() {
         GameData::pontos = 0;
 
     } else {
+        lose = Music("resources/music/endStateLose.ogg");
+
         GameObject* end = new GameObject();
         Sprite* ed = new Sprite(*end, "resources/images/lose.jpg");
         CameraFollower* Cam = new CameraFollower(*end);
@@ -139,9 +146,14 @@ void EndState::LoadAssets() {
 }
 
 void EndState::Start() {
-    cout << "\nstart EndState" << endl;
+    cout << "\nSTART EndState" << endl;
     LoadAssets();
     StartArray();
+    if(GameData::playerVictory) {
+        win.Play();
+    } else {
+        lose.Play();
+    }
 }
 
 
@@ -150,13 +162,13 @@ void EndState::Pause() {
 }
 
 void EndState::Resume() {
-    cout << "resume EndState" << endl;
+    cout << "RESUME EndState" << endl;
     Camera::pos.x = 0;
     Camera::pos.y = 0;
 }
 
 EndState::EndState() {
-     cout << "EndState criado!!" << endl;
+
 }
 
 EndState::~EndState() {
@@ -167,14 +179,23 @@ void EndState::Update(float dt) {
     UpdateArray(dt);
 
     if(InputManager::GetInstance().QuitRequested() || InputManager::GetInstance().KeyPress(ESCAPE_KEY)) {
+        if(GameData::playerVictory) {
+            win.~Music();
+        } else {
+            lose.~Music();
+        }
         quitRequested = true;
     }
 
     if(InputManager::GetInstance().KeyPress(SDLK_SPACE)) {
+        if(GameData::playerVictory) {
+            win.~Music();
+        } else {
+            lose.~Music();
+        }
         popRequested = true;
         Game::GetInstance().Push(new StageState());
     }
-
 
 }
 

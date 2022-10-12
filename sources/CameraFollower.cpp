@@ -25,5 +25,5 @@ bool CameraFollower::Is(string type) {
 }
 
 void CameraFollower::Start() {
-    cout << "start camera" << endl;
+    
 }

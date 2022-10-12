@@ -2,6 +2,7 @@
 #define TITLESTATE_H
 
 #include "../headers/State.h"
+#include "../headers/Music.h"
 
 class TitleState : public State {
     public:

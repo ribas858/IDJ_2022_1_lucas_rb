@@ -2,6 +2,7 @@
 #define ENDSTATE_H
 
 #include "../headers/State.h"
+#include "../headers/Music.h"
 
 class EndState : public State {
     public:
@@ -18,6 +19,8 @@ class EndState : public State {
 
     
     private:
+        Music win;
+        Music lose;
 };
 
 #endif

@@ -1,8 +1,6 @@
 #include "../headers/Game.h"
-
 #include "../headers/TileSet.h"
 #include "../headers/Resources.h"
-
 #include "../headers/InputManager.h"
 #include "../headers/Camera.h"
 
@@ -14,7 +12,6 @@ Game::Game (string title, int width, int height) : title(title), width(width), h
         cout << "|===-> Erro no Padrão Singleton :: " << endl;
         exit(EXIT_SUCCESS);
     } else {
-        // cout << "instance == null" << endl;
         instance = this;
     }
     window = nullptr;
@@ -80,8 +77,6 @@ void Game::Run() {
         stateStack.top()->Start();
         
         while (!stateStack.empty() && !stateStack.top()->QuitRequested()) {
-
-            // cout << "tamanho pilha: " << stateStack.size() << endl;
             
             if(stateStack.top()->PopRequested()) {
                 stateStack.pop();
@@ -105,13 +100,8 @@ void Game::Run() {
             SDL_RenderPresent(renderer);
             SDL_Delay(33);
 
-            InputManager::GetInstance().SetUpdateCounter()++;
-
-            // if (InputManager::GetInstance().IsKeyDown(SDLK_d)) {
-            //     cout << "dt: " << GetDeltaTime() << " segs" << endl;
-            // }      
+            InputManager::GetInstance().SetUpdateCounter()++; 
         }
-        // cout << "Acabou o loop" << endl;
         Resources::ClearImages();
         Resources::ClearSounds();
         Resources::ClearMusics();

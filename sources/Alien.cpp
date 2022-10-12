@@ -21,20 +21,15 @@ int Alien::flag = 0;
 Alien::Alien(GameObject & associated, int nMinions, float timeOffset) : Component(associated), nMinions(nMinions), timeOffset(timeOffset) {
 
     Sprite* alienSprite = new Sprite(associated, "resources/images/alien.png");
-    // alienSprite->SetScale(2,2);
     associated.AddComponent(alienSprite);
     Sound* som = new Sound(associated, "resources/sounds/mini.wav");
     associated.AddComponent(som);
     Collider* cold = new Collider(associated);
     associated.AddComponent(cold);
-    hp = 100;
 
+    hp = 100;
     associated.box.x = associated.box.x - (associated.box.w / 2);
     associated.box.y =  associated.box.y - (associated.box.h / 2);
-
-
-    //cout << "alien w: " << associated.box.w << " alien h: " << associated.box.h << endl;
-    //cout << "alien x: " << associated.box.x << " alien y: " << associated.box.y << endl;
     speed.x = 0;
     speed.y = 0;
     GameData::alienCount++;
@@ -51,17 +46,14 @@ Alien::~Alien() {
 }
 
 void Alien::Start() {
-    cout << "start alien" << " alien id: " << id << " alienCount: " << GameData::alienCount << endl;
     //
     for (int i = 1; i <= nMinions; i++) {
         GameObject* minion = new GameObject();
         const float MIN_RAND = 1.0, MAX_RAND = 1.5;
         const float range = MAX_RAND - MIN_RAND;
-        // cout << range * ((((float) rand()) / (float) RAND_MAX)) + MIN_RAND << endl;
 
         float scale = range * ((((float) rand()) / (float) RAND_MAX)) + MIN_RAND;
         Vec2 s(scale,scale);
-        //Vec2 s(1,1);
         
         if (i == 1) {
             Minion* mini = new Minion(*minion, Game::GetInstance().GetCurrentState().GetObjectPtr(&associated), 4, true, i, nMinions, s);
@@ -74,13 +66,10 @@ void Alien::Start() {
         minionArray.push_back(Game::GetInstance().GetCurrentState().AddObject(minion));
         
     }
-    cout << endl;
-
 }
 
 void Alien::Update(float dt) {
 
-    //cout << "alien x: " << associated.box.x << " alien y: " << associated.box.y << " alienCount: " << alienCount << endl;
     associated.angleDeg++;
     if (associated.angleDeg == 360) {
         associated.angleDeg = 0;
@@ -117,7 +106,6 @@ void Alien::Update(float dt) {
                 if (fimDesloc.x == 0) {
                     associated.box.x += speed.x;
                     if (associated.box.GetCenter().x < destination.x) {
-                        // cout << "x neg -: +1" << endl;
                         fimDesloc.x++;
                     }
                 }
@@ -125,7 +113,6 @@ void Alien::Update(float dt) {
                 if (fimDesloc.x == 0) {
                     associated.box.x += speed.x;
                     if (associated.box.GetCenter().x > destination.x) {
-                        // cout << "x posit : +1" << endl;
                         fimDesloc.x++;
                     }
                 }
@@ -134,7 +121,6 @@ void Alien::Update(float dt) {
                 if (fimDesloc.y == 0) {
                     associated.box.y += speed.y;
                     if (associated.box.GetCenter().y < destination.y) {
-                        // cout << "y neg -: +1" << endl;
                         fimDesloc.y++;
                     }
                 }
@@ -142,7 +128,6 @@ void Alien::Update(float dt) {
                 if (fimDesloc.y == 0) {
                     associated.box.y += speed.y;
                     if (associated.box.GetCenter().y > destination.y) {
-                        // cout << "y posit : +1" << endl;
                         fimDesloc.y++;
                     }
                 }
@@ -159,11 +144,6 @@ void Alien::Update(float dt) {
 
             if (fimDesloc.x == 1 && fimDesloc.y == 1) {
                 if (restTimer.Get() > 0.5) {
-                    //cout << "\nFim Desloc. X: " << fimDesloc.x << " | Fim Desloc. y: " << fimDesloc.y << " | Tiros: " << counTiros << endl;
-                    //printf("Pos X0: %.6f | Pos Y0: %.6f\n", inicialPos.x, inicialPos.y);
-                    //printf("Pos X: %.6f | Pos Y: %.6f\n", destination.x, destination.y);
-                    //printf("Cam X: %.6f | Cam Y: %.6f\n", Camera::pos.x, Camera::pos.y);
-                    
                     fimDesloc.x = 0;
                     fimDesloc.y = 0;
                     flag = 0;
@@ -177,12 +157,10 @@ void Alien::Update(float dt) {
             }
         }
     } else {
-        //cout << "Fim de jogo" << endl;
     }
-    //cout << "hp: " << hp << endl;
     if (hp <= 0) {
         GameObject* expl = new GameObject();
-        Sprite* ex = new Sprite(*expl, "resources/images/aliendeath_fire2.png", 8, 0.08, 0.8);
+        Sprite* ex = new Sprite(*expl, "resources/images/aliendeath.png", 8, 0.08, 0.8);
         expl->AddComponent(ex);
         Sound* som = new Sound(*expl, "resources/sounds/boom.wav");
         som->Play();
@@ -221,7 +199,6 @@ void Alien::NotifyCollision(GameObject& other) {
         if (cp) {
             Bullet* bl = (Bullet*) cp;
             if (bl->targetsPlayer) {
-                //cout << "Bateu no Alien: W: " << other.box.w << endl;
                 hp -= 10;
                 GameData::pontos += 5;
 
@@ -229,15 +206,11 @@ void Alien::NotifyCollision(GameObject& other) {
                 Sprite* ex = new Sprite(*expl, "resources/images/penguindeath.png", 5, 0.08, 0.4);
                 ex->SetScale(0.5, 0.5);
                 expl->AddComponent(ex);
-                // Sound* som = new Sound(*expl, "resources/sounds/boom_pg.wav");
-                // som->Play();
-                // expl->AddComponent(som);
                 expl->box.x = other.box.GetCenter().x - ex->GetWidth()/2;
                 expl->box.y = other.box.GetCenter().y - ex->GetHeight()/2;
                 Game::GetInstance().GetCurrentState().AddObject(expl);
 
                 other.RequestDelete();
-                //cout << "hp Alien: " << hp << endl;
             }
         }
         
@@ -259,17 +232,12 @@ void Alien::NewShoot(Vec2 destination) {
                 id = i;
             }
         }
-        //cout << "Minion Mais Perto: " << id << " Distancia: " << min << endl;
         
         if (min < 400) {
             if(auto mini = minionArray[id].lock()) {
-                //cout << "minon shoot" << endl;
                 Minion* minion = (Minion*) mini->GetComponent("Minion");
-                
                 if(minion) {
-                    
                     minion->Shoot(destination);
-                    
                 }
             }
         }

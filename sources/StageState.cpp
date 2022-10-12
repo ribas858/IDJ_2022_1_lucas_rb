@@ -41,7 +41,7 @@ void StageState::LoadAssets() {
     AddObject(map_obj);
     
 
-    for (int i=0; i<3; i++) {
+    for (int i=0; i<5; i++) {
         GameObject* alien = new GameObject();
         srand(i * (rand() % 5000000) * (rand() % 5) );
         alien->box.x = rand() % 1408;
@@ -71,7 +71,6 @@ void StageState::LoadAssets() {
     penguin->AddComponent(pbody);
     Camera::Follow(penguin);
     AddObject(penguin);
-    cout << "criou pinguin" << endl;
 
     GameObject* pontos = new GameObject();
     Sprite* pt = new Sprite(*pontos, "resources/images/pontos.png");
@@ -90,7 +89,6 @@ void StageState::LoadAssets() {
     GameObject* texto = new GameObject();
     SDL_Color color = InputManager::GetInstance().CreateColor("0eff00");
     Text* tx = new Text(*texto, "resources/font/AGENTORANGE.TTF", 15, Text::TextStyle::BLENDED, "HP: 200", color, 1);
-    cout << "id: " << tx->GetId() << endl;
     texto->AddComponent(tx);
     CameraFollower* Cam2 = new CameraFollower(*texto, {80, 35});
     texto->AddComponent(Cam2);
@@ -99,7 +97,6 @@ void StageState::LoadAssets() {
     GameObject* texto2 = new GameObject();
     SDL_Color color1 = InputManager::GetInstance().CreateColor("ffffff");
     Text* tx1 = new Text(*texto2, "resources/font/AGENTORANGE.TTF", 15, Text::TextStyle::BLENDED, "Pontos: 0", color1, 2);
-    cout << "id: " << tx1->GetId() << endl;
     texto2->AddComponent(tx1);
     CameraFollower* Cam3 = new CameraFollower(*texto2, {20, 75});
     texto2->AddComponent(Cam3);
@@ -116,7 +113,6 @@ void StageState::LoadAssets() {
     GameObject* texto3 = new GameObject();
     SDL_Color color2 = InputManager::GetInstance().CreateColor("ffffff");
     Text* tx2 = new Text(*texto3, "resources/font/AGENTORANGE.TTF", 20, Text::TextStyle::BLENDED, "Aliens", color2);
-    cout << "id: " << tx2->GetId() << endl;
     texto3->AddComponent(tx2);
     CameraFollower* Cam4 = new CameraFollower(*texto3, {75, 130});
     texto3->AddComponent(Cam4);
@@ -125,7 +121,6 @@ void StageState::LoadAssets() {
     GameObject* texto4 = new GameObject();
     SDL_Color color3 = InputManager::GetInstance().CreateColor("ffffff");
     Text* tx3 = new Text(*texto4, "resources/font/AGENTORANGE.TTF", 15, Text::TextStyle::BLENDED, "0", color3, 3);
-    cout << "id: " << tx3->GetId() << endl;
     texto4->AddComponent(tx3);
     CameraFollower* Cam8 = new CameraFollower(*texto4, {105, 170});
     texto4->AddComponent(Cam8);
@@ -140,8 +135,8 @@ void StageState::Start() {
     LoadAssets();
     StartArray();
     started = true;
-    // backgroundMusic.Play();
-    cout << "Tudo iniciado.." << endl;
+    backgroundMusic.Play();
+    cout << "\nCARREGADO!!" << endl;
 }
 
 
@@ -155,7 +150,7 @@ void StageState::Resume() {
 }
 
 StageState::StageState() {
-    cout << "State criado!!" << endl;
+    
 }
 
 StageState::~StageState() {
@@ -166,12 +161,12 @@ void StageState::Update(float dt) {
     Camera::Update(dt);
 
     if(InputManager::GetInstance().QuitRequested()) {
-        backgroundMusic.~Music(); // Descomentar
+        backgroundMusic.~Music();
         quitRequested = true;
     }
     
     if(InputManager::GetInstance().KeyPress(ESCAPE_KEY)) {
-        backgroundMusic.~Music(); // Descomentar
+        backgroundMusic.~Music();
         popRequested = true;
     }
 
@@ -193,8 +188,6 @@ void StageState::Update(float dt) {
                     Collider* cold1 = (Collider*)cp1;
 
                     if ( Collision::IsColliding(cold0->box, cold1->box, (objectArray[i]->angleDeg* PI) / 180, objectArray[j]->angleDeg * PI / 180) ) {
-                        //cout << "colidiu meu mano" << endl;
-                        //cout << "obj i: " << objectArray[i]->box.w << " obj j: " << objectArray[j]->box.w << endl;
                         objectArray[i]->NotifyCollision(*objectArray[j]);
                         objectArray[j]->NotifyCollision(*objectArray[i]);
                     }
@@ -203,7 +196,6 @@ void StageState::Update(float dt) {
         }
         
     }
-    // cout << GameData::alienCount << endl;
 
     Text* t = GetText(2);
     if (t) {
@@ -225,6 +217,7 @@ void StageState::Update(float dt) {
             GameData::alienCount = 0;
             mudaState.Restart();
             GameData::playerVictory = true;
+            backgroundMusic.~Music();
             popRequested = true;
             Game::GetInstance().Push(new EndState());
         }
@@ -240,6 +233,7 @@ void StageState::Update(float dt) {
         if(mudaState.Get() > 1.6) {
             mudaState.Restart();
             GameData::playerVictory = false;
+            backgroundMusic.~Music();
             popRequested = true;
             Game::GetInstance().Push(new EndState());
         }
@@ -249,8 +243,6 @@ void StageState::Update(float dt) {
             t->SetText("HP: " + to_string(PenguinBody::player->GetHp()));
         }
     }
-    
-    //cout << endl;
 
 }
 

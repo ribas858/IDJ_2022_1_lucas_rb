@@ -37,8 +37,4 @@ class PenguinCannon : public Component, public Being {
 
 };
 
-
-
-
-
 #endif

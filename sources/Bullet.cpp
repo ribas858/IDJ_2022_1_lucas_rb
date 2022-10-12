@@ -23,11 +23,7 @@ void Bullet::Update(float dt) {
     associated.box.y += ds.y;
 
     float DS = sqrt(pow(ds.x, 2) + pow(ds.y, 2));
-
     distanceLeft -= DS;
-
-    // cout << "distance left: " << distanceLeft << endl;
-
     if (distanceLeft <= 0) {
         associated.RequestDelete();
     }
